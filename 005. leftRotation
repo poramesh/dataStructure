@@ -81,7 +81,16 @@ if __name__ == '__main__':
     fptr.write(' '.join(map(str, result)))
     fptr.write('\n')
 
-    fptr.close()
-    
+(or)
+
+for value in (arr[d:] + arr[0:d]): print value,
+
+(or)
+when d is greater than n
+shifted = a[d%n:] + a[:d%n]
+#print(*printed)
+    for num in shifted:
+        print(num, end=' ')
+
     
     
