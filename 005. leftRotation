@@ -92,5 +92,20 @@ shifted = a[d%n:] + a[:d%n]
     for num in shifted:
         print(num, end=' ')
 
+(or)
+import sys
+n, d= map(int, raw_input().strip().split(' '))
+lst = map(int, raw_input().strip().split(' '))
+
+rounds = n - d
+
+if rounds != 0:
+    final= lst[n-rounds:] + lst[:n-rounds]
+else:
+    final = lst
+    
+for _ in final:
+    print _,
+
     
     
