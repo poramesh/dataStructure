@@ -1,0 +1,138 @@
+Starting with a 1-indexed array of zeros and a list of operations, for each operation add a value to each the array element between two given indices, inclusive. Once all operations have been performed, return the maximum value in the array.
+
+Example
+n=10
+queries =[[1,5,3],[4,8,7],[6,9,1]]
+
+Queries are interpreted as follows:
+
+    a b k
+    1 5 3
+    4 8 7
+    6 9 1
+Add the values of k between the indices a and b inclusive:
+
+index->     1 2 3  4  5 6 7 8 9 10
+    [0,0,0, 0, 0,0,0,0,0, 0]
+    [3,3,3, 3, 3,0,0,0,0, 0]
+    [3,3,3,10,10,7,7,7,0, 0]
+    [3,3,3,10,10,8,8,8,1, 0]
+The largest value is of 10 after all operations are performed.
+
+Function Description
+arrayManipulation has the following parameters:
+
+int n - the number of elements in the array
+int queries[q][3] - a two dimensional array of queries where each queries[i] contains three integers, a, b, and k.
+Returns
+
+int - the maximum value in the resultant array
+
+Input Format
+The first line contains two space-separated integers n and m, the size of the array and the number of operations.
+Each of the next m lines contains three space-separated integers a,b and k, the left index, right index and summand.
+
+Constraints
+3<=n<=10^7
+1<=m<=2*10^5
+1<=a<=b<=n
+0<=k<=10^9
+
+Sample Input
+
+5 3
+1 2 100
+2 5 100
+3 4 100
+Sample Output
+200
+
+Explanation
+
+After the first update the list is 100 100 0 0 0.
+After the second update list is 100 200 100 100 100.
+After the third update list is 100 200 200 200 100.
+
+The maximum value is 200.
+
+
+arrSize, n = map(int,input().split(" "))
+#arrSize = arrSize+1
+arr=[0]*arrSize
+for _ in range(n):
+    a,b,value=map(int,input().split(" "))
+    for i in range(a-1,b):
+        arr[i]=value+arr[i]
+print(max(arr))
+
+
+We can try to understand this logic like we imagine Supermario walking on a N width horiz line. 
+a and b is the point on the line, k is the mushroom Mario always like to eat. 
+When Mario go to the point at a,he eat the k size mushroom and become taller,
+after he have walked through point b, his height reverse to the origin height before he eat the mushroom.
+eg. 
+1. When Mario is walking to a, he eat a k size mushroom, and become k bigger 
+2. Then Mario is walking to a', he eat a k' size mush, and become k' bigger, now Mario's height is (k + k') 
+3. If Mario have walked to b, so he pooped out the mushroom and become k smaller, the only way that he can become larger is to meet a new (a,b) point and eat a new k size mushroom
+4. The rest can be done in the same manner.
+
+What we need to do is tracing the Mario's biggest height when walking through that muliple query's a and b point.
+
+
+arrSize, n = map(int,input().split(" "))
+max = 0
+x=0
+arrSize = arrSize+1
+arr=[0]*arrSize
+for _ in range(n):
+    a,b,value=map(int,input().split(" "))
+    arr[a]=value+arr[a]
+    if b+1<arrSize: arr[b+1]=arr[b+1]-value
+
+    
+
+for i in range(1,arrSize):
+    x = x + arr[i]
+    if x>max:
+        max=x
+        
+
+print(max)
+
+
+(or)
+
+n,m=map(int,input().split())
+ch=[0 for _ in range(n+2)]
+for _ in range(m):
+    a,b,k=map(int,input().split())
+    ch[a]+=k
+    ch[b+1]-=k
+v=0
+m=0
+for i in xrange(1,n+1):
+    v+=ch[i]
+    m=max(m,v)
+print m
+
+
+(or)
+
+n, m = map(int, input().split())
+ans = 0
+queries = [None] * (2*m)
+for i in range(m):
+    a, b, k = map(int, input().split())
+    queries[2*i] = (a, 1, k)
+    queries[2*i+1] = (b, 2, -k)
+queries.sort()
+
+current = 0
+for q in queries:
+    if q[1] == 1:
+        current += q[2]
+        ans = max(current, ans)
+    else:
+        ans = max(current, ans)
+        current += q[2]
+print ans
