@@ -1,0 +1,146 @@
+struct node {
+    int data;           // Data stored in the node
+    struct node *next;  // Pointer to the next node in the linked list
+};
+
+In the C programming language, when you're defining a struct, you're essentially creating a new user-defined data type. In this case,
+you're defining a structure named node, which contains two members: an integer named data and a pointer to another node structure named next.
+The reason why struct node *next; is used instead of just node *next; is because when you're defining the struct, the compiler doesn't yet know what node is,
+since it's being defined in the same statement. To resolve this, you explicitly specify struct node to tell the compiler that next will be a pointer to a structure of type node.
+
+In Python, you typically don't use struct to define data structures like you do in languages like C or C++. Instead, you can use classes to achieve similar functionality. 
+class Node:
+    def __init__(self, data):
+        self.data = data  # Data stored in the node
+        self.next = None  # Pointer to the next node in the linked list
+c:-
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+struct node{
+    int data;
+    struct node* next;
+};
+
+struct node* head;
+
+void insert(int x){
+   struct node* temp =  (struct node*)malloc(sizeof(struct node));
+   temp->data = x;
+   temp->next = head; 
+   head = temp; 
+}
+
+void print(){
+   struct node* temp = head;
+   printf("list is:" );
+   while(temp!=NULL){
+      printf("%d ",temp->data);
+      temp=temp->next;
+   }
+   printf("\n");
+}
+
+int main(){
+   head = NULL;
+   printf("enter the value:");
+   int n,i,x;
+   scanf("%d",&n); 
+   for (i=0;i<n;i++){
+      printf("enter the number:"); 
+      scanf("%d",&x);
+      insert(x);
+    print(x);
+   }
+}
+
+java:-
+
+import java.util.Scanner;
+
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class LinkedList {
+    Node head;
+
+    LinkedList() {
+        this.head = null;
+    }
+
+    void insert(int x) {
+        Node newNode = new Node(x);
+        newNode.next = head;
+        head = newNode;
+    }
+
+    void printList() {
+        Node temp = head;
+        System.out.print("List is: ");
+        while (temp != null) {
+            System.out.print(temp.data + " ");
+            temp = temp.next;
+        }
+        System.out.println();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        LinkedList linkedList = new LinkedList();
+
+        System.out.print("Enter the number of elements: ");
+        int n = scanner.nextInt();
+
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter the number: ");
+            int x = scanner.nextInt();
+            linkedList.insert(x);
+        }
+
+        linkedList.printList();
+    }
+}
+
+python:-
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def insert(self, x):
+        new_node = Node(x)
+        new_node.next = self.head
+        self.head = new_node
+
+    def print_list(self):
+        temp = self.head
+        print("List is:", end=" ")
+        while temp:
+            print(temp.data, end=" ")
+            temp = temp.next
+        print()
+
+if __name__ == "__main__":
+    linked_list = LinkedList()
+    n = int(input("Enter the number of elements: "))
+    for _ in range(n):
+        x = int(input("Enter the number: "))
+        linked_list.insert(x)
+    linked_list.print_list()
