@@ -1,0 +1,173 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+struct node{
+    int data;
+    struct node* next;
+};
+
+struct node* head;
+
+void insert(int x,int n){
+   struct node* temp1 =  (struct node*)malloc(sizeof(struct node));
+   temp1->data = x;
+   temp1->next = NULL; 
+   if(n==1){
+       temp1->next=head;
+       head=temp1;
+   }else{
+       struct node* temp2 = head;
+       for(int i=1;i<n-1;i++){
+           temp2 = temp2->next;
+       }
+     temp1->next=temp2->next;
+     temp2->next=temp1;
+   }
+}
+
+void delete(int n){
+    struct node* temp1 = head;
+    if(n==1){
+        head = temp1->next; 
+        free(temp1);
+    } else {
+        for(int i=1;i<n-1;i++){
+            temp1=temp1->next;
+        }
+        struct node* temp2 = temp1->next;
+        temp1->next=temp2->next;
+        free(temp2);
+    }
+}
+
+void reverseList(){
+    struct node* prev =NULL;
+    struct node* current=head;
+    struct node* next;
+    while(current!=NULL){
+        next=current->next;
+        current->next=prev;
+        prev=current;
+        current=next;
+    }
+    head=prev;
+}
+
+void print(){
+   struct node* temp = head;
+   printf("list is:" );
+   while(temp!=NULL){
+      printf("%d ",temp->data);
+      temp=temp->next;
+   }
+   printf("\n");
+}
+
+int main(){
+   head = NULL;
+   insert(1,1);
+   insert(2,2);
+   insert(3,2);
+   insert(4,1);
+   insert(5,1);
+   insert(8,4);
+   print();
+   delete(1);
+   print();
+   delete(4);
+   print();
+   reverseList();
+   print();
+}
+
+(or)
+
+same code but head is local varaible rather than global uyayy. 
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+struct node{
+    int data;
+    struct node* next;
+};
+
+
+struct node* insert(struct node*head,int x,int n){
+   struct node* temp1 =  (struct node*)malloc(sizeof(struct node));
+   temp1->data = x;
+   temp1->next = NULL; 
+   if(n==1){
+       temp1->next=head;
+       head=temp1;
+   }else{
+       struct node* temp2 = head;
+       for(int i=1;i<n-1;i++){
+           temp2 = temp2->next;
+       }
+     temp1->next=temp2->next;
+     temp2->next=temp1;
+   }
+   return head;
+}
+
+struct node* delete(struct node*head, int n){
+    struct node* temp1 = head;
+    if(n==1){
+        head = temp1->next; 
+        free(temp1);
+    } else {
+        for(int i=1;i<n-1;i++){
+            temp1=temp1->next;
+        }
+        struct node* temp2 = temp1->next;
+        temp1->next=temp2->next;
+        free(temp2);
+    }
+    return head;
+}
+
+struct node* reverseList(struct node*head){
+    struct node* prev =NULL;
+    struct node* current=head;
+    struct node* next;
+    while(current!=NULL){
+        next=current->next;
+        current->next=prev;
+        prev=current;
+        current=next;
+    }
+    head=prev;
+    return head;
+}
+
+void print(struct node*head){
+   struct node* temp = head;
+   printf("list is:" );
+   while(temp!=NULL){
+      printf("%d ",temp->data);
+      temp=temp->next;
+   }
+   printf("\n");
+}
+
+int main(){
+   struct node* head = NULL;
+   head = insert(head,1,1);
+   head = insert(head,2,2);
+   head = insert(head,3,2);
+   head = insert(head,4,1);
+   head = insert(head,5,1);
+   head = insert(head,8,4);
+   print(head);
+   head=delete(head,1);
+   print(head);
+   head=delete(head,4);
+   print(head);
+   head = reverseList(head);
+   print(head);
+}
