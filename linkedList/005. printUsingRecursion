@@ -59,12 +59,6 @@ int main(){
    head = insert(head,5,1);
    head = insert(head,8,4);
    print(head);
-   head=delete(head,1);
-   print(head);
-   head=delete(head,4);
-   print(head);
-   head = reverseList(head);
-   print(head);
    printForward(head);
    printf("\n");
    printReverse(head);
