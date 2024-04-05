@@ -1,0 +1,104 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+struct node{
+    int data;
+    struct node* next;
+};
+
+
+struct node* insert(struct node*head,int x,int n){
+   struct node* temp1 =  (struct node*)malloc(sizeof(struct node));
+   temp1->data = x;
+   temp1->next = NULL; 
+   if(n==1){
+       temp1->next=head;
+       head=temp1;
+   }else{
+       struct node* temp2 = head;
+       for(int i=1;i<n-1;i++){
+           temp2 = temp2->next;
+       }
+     temp1->next=temp2->next;
+     temp2->next=temp1;
+   }
+   return head;
+}
+
+
+
+void print(struct node*head){
+   struct node* temp = head;
+   printf("list is:" );
+   while(temp!=NULL){
+      printf("%d ",temp->data);
+      temp=temp->next;
+   }
+   printf("\n");
+}
+
+
+
+
+struct node*insertFirst(struct node*head, int data){
+    struct node* temp = (struct node*)malloc(sizeof(struct node));
+    temp->data=data;
+    temp->next=NULL;
+    if(head==NULL){
+        head=temp;
+    } else{
+        struct node*temp1=head;
+        while(temp1->next!=NULL){
+            temp1 = temp->next;
+        }
+    temp1->next=temp;
+
+    }
+    return head;
+}
+
+struct node* reverseRecursion(struct node* p, struct node* head) {
+    if (p->next == NULL) {
+        head = p; 
+        return head;
+    }
+
+    head = reverseRecursion(p->next, head);
+    struct node* q = p->next;
+    q->next = p;
+    p->next = NULL;
+    return head;
+}
+
+int main(){
+   struct node* head = NULL;
+   head = insertFirst(head,3);
+   head = insertFirst(head,50);
+   head = insert(head,1,1);
+   head = insert(head,2,2);
+   head = insert(head,3,2);
+   head = insert(head,4,1);
+   head = insert(head,5,1);
+   head = insert(head,8,4);
+
+   print(head);
+   head = reverseRecursion(head, head);
+   print(head);
+}
+
+(or)
+
+struct node*head;
+void reverseRecursion(struct node* p,) {
+    if (p->next == NULL) {
+        head = p; 
+        return;
+    }
+
+    reverseRecursion(p->next, head);
+    struct node* q = p->next;
+    q->next = p;
+    p->next = NULL;
+}
