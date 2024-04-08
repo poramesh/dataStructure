@@ -8,7 +8,7 @@ struct node{
     struct node* link;
 };
 
-struct node*top;
+struct node*top==NULL;
 
 void push(int data){
     struct node* temp = (struct node*)(malloc(sizeof(struct node)));
