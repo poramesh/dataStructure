@@ -57,3 +57,6 @@ main()
    for(i=0;i<len;i++)  
       pop();  
 } 
+
+
+using stack for reversal of string is not a best apprach because of its space complexity. whereas linked list is an intuitive approach.
