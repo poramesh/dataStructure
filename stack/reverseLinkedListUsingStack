@@ -1,0 +1,95 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define maxsize 101
+
+int top =-1;
+struct node* s[maxsize];
+struct node*head;
+void push(struct node*);
+void pop();
+
+struct node{
+    int data;
+    struct node*next;
+};
+
+void insert(int data){
+    struct node*temp = (struct node*)(malloc(sizeof(struct node)));
+    temp->data=data;
+
+    if(head==NULL){
+        head=temp;
+    } else{
+        temp->next=head;
+        head=temp;
+    }
+}
+
+void display(){
+    struct node*temp=head;
+    while(temp!=NULL){
+        printf("%d ",temp->data);
+        temp=temp->next;
+    }
+    printf("\n");
+}
+
+void reverse(){
+    if(head==NULL)  return;
+    struct node* temp = head;
+    while(temp!=NULL){
+        //s[++top]=temp;
+        push(temp);
+        temp=temp->next;
+    }
+    temp =s[top];
+    head=temp;
+    pop(); //s[--top]
+    while(top>=0){
+        temp->next=s[top];
+        pop(); //s[--top]
+        temp=temp->next;
+    }
+    temp->next = NULL;
+    
+}
+
+
+void push(struct node* temp){
+    if(top==maxsize-1){
+        printf("stack is full");
+    }else {
+        s[++top]=temp;
+    }
+}
+
+void pop(){
+    if(top==-1){
+        printf("stack is empty");
+    }
+    else top--;
+}
+
+void print(){
+    for(int i=0;i<=top;i++){
+        printf("%d ",s[i]);
+    }
+    printf("\n");
+}
+
+int main(){
+    head =NULL;
+    insert(1);
+    insert(2);
+    insert(3);
+    insert(4);
+    insert(5);
+    display();
+    reverse();
+    display();
+    insert(6);
+    display();
+    reverse();
+    display();
+    
+}
