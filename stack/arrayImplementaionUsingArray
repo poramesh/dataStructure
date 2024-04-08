@@ -1,0 +1,50 @@
+A stack ADT: A list with the restrictions that insertion and deletion can be performed only from one end, called the top.
+Operations: push(x) pop() top() isEmpty()
+Stack is LIFO(last in first out)
+Application: Function calls/Recursion/Undo in a n editor/Balanced parenthesis
+
+
+#include<stdio.h>
+#include <stdlib.h>
+
+#define max_size 101
+int a[max_size];
+int top=-1;
+
+void push(int data){
+    if(top==max_size-1){
+        printf("not enough memory, sorry :(");
+        return;
+    } else{
+        a[++top]=data;
+    }
+}
+void pop(){
+    if(top==-1){
+        printf("the stack is empty? what are you are trying to pop haha");
+        return;
+    } else{
+        top--;
+    }
+}
+
+void print(){
+    if(top==-1){
+        printf("stakc is empty, nothing to print sorry");
+        return;
+    } else {
+        for (int i =0;i<=top;i++){
+            printf("%d ",a[i]);
+        }
+    }
+    
+}
+int main(){
+    push(10);
+    push(11);
+    push(12);
+    print();
+    pop();
+    printf("\n");
+    print();
+}
