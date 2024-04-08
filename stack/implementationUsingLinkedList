@@ -1,0 +1,55 @@
+#include<stdio.h>
+#include <stdlib.h>
+
+
+
+struct node{
+    int data;
+    struct node* link;
+};
+
+struct node*top;
+
+void push(int data){
+    struct node* temp = (struct node*)(malloc(sizeof(struct node)));
+    temp->data= data;
+    if(top==NULL){
+        top=temp;
+    } else{
+        temp->link=top;
+        top=temp;
+    }
+}
+void pop(){
+    if(top==NULL){
+        return;
+    }else{
+        struct node * temp= top;
+        top=temp->link;
+        free(temp);
+    }
+}
+
+void print(){
+    if(top==NULL){
+        printf("stakc is empty, nothing to print sorry");
+        return;
+    } else {
+        struct node*temp = top;
+        while(temp!=NULL){
+            printf("%d ",temp->data);
+            temp=temp->link;
+        }
+    }
+
+
+}
+int main(){
+    push(10);
+    push(11);
+    push(12);
+    print();
+    pop();
+    printf("\n");
+    print();
+}
