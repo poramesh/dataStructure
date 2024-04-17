@@ -1,0 +1,5 @@
+conversion from infix to postfix:
+A+B*C=> A+(B*C)=>A(BC*)+=>ABC*+
+A+B*C-D*E => ABC*+DE*-
+((A+B)*C-D)*E = AB+C*D-E*
+A*(B+C)=>ABC+*
