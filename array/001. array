@@ -30,7 +30,11 @@ ans = ""
 for a in range(N):
     ans += A[N-a-1]+" "
     
-print(ans[0:-1])
+print(ans[0:-1])//print()ans[0:]
+
+(or)
+print(' '.join(A[::-1]))
+
 
 (or)
 n = int(input())
@@ -43,13 +47,18 @@ for i in range(len(ar)):
     rev[j] = ar[i]
     j=j-1
     
-res = ' '.join(map(str,rev))
+res = ' '.join(map(str,rev)) //join() method is used to concatenate elements of an iterable (like a list) into a single string,with the specified separator between each element.
 print(res)
 
 (or)
 
 N = input()
-A = [int(x) for x in input().split()]
+A = [int(x) for x in input().split()] //int
+#A = input()s.plit() // store as string
+#A = input() #store its as str
+#
+
+A = input().split() #list
 
 
 print(' '.join([str(x) for x in reversed(A)]))
