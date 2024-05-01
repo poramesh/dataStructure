@@ -88,10 +88,13 @@ for value in (arr[d:] + arr[0:d]): print value,
 (or)
 when d is greater than n
 shifted = a[d%n:] + a[:d%n]
-#print(*printed)
+#print(*printed) // if star is not mentioned then it will be printed as list 
     for num in shifted:
-        print(num, end=' ')
+        print(num, end=' ') 
 
+//end is provided so that it wouldnt go to the next line. without end it woild pront like 1 \n 2 \n and so on if we provid end then it will be seperated with space
+//end specifies what to print at the end of the output. By default, it's a newline character ('\n').
+//When end=' ', it means that instead of ending with a newline character, it will end with a space character (' '). So, the next call to print() will start printing on the same line, separated by a space.
 (or)
 import sys
 n, d= map(int, raw_input().strip().split(' '))
@@ -107,5 +110,26 @@ else:
 for _ in final:
     print _,
 
-    
-    
+\''''''''/
+print(*printed) 
+ will print each element of the printed iterable separated by spaces. This is because the * operator unpacks the elements of the iterable and passes them as
+separate arguments to the print() function.
+printed = [1, 2, 3]
+print(printed) will [1,2,3]
+print(*printed) will print 1 2 3
+
+Unpacking refers to extracting individual elements from a container, such as a list, tuple, or dictionary, and assigning them to separate variables.
+
+In Python, you can unpack elements using the * operator for iterable unpacking and the ** operator for dictionary unpacking.
+
+Iterable unpacking (using *) is used with sequences like lists or tuples. For example:
+
+my_list = [1, 2, 3]
+a, b, c = my_list
+Here, a, b, and c are assigned the values 1, 2, and 3, respectively. This is unpacking my_list into individual variables.
+def my_function(a, b, c):
+    print(a, b, c)
+
+my_list = [1, 2, 3]
+my_function(*my_list)
+
