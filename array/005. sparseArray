@@ -1,4 +1,4 @@
-There is a collection of input strings and a collection of query strings. For each query string, determine how many times it occurs in the list of input strings. Return an array of the results.
+ There is a collection of input strings and a collection of query strings. For each query string, determine how many times it occurs in the list of input strings. Return an array of the results.
 
 Example
 
@@ -53,16 +53,41 @@ for i in range(q):
         if queryList[i] == stringList[j]:
             max=max+1
     print(max)
+
+(or)
+
+def matchingStrings(strings, queries):
+    res = []
+    for i in queries:
+        print(i)
+        //print(strings.count(i))
+        res.append(strings.count(i))
+    return res
         
 (or)
 
+
 from collections import Counter
 
-cnt = Counter([input().strip() for _ in range(int(input().strip()))]) 
+cnt = Counter([input().strip() for _ in range(int(input().strip()))]) //Counter({'aba': 2, 'baba': 1, 'xzxb': 1})
+
 
 for _ in range(int(input().strip())):
     print(cnt[input().strip()])
-
+i/p
+4
+aba
+baba
+aba
+xzxb
+3
+aba
+xzxb
+ab
+o/p
+2
+1
+0
 (or)
 
 import collections
@@ -73,4 +98,8 @@ for _ in range(int(input())):
 for _ in range(int(input())):
     print(values[input()])
 
+//defaultdict(<class 'int'>, {'aba': 1})
+defaultdict(<class 'int'>, {'aba': 1, 'baba': 1})
+defaultdict(<class 'int'>, {'aba': 2, 'baba': 1})
+defaultdict(<class 'int'>, {'aba': 2, 'baba': 1, 'xzxb': 1})
 defaultdict helps to intialise value to zero
