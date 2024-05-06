@@ -25,7 +25,8 @@ struct node{
     struct node* next;
 };
 
-struct node* head;
+struct node* head; //struct node* head;: This line declares a pointer named head which can point to an object of type struct node
+// It's important to understand that the pointer itself doesn't contain the actual data or structure; it simply holds the memory address where the data or structure is stored in the computer's memory.
 
 void insert(int x){
    struct node* temp =  (struct node*)malloc(sizeof(struct node));
