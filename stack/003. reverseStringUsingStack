@@ -58,5 +58,25 @@ main()
       pop();  
 } 
 
+(or)
+
+int main()  
+{  
+   char str[]="sri lanka";  
+   int len = strlen(str);  
+   int i;  
+   char str1[len];
+  
+   for(i=0;i<len;i++){  
+        push(str[i]); 
+   }
+  
+   for(i=0;i<len;i++) {
+      str1[i]=stack[--top];
+   }
+  for(i=0;i<len;i++){
+      printf("%c",str1[i]);
+  }
+
 
 using stack for reversal of string is not a best apprach because of its space complexity. whereas linked list is an intuitive approach.
