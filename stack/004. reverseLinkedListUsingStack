@@ -1,3 +1,5 @@
+#here we will be using stack explicityl where we basically reversee the  references with the help of stack.
+
 #include<stdio.h>
 #include<stdlib.h>
 #define maxsize 101
