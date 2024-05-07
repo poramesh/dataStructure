@@ -95,3 +95,138 @@ int main(){
     display();
     
 }
+
+(or)
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+   char word;
+   struct node *next;
+};
+
+void reverse_string(char *word);
+void print();
+void push(char);
+struct node* root;
+
+int main()
+{
+  root=NULL; 
+  char *word="bugun seminer vardi!";  //In the statement char *word = "bugun seminer vardi!";, you are declaring a pointer to a character (char*) named word and initializing it with the memory address of the first character of the string "bugun seminer vardi!".
+                                     
+  reverse_string(word);
+  print();
+
+}
+
+void reverse_string(char *word)
+{
+ int i=0;
+ 
+ for(i=0;(word[i])!='\0';i++)
+ {
+  printf("%c",word[i]);
+      push(word[i]);
+ } 
+ printf("\n");
+}
+
+void push(char letter)
+{
+ struct node* temp=(struct node*)malloc(sizeof(struct node));
+ temp->word=letter;
+ 
+ if(root==NULL)
+ {
+   root=temp;
+   root->next=NULL;
+   return;
+ }
+ 
+ temp->next=root;
+ root=temp;
+
+}
+
+void print()
+{
+ struct node *iter=root;
+ int i=0;
+
+ while(iter!=NULL)
+ {
+   printf("%c",iter->word);
+   iter=iter->next;
+ } 
+  printf("\n");
+}
+
+(or)
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int value;
+    struct Node* next;
+};
+
+typedef struct Node Node; //In the code you provided, typedef struct Node Node; is a type definition that creates an alias node for the struct type struct Node
+
+void reverse(Node** head) {
+    Node* temp = *head;
+    if (*head == NULL)
+        return;
+    struct Node* prev = NULL;
+    struct Node* current = *head;
+    struct Node* next = NULL;
+    while (current != NULL) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    *head = prev;
+}
+//Node** head: This is a double pointer to a Node. It's typically used to pass a pointer to a function so that the function can modify the pointer itself, such as updating it to point to a different node.
+//*head: When you dereference head with *head, you get the value stored at the memory address pointed to by head. In this case, the value is a pointer to the head of a linked list.
+
+
+void push(Node** head, int value) {
+    Node* temphead = *head;
+    Node* temp = (Node*)malloc(sizeof(Node));
+    temp->value = value;
+    temp->next = NULL;
+    if (*head == NULL) {
+        *head = temp;
+        return;
+    }
+    while (temphead->next != NULL) {
+        temphead = temphead->next;
+    }
+    temphead->next = temp;
+}
+
+void print(Node* head) {
+    Node* temp = head;
+    while (temp != NULL) {
+        printf("%d\n", temp->value);
+        temp = temp->next;
+    }
+}
+
+int main() {
+    Node* head = NULL; 
+    print(Node)
+    push(&head, 1);
+    push(&head, 2);
+    push(&head, 3);
+    print(head);
+    reverse(&head);
+    printf("rev:\n");
+    print(head);
+    return 0;
+}
+
+
