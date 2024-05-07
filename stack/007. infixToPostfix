@@ -71,6 +71,9 @@ int main() {
     printf("\no/p is %s",op);
     return 0;
 }
+//A + B * C + D
+//A + B * C
+
 
 
 (or)
