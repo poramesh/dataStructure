@@ -1,4 +1,7 @@
 // Online C++ compiler to run C++ program online
+
+//here we are using stack implicility
+
 #include <iostream>
 #include<cstring>
 #include <stack>
