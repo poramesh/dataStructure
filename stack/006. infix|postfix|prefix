@@ -1,7 +1,7 @@
 order of operations: 
 1. parenthesis 
 2. exponents (right to left) x^2^4 
-3. multiplication and dividion(left to right) 
+3. multiplication and division(left to right) 
 4. addition and subtraction(left to right)
 
 infix:<operand><operator><operand>
@@ -25,12 +25,17 @@ prefix:
 -+*ab*cde
 -+*2 3*5 4 9 => 17 here we go on from the right!
 
+
+more example: https://runestone.academy/ns/books/published/pythonds/BasicDS/InfixPrefixandPostfixExpressions.html 
+remember to use your brain to apply order of operations.
+
 --------
 // Online C compiler to run C program online
 #include <stdio.h>
 #include<stdlib.h>
 #include<string.h>
 #include<stdbool.h>
+
 #define max_size 50
 
 int a[max_size];
@@ -87,13 +92,13 @@ int evaluateExp(char exp[]){
 int main() {
     
     char c[40];
-    printf("enter the expression \n");
+    printf("enter the expression \n"); //(2*3)+(5*4)-9
     scanf("%s",c);
     //scanf("%[^\n]s",c);
 
 
     int op = evaluateExp(c);
-    printf("solution is %d",op);
+    printf("solution is %d",op); //9
     return 0;
 }
 
