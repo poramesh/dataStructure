@@ -1,0 +1,25 @@
+
+Introduction to Queues:
+It is FIFO(first in first out)
+A list or collection with the restriction that insertion can be performed at one end (rear) and deletion can be performed at the other end(front).
+operations
+1. enqueue(x) or push(x)
+2. dequeue() or pop()
+3. front() or peek()
+4. isempty()
+
+application: printer queue, process schelduing, simulating wait.
+
+front and rear will be poiting to empty that is -1, when we enque a value both front and rear will be incrememneted,
+, and after we enqueue another value, we will only increment rear end.
+when we dequeue oepration we will incremenet front(since the cell is not part of the array, it doesnt mater what value is present).
+
+
+as we traverse the array, we might reach the end of the cell that is last index in array, during that time it would be a good idea to use circular array.
+we can use modulo operation.
+current position = i
+next position = (rear+1)%n
+previous postition = (rear+n-1)%n #addig n so it is always positive.
+printing=(first+i%n)
+count = (rear+n-front)%n+1
+
