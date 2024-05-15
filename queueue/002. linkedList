@@ -1,0 +1,163 @@
+Queue- linked list implementation.
+A list or collection with the restreiction that insertion can be performed at one end (rear)
+and deletion can be peformed at otehr end(front)
+
+drawbacks for array implemetation: what if arrays gets filled??
+1. sorry "queue is full"
+2. create a new larger array and copy the data.
+3. if the queue is less, the memory assigned will be wasted. sadddddd
+
+we can implement it in big o of 1 if we can have front and rear variable holding the adress s we can perform both the iperation without making much fuss.
+
+anything that is in dynamic memory should be explicitly free'd.
+there are no major disadavantage, as we wil be storing and doing eveyrhing in less time only disadvantage is the extra mem.
+/*Queue - Linked List implementation*/
+#include<stdio.h>
+#include<stdlib.h>
+struct Node {
+	int data;
+	struct Node* next;
+};
+// Two glboal variables to store address of front and rear nodes. 
+struct Node* front = NULL;
+struct Node* rear = NULL;
+
+// To Enqueue an integer
+void Enqueue(int x) {
+	struct Node* temp = 
+		(struct Node*)malloc(sizeof(struct Node));
+	temp->data =x; 
+	temp->next = NULL;
+	if(front == NULL && rear == NULL){
+		front = rear = temp;
+		return;
+	}
+	rear->next = temp;
+	rear = temp;
+}
+
+// To Dequeue an integer.
+void Dequeue() {
+	struct Node* temp = front;
+	if(front == NULL) {
+		printf("Queue is Empty\n");
+		return;
+	}
+	if(front == rear) {
+		front = rear = NULL;
+	}
+	else {
+		front = front->next;
+	}
+	free(temp);
+}
+
+int Front() {
+	if(front == NULL) {
+		printf("Queue is empty\n");
+		return;
+	}
+	return front->data;
+}
+
+void Print() {
+	struct Node* temp = front;
+	while(temp != NULL) {
+		printf("%d ",temp->data);
+		temp = temp->next;
+	}
+	printf("\n");
+}
+
+int main(){
+	/* Drive code to test the implementation. */
+	// Printing elements in Queue after each Enqueue or Dequeue 
+	Enqueue(2); Print(); 
+	Enqueue(4); Print();
+	Enqueue(6); Print();
+	Dequeue();  Print();
+	Enqueue(8); Print();
+}
+
+(or)
+
+// Online C compiler to run C program online
+#include <stdio.h>
+#include<stdlib.h>
+
+
+struct node{
+    int data;
+    struct node *link;
+};
+struct node* front = NULL;
+struct node* rear = NULL;
+
+void goGetInTheQueue(int data){
+    struct node *temp = (struct node*)(malloc(sizeof(struct node)));
+    temp->data=data;
+    temp->link=NULL;
+    if(front==NULL && rear==NULL){
+        front = rear = temp;
+    } else{
+        rear->link = temp;
+        rear=temp;
+    }
+}
+void getPopped(){
+    if(front==rear){
+        front=rear=NULL;
+    }else{
+        struct node* temp= front;
+        front = temp->link;
+        free(temp);
+    }
+    
+}
+void frontofTheQueue(){
+    if(front==NULL){
+        printf("queue is empty");
+    }else {
+        printf("\n the value in the front of the queue is : %d \n", front->data);
+    }
+    
+}
+
+void printTheQueue(){
+    if(front==NULL){
+        printf("queue is empty ");
+    } else {
+        printf("the values in the queue are ");
+        struct node* temp=front;
+        while(temp){
+        printf("%d ",temp->data);
+        temp=temp->link;
+        }
+    }
+}
+
+int main() {
+    int n;
+    printf("enter the number of elements: ");
+    scanf("%d",&n);
+    int a[n];
+    printf("enter the elements now: ");
+    for(int i=0;i<n;i++){
+        scanf("%d",&a[i]);
+        goGetInTheQueue(a[i]);
+        if(a[i]%3==0){
+            getPopped();
+        }
+    }
+    printTheQueue();
+    frontofTheQueue();
+    return 0;
+}
+
+
+
+
+
+
+
+source code: https://gist.github.com/mycodeschool/7510222
