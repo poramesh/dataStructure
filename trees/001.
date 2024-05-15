@@ -1,0 +1,79 @@
+Array, linkedList, Stack, Queues are all linear data structures in which daat is arranged in sequential manner.
+
+Befoere implementing something we need to decide which data structure to use;;for that we need to consider what needs to be stored,
+cost of operations, memory usage and ease of implementaion.
+trees are a ds which are used to store the hirearchial data.
+eg: organisational hirearchy of the company.
+Tress could be defined as a collection of entities called nodes linked together to simulate the hierarchy. tree is a non linear data structure, it is a hierarchial structure. 
+
+the top most node in the tree is called a root of the tree..
+
+each node contain data, it could be of any type.
+
+node can have a link or reference to some ohter nodes that can be called as its childrens.
+
+children of same nodes are called siblings.
+
+any child that doesnt have child can be called as leaf nodes.
+
+all other nodes with atleast one child can be called as internal nodes.
+
+parent of parent can be called grand-parent.  
+
+                                    1
+                                 /    \
+                                2      3
+                              /\ \     /\
+                             4  5 6   7  8
+                                /\    /
+                               9  10  11
+
+
+the link is no bidirectional. we can go from 1 to 2 but we cant go from 2 to 1.
+
+2 is a parent of 4, 5 and 6 and 
+4,5,and 6 are grandchildren of 1
+
+if we can go from a to b
+then a is ancestor of b (1, 2 and 5 are ancestor of 5)
+and b is descendant of a (10 is descent of 1 2 and 5)
+what are the common ancestor of 4 and 9 =>2 and 1
+6 and 7 are not sibbling as they doont have same parent but they have grandparents so they are cousins.
+Node no 3 is uncle of node number 6
+
+properties of tree: 
+
+1. tree could be defined as recursively as a structure that consists of a distinguisghed node called root.
+and some suub tress, and arrangement is such that roots of the tree contains link to roots of all the subtrees. 
+
+we got two sub tresss above for 1
+and for 2 we have three sub tress.
+
+recursion is reducing osmething in a self simmilar manner. this recursive property of tree will be used everywhere in all implementation and uses of tree.
+
+2. tree with n nodes, there will be exactly n-1 links or edges. each arrow could be link or edge.
+all nodes except root node can be exactly one incoming link. node no 2 has one incoming link, and it has threee outgoing link.
+
+3. depth:
+depth of some node x in a tree can be defined as lenght of the path from root to node x.
+(or)
+depth of x = no of edge in path from root to x.
+the depth of root node is zero
+the depth of 2 and 3 is one
+the depth of 4, 5 ,6 , 7 and 8 is two
+the depth of 9 , 10 and 11 is three
+
+height: 
+height of a node in tree can be defined as number of edges in longest path from x to a leaf.
+the height of 3 is two. as it goes to 7 and 11.
+the height leaf node will be zero.
+
+height of tree is height of root node.
+
+simple and common kind of tree, any node can have atmost 2 childrens.
+
+
+
+
+
+
