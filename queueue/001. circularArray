@@ -19,9 +19,211 @@ as we traverse the array, we might reach the end of the cell that is last index 
 we can use modulo operation.
 
 
-current positionor rear = i
-next position = (i+1)%n
-previous postition = (i+n-1)%n #addig n so it is always positive.
+current position = rear
+next position = (rear+1)%n
+previous postition = (rear+n-1)%n #addig n so it is always positive.
 printing=(first+rear%n)
 count = (rear+n-front)%n+1
+to check if its full: (rear+1)%MAX_SIZE == front ? true : false;
+
+#include <stdio.h>
+#include<stdbool.h>
+#define max_size 50
+
+
+int rear=-1, front=-1;
+int q[max_size];
+
+bool isFull(){
+     if(((rear+1)%max_size)==front){
+         return true;
+     } else return false;
+}
+
+bool isEmpty(){
+    if(rear==-1&&front==-1){
+        return true;
+    } else return false;
+}
+
+void goGetInTheQueue(int ele){
+    if(isFull()){
+        printf("queue is full");
+        return;
+    } else if(isEmpty()){
+
+        rear = rear+1;
+        front = front+1;
+    } else {
+        rear= rear+1;
+    }
+    q[rear]=ele;
+}
+
+void getPopped(){
+    if(isEmpty()){
+        printf("There's nothing to pop");
+    }else if(rear==front){
+        rear=rear-1;
+        front=front-1;
+    } else {
+        front=(front+1)%max_size;
+    }
+  // printf("popped cause you encountered the multiple of 3 in the rear end \n");
+}
+void printTheQueue(){
+    if(isEmpty()){
+        printf("Queue is empty");
+    } else {
+        int count = (rear-front+max_size)%max_size+1;
+        int i=front;
+        while(count){
+            printf("%d",q[i]);
+            i++;
+            count--;
+        }
+    }
+}
+void frontofTheQueue(){
+    if(isEmpty()){
+        printf("queue is empty");
+    } else {
+        printf("\nthe element in the front of the queue is %d",q[front]);
+    }
+}
+
+int main() {
+    int n;
+    printf("enter the number of elements: ");
+    scanf("%d",&n);
+    int a[n];
+    printf("enter the elements now: ");
+    for(int i=0;i<n;i++){
+        scanf("%d",&a[i]);
+        goGetInTheQueue(a[i]);
+        if(a[i]%3==0){
+            getPopped();
+        }
+    }
+    printTheQueue();
+    frontofTheQueue();
+    return 0;
+}
+
+(or)
+
+/* Queue - Circular Array implementation in C++*/
+#include<iostream>
+using namespace std; 
+#define MAX_SIZE 101  //maximum size of the array that will store Queue. 
+
+// Creating a class named Queue.
+class Queue
+{
+private:
+	int A[MAX_SIZE];
+	int front, rear; 
+public:
+	// Constructor - set front and rear as -1. 
+	// We are assuming that for an empty Queue, both front and rear will be -1.
+	Queue()
+	{
+		front = -1; 
+		rear = -1;
+	}
+
+	// To check wheter Queue is empty or not
+	bool IsEmpty()
+	{
+		return (front == -1 && rear == -1); 
+	}
+
+	// To check whether Queue is full or not
+	bool IsFull()
+	{
+		return (rear+1)%MAX_SIZE == front ? true : false;
+	}
+
+	// Inserts an element in queue at rear end
+	void Enqueue(int x)
+	{
+		cout<<"Enqueuing "<<x<<" \n";
+		if(IsFull())
+		{
+			cout<<"Error: Queue is Full\n";
+			return;
+		}
+		if (IsEmpty())
+		{ 
+			front = rear = 0; 
+		}
+		else
+		{
+		    rear = (rear+1)%MAX_SIZE;
+		}
+		A[rear] = x;
+	}
+
+	// Removes an element in Queue from front end. 
+	void Dequeue()
+	{
+		cout<<"Dequeuing \n";
+		if(IsEmpty())
+		{
+			cout<<"Error: Queue is Empty\n";
+			return;
+		}
+		else if(front == rear ) 
+		{
+			rear = front = -1;
+		}
+		else
+		{
+			front = (front+1)%MAX_SIZE;
+		}
+	}
+	// Returns element at front of queue. 
+	int Front()
+	{
+		if(front == -1)
+		{
+			cout<<"Error: cannot return front from empty queue\n";
+			return -1; 
+		}
+		return A[front];
+	}
+	/* 
+	   Printing the elements in queue from front to rear. 
+	   This function is only to test the code. 
+	   This is not a standard function for Queue implementation. 
+	*/
+	void Print()
+	{
+		// Finding number of elements in queue  
+		int count = (rear+MAX_SIZE-front)%MAX_SIZE + 1;
+		cout<<"Queue       : ";
+		for(int i = 0; i <count; i++)
+		{
+			int index = (front+i) % MAX_SIZE; // Index of element while travesing circularly from front
+			cout<<A[index]<<" ";
+		}
+		cout<<"\n\n";
+	}
+};
+int main()
+{
+	/*Driver Code to test the implementation
+	  Printing the elements in Queue after each Enqueue or Dequeue 
+	*/
+   Queue Q; // creating an instance of Queue. 
+   Q.Enqueue(2);  Q.Print();  
+   Q.Enqueue(4);  Q.Print();  
+   Q.Enqueue(6);  Q.Print();
+   Q.Dequeue();	  Q.Print();
+   Q.Enqueue(8);  Q.Print();
+}
+
+
+
+https://gist.github.com/mycodeschool/7331785
 
