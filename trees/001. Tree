@@ -72,8 +72,29 @@ height of tree is height of root node.
 
 simple and common kind of tree, any node can have atmost 2 childrens.
 
+                                   1
+                                 /    \
+                                2      3
+                               /\      /\
+                              4  5    7  8
+                                /\    /
+                               9  10  11
+Binary tree is the tree in which each node can have at most 2 children.
+the most common way of implementing BT is dynamically created nodes linked using pointers or references just the way we do for linked list
 
+struct node{
+int data;
+node* left;
+node*right;
+}
 
+we have two pointers cause we atmost are going to have two childrens. and its specific to BT. for other generic tree with any no of nodes we will use diff structutre.
+
+applications:
+storing naturally hierachial data: eg - file system
+organising data: for quick search, insertion, deletion eg: BST(binary search tree)
+trie - dictionary(dynamic spell checking)
+netowkinf routing alogirthm.
 
 
 
