@@ -17,9 +17,11 @@ when we dequeue oepration we will incremenet front(since the cell is not part of
 
 as we traverse the array, we might reach the end of the cell that is last index in array, during that time it would be a good idea to use circular array.
 we can use modulo operation.
-current position = i
-next position = (rear+1)%n
-previous postition = (rear+n-1)%n #addig n so it is always positive.
-printing=(first+i%n)
+
+
+current positionor rear = i
+next position = (i+1)%n
+previous postition = (i+n-1)%n #addig n so it is always positive.
+printing=(first+rear%n)
 count = (rear+n-front)%n+1
 
