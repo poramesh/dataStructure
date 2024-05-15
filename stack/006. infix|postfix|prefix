@@ -229,6 +229,10 @@ So this expression (if you are storing digit characters on c):
 ++n[c-'0'];
 
 ------
+
+scanf("%s", characters); reads characters from the input stream until a whitespace character (space, tab, newline, etc.)
+is encountered and stores them in the characters array. This will read characters until the user presses Enter.
+
 scanf family functions support scanset specifiers which are represented by %[]. 
 Inside scanset, we can specify single character or range of characters. While processing scanset,
 scanf will process only those characters which are part of scanset. We can define scanset by putting characters inside square brackets.
