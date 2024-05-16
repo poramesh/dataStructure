@@ -1,0 +1,82 @@
+
+
+what ds will you use to store a modifiable collection?
+1. search(x)
+2. insert(x)
+3. remove(x)
+
+we can use an array or linked list? but which oen would take efficent running time?
+
+for arrays the cost of implemnetation is"
+O(n) for search operation
+O(1) fr Insert opeation
+O(n) for remove operation
+
+if we used linked list it would be.
+O(n) for search operation
+O(1) fr Insert opeation to insert head
+O(n) for remove operation
+
+for search, n comparisons in worse case.
+lets say cost of 1 comparison = 10^-6 sec
+n=0^8
+t=100 sec
+
+we can perform binary search in a sorted array in O(logn)
+
+for the sorted array it would cost the running time.
+O(logn) for search operation
+O(n) fr Insert opeation
+O(n) for remove operation
+
+for n search, log2(n) comparisons
+if 1 comaprson = 10^-6 sec
+n = 2^31
+  = 31*10^10-6 sec
+
+when we BST we can have O(logn) to perform all the operation, by making all of them balanced.
+
+
+BST = Binary search tree is a binary tree in whic for each node, value of all the nodes in left subtree is lesser or equal and
+value of all the nodes in right subtree is greater.
+                               15
+                              /  \
+                            10    20
+                          /  \    / \
+                         8   12  17  25
+
+this is BST
+
+                               15
+                              /  \
+                            10    20
+                          /  \    / \
+                         8   16  17  25
+this is not BST
+
+
+in the array we start searching from the median, if the value is less than that then we traverse left else right
+     search(10)
+
+       meedian
+         |
+8 10 12 15 17 20 25
+|                 |
+Start            end
+
+now the search space is reduced in half.we start with n element in search adn we reduce the search spance n/2 until we find the element.
+
+ meedian
+   |
+8 10 12 15 17 20 25
+|     |
+Start end 
+
+n=> n/2=>n/4=......1
+
+log2(n) steps
+we are taking k steps
+n/2^k =1
+2^k =n
+k=log2(n)
+
