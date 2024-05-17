@@ -1,0 +1,23 @@
+BST  
+
+how do we create non linear logical structure in computer memory.
+we can use dynmaically created nodes taht we create jst like we for for linked list.
+
+struct node{
+int data;
+node* left;
+node* right;
+}
+we had a similar implementation for doubly linked list, one for prev node and one for net node.
+but this one is for BST which is non linear.
+nodes will be created in head using malloc function in c or new operator in c++.
+
+struct bstNode{
+int data;
+struct bstNode* left;
+struct bstNode* right;
+}
+struct bstNode* rootPtr; //to store adress of root node.
+
+
+ 
