@@ -1,0 +1,85 @@
+// Online C compiler to run C program online
+#include <stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+
+
+struct bstNode{
+    int data;
+    struct bstNode* left;
+    struct bstNode* right;
+};
+
+
+struct bstNode* getNewNode(int data){
+    struct bstNode* newNode = (struct bstNode*)(malloc(sizeof(struct bstNode))); 
+    newNode->data = data;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+}
+void insert(int data, struct bstNode** root){
+    if(*root==NULL){
+        *root = getNewNode(data);
+        return;
+    }
+    struct bstNode * travPtr = *root;
+    struct bstNode * parentNode = NULL ;
+    while(travPtr){
+        parentNode = travPtr;
+        travPtr = data<=travPtr->data? travPtr->left : travPtr->right;
+    }
+    if(data<=parentNode->data){
+        parentNode->left=getNewNode(data);
+    } else if(data>=parentNode->data){
+        parentNode->right=getNewNode(data);
+    }
+    
+}
+
+bool search(struct bstNode** root, int data){
+    if(root==NULL){
+        return false;
+    }
+    struct bstNode * travPtr = *root;
+    while(travPtr->data != data){
+        travPtr = data <= travPtr->data ? travPtr->left : travPtr->right;
+        
+        if(travPtr->left==NULL && travPtr->right == NULL){
+            if(travPtr->data==data){
+                return true;
+            }
+            return false;
+        }
+    }
+    bool retVal = travPtr->data == data? true : false;
+    return retVal;
+    
+}
+
+bool search1(struct bstNode** root, int data){
+    struct bstNode* travPtr = *root;
+    if(data == travPtr->data) return true;
+    while(travPtr!=NULL &&travPtr->data!=data){
+        travPtr = (data > travPtr->data) ? travPtr->right : travPtr->left;
+    }
+    if(travPtr == NULL){
+        return false;
+    } else return true;
+}
+struct bstNode * root = NULL;
+
+int main() {
+    insert(15, &root);
+    insert(11, &root);
+    insert(20, &root);
+    insert(19, &root);
+    insert(34, &root);
+    insert(50, &root);
+
+    bool isTrue = search1(&root,51);
+    if(isTrue==true){
+        printf("found it");
+    } else printf("not found");
+    return 0;
+}
