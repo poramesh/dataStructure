@@ -19,5 +19,62 @@ struct bstNode* right;
 }
 struct bstNode* rootPtr; //to store adress of root node.
 
+// Online C compiler to run C program online
+#include <stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
 
- 
+
+struct bstNode{
+    int data;
+    struct bstNode* left;
+    struct bstNode* right;
+};
+
+
+struct bstNode* getNewNode(int data){
+    struct bstNode* newNode = (struct bstNode*)(malloc(sizeof(struct bstNode))); 
+    newNode->data = data;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+}
+struct bstNode* insert(int data, struct bstNode* root){
+    if(root==NULL){
+        root = getNewNode(data);
+    } else if(data <= root->data){
+            root->left = insert(data, root->left);
+        } else {
+            root->right = insert(data, root->right);
+        }
+    return root;
+}
+
+bool search(struct bstNode* root, int data){
+    if(root==NULL){
+        return false;
+    }else if(root->data==data){
+        return true;
+    }
+    else if(data <= root->data){
+        return search(root->left,data);
+        } else {
+            return search(root->right,data);
+    }
+}
+
+
+int main() {
+    struct bstNode* root = NULL;
+    root = insert(15, root);
+    root = insert(11, root);
+    root = insert(20, root);
+    root = insert(19, root);
+
+    bool isTrue = search(root,20);
+    if(isTrue==true){
+        printf("found it");
+    } else printf("not found");
+    return 0;
+}
+ code: https://gist.github.com/mycodeschool/44e1a9183ab0e931f729
