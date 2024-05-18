@@ -1,1 +1,23 @@
+                                   F               L-0
+                                 /    \          
+                                D      J        L-1
+                                /\     /\
+                               B  E   G  K      L-2
+                               /\      \    
+                              A  C      I       L-3
+                                       /
+                                      H         L-4
+
+
+BFS -> F,D,J,B,E,G,K,A,C,I,H
+BFS is also called level order traversal. here we visit all its children before visiitng any of its grandchildrens
+
+we can make use of Queue, to traverse the level order traversal.
+we basically push the root node, then enter the while loop and it calls until q is empty. each time when
+we enter the loop we visit /print the data and insertt the adress of the left and right child.
+isnt this amazing??
+
+time complexity is O(n) all cases
+space compelxity is O(n) worst/avg O(1) - best
+
 
