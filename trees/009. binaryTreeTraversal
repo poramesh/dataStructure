@@ -1,0 +1,47 @@
+In linear DS, there will be a logical start and logical end.
+tree is not a linear ds. 
+
+when we start at root there are two possible way to traverse.
+
+tree traversal: process of visiting each node in the tree exactly once in some order.
+visiting is equivalent to reading or processing data in a node.
+there are two way tree traverssal can be categorised into-
+breadth-first and depth-first.
+these two are general technique used to traverse in graph.
+tree is a special kind of graph.
+
+in breadth first traversal approach. we would visit all the nodes at same depth or level before visitng at next leve.
+
+                                    F           L-0
+                                 /    \          
+                                D      J        L-1
+                                /\     /\
+                               B  E   G  K      L-2
+                               /\      \    
+                              A  C      I       L-3
+                                       /
+                                      H         L-4
+
+
+BFS -> F,D,J,B,E,G,K,A,C,I,H
+BFS is also called level order traversal. here we visit all its children before visiitng any of its grandchildrens
+
+DFS -> F,D,B,A,C,E,J,G,I,H,K
+here we will go to a child and we would complete the whole subtree of that child before going to the next child.
+we can visit left subtree, right sibtree or root in different order.
+there are three popular depth first strategies.
+
+<root><left><right> = preorder (DLR)
+read the data, and then left, once all the nodes in left node is completed then we go to the right 
+F,D,B,A,C,E,J,G,I,H,K
+
+<left><root><right> = inorder  (LDR) 
+we will first finish visiting the left subtree then current node and then go right.
+A,B,C,D,E,F,G,H,I,J,K
+
+(its bascailly get a sorted list)
+
+<left><right><root> = postorder (LRD)
+A,C,B,E,D,H,I,G,K,J,F
+
+
