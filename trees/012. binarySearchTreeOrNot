@@ -1,0 +1,30 @@
+       8                 
+      /
+     6
+    /
+   4
+this is a BST
+
+           10
+           /\
+          5  16
+         /\ 
+        4  7
+       /    \
+      1      11
+this is not a BST
+
+        7
+       /\
+      4  9
+     /\
+    1 6
+this is a BST
+
+      5
+     / \
+    1   8
+       /  \
+      9    12
+this is not a BST
+
