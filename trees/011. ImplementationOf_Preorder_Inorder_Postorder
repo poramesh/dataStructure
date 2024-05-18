@@ -1,1 +1,42 @@
 
+
+                                    F           L-0
+                                 /    \          
+                                D      J        L-1
+                                /\     /\
+                               B  E   G  K      L-2
+                               /\      \    
+                              A  C      I       L-3
+                                       /
+                                      H         L-4
+
+
+DFS -> F,D,B,A,C,E,J,G,I,H,K
+here we will go to a child and we would complete the whole subtree of that child before going to the next child.
+we can visit left subtree, right sibtree or root in different order.
+there are three popular depth first strategies.
+
+<root><left><right> = preorder (DLR)
+1. visit root
+2. visit left subtree
+3. visit right subtree
+
+F,D,B,A,C,E,J,G,I,H,K
+
+<left><root><right> = inorder  (LDR) 
+we will first finish visiting the left subtree then current node and then go right.
+A,B,C,D,E,F,G,H,I,J,K
+
+(its bascailly get a sorted list)
+
+<left><right><root> = postorder (LRD)
+A,C,B,E,D,H,I,G,K,J,F
+
+time complexity is O(n)
+space complexity is O(h)
+worst case o(n)
+best/avg: O(logn)
+
+
+
+link: https://gist.github.com/mycodeschool/10016271
