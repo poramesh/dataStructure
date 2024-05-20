@@ -92,7 +92,14 @@ int main(){
     int heightOfTree = height(root);
     printf("height %d", heightOfTree);
 }
+        13
+       /  \
+      9   15
+     /    /
+    7    14
 
+
+  
 //tracing the algo!
 l is -1
 r is -1
