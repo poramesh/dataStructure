@@ -76,22 +76,22 @@ https://www.cs.kent.edu/~durand/CS2/Notes/10_Binary_Trees/ds_treesB.html
 link:
 https://www.youtube.com/watch?v=H5JubkIy_p8
 
- 24 23 22 21 20
+ 2^4 2^3 2^2 2^1 2^0
     1  1  1  1two
 +            1two
    -----------
- 1  0  0  0  0two =  24 = 16
+ 1  0  0  0  0two =  2^4 = 16
 
- 10000two = 1111two + 1two
+ 10000two = 1111two + 1two (16=15+1) 
 
  10000two - 1two = 1111two
 So,
 
- 24  - 1 =  23 + 22 + 21 + 20
-And, in general,
+ 2^4  - 1 =  2^3 + 2^2 + 2^1 + 2^0
+And, in general,^
 
- 2(d + 1) - 1 =  2d + 2d - 1 + ... + 21 + 20
-In a complete binary tree of height d there will be at least 2d nodes. Levels through d - 1 form a full tree and there is at least 1 node in the next level (at the left).
+ 2^(d + 1) - 1 =  2^d + 2^d - 1 + ... + 2^1 + 2^0
+In a complete binary tree of height d there will be at least 2^d nodes. Levels through d - 1 form a full tree and there is at least 1 node in the next level (at the left).
 
 balanced binary tree:
 difference between height of left and right subtree for every node is not more than k(mostly 1)
@@ -110,7 +110,7 @@ height of tree with 1 node is 0
                              0 0        0  0 
 
 there are three edges in the above tree and 4 nodes traversing until leaf path.
-height of lST is 1 and RST is -1 => 1-(-1)= 2
+height of LST is 1 and RST is -1 => 1-(-1)= 2
 
 we can implement binary tree using:
 a. dynamically created nodes.
@@ -122,7 +122,7 @@ node* right;
 }
 
 b. arrays
-usuallt used for heaps.
+usually used for heaps.
 we can store values in arrays for complete BT. 
 
                                    0
