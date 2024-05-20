@@ -1,4 +1,3 @@
-
 //finding minimum and maximum element in the binary search tree.
 
 
@@ -62,6 +61,26 @@ void findMax(struct bstNode* root){
     printf("\nthe maximum element in the tree is:%d",root->data);
 }
 
+void recursionFindMin(struct bstNode* root){
+    if(root==NULL){
+        printf("error,tree is empty");
+    } else if (root->left==NULL){
+        printf("\nminimum elelment in the tree using recursion is:%d\n", root->data );
+        return;
+    }
+    return recursionFindMin(root->left);
+}
+
+
+void recursionFindMax(struct bstNode* root){
+    if(root==NULL){
+        printf("error,tree is empty");
+    } else if (root->right==NULL){
+        printf("minimum elelment in the tree using recursion is:%d\n", root->data );
+        return;
+    }
+    return recursionFindMax(root->right);
+}
 int main(){
     struct bstNode *root=NULL;
     root = insert(13, root);
@@ -73,5 +92,6 @@ int main(){
     retVal==true? printf("found\n") : printf("not found\n");
     findMin(root);
     findMax(root);
+    recursionFindMin(root);
+    recursionFindMax(root);
 }
-
