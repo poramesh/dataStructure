@@ -21,7 +21,121 @@ time complexity is O(n) all cases
 space compelxity is O(n) worst/avg O(1) - best
 
 
+// Online C compiler to run C program online
+#include <stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+#define MAX 100
 
+
+
+struct node{
+    int data;
+    struct node *left;
+    struct node *right;
+};
+
+struct node* a[MAX]; 
+
+int front = -1;
+int rear = -1;
+
+bool QEmpty(){
+    if (front == -1 && rear == -1){
+        return true;
+    } else return false; 
+}
+
+bool QFull(){
+    if(((rear +1)%MAX) == front ){
+    return true;
+    } else return false;
+}
+
+void QPush(struct node* data){
+    if(QFull()){
+        printf("Q is full");
+        return ;
+    } 
+    if (QEmpty()) {
+        front = rear = 0;
+    }
+    else rear = (rear+1)%MAX;
+    a[rear] = data;
+}
+
+void QPop(){
+    if(QEmpty()){
+        printf("nothing to pop\n");
+        return ;
+    } else if(rear == front){
+        rear = -1;
+        front = -1;
+    } else
+    front = (front+1)%MAX;
+}
+
+
+struct node* insert(struct node* root, int data ){
+    if(root == NULL){
+        root = (struct node*)malloc(sizeof(struct node));
+        root->data = data;
+        root->left=NULL;
+        root->right=NULL;
+        } else if(data<=root->data) {
+            root->left = insert(root->left, data);
+            } else root->right = insert(root->right,data);
+    return root;
+}
+
+void search(struct node* root, int data){
+    if(root == NULL){
+        printf("Not found \n");
+    } else if(root->data == data){
+        printf("found\n");
+        return;
+    } else if(data<=root->data){
+        return search(root->left, data);
+    } else return search(root->right,data);
+}
+
+
+void levelOrderTraversal(struct node*root){
+    if(root == NULL){
+        return;
+    } 
+    QPush(root);
+    while(!QEmpty()){
+        struct node * current = a[front];
+        QPop();
+        printf("%d \n", current->data);
+        if(current->left!=NULL) {
+            QPush(current->left);
+        }
+        if(current->right!=NULL){
+            QPush(current->right);
+        }
+    }
+}
+
+int main() {
+    //implementation of level order traversal
+    
+    printf("%d \n", a); //4210784
+    
+    struct node * root = NULL;
+    root = insert(root, 15);
+    root = insert(root, 10);
+    root = insert(root, 19);
+    root = insert(root, 40);
+    root = insert(root,32);
+    root = insert(root, 18);
+    search(root, 15);
+    search(root,100);
+    search(root,19);
+    levelOrderTraversal(root);
+    return 0;
+}
 
 
 
