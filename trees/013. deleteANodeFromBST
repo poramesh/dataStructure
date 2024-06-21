@@ -1,0 +1,43 @@
+case 1: No child
+
+            12
+			    /     \
+			  5        15
+			/   \     /   \
+		3      7   13    17
+  /         \         \
+ 1           9         19
+
+so we are deleting 19, we jsut need to remove the reference from the parent so we will detach the link.
+and then we need to reclaim the memory that we allocated. 
+since it is a leaf node, we can jsut delete the reference. the property is conserved. 1,9,13, adn 19 are easier to be wiped off haha
+
+case 2: one child
+
+            12
+			    /     \
+			  5        15
+			/   \     /   \
+		3      7   13    17
+  /         \         \
+ 1           9         19
+
+
+7 has only one child. we can link its 7's parents to his only child.
+so only the adress of the left subtree of 5 has changed, and also if the original tree had 8 and 11 as the child to 9 it 
+wouldnt have affected the property.
+
+           12
+			    /     \
+			  5        15
+			/   \     /   \
+		3      9    13    17
+  /       / \           \
+ 1       8   11          19
+
+node with only one child can be linked to its parents and then we can wipe of the node from the memory.
+
+there is another which has only one child that is 3 and 17 
+
+
+case 3: 2 children
