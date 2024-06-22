@@ -1,0 +1,12 @@
+	int num = INT_MIN;
+	int *var = &num; 
+	int **ptr = &var;
+	printf("%d ",num); //-2147483647 value of num
+	printf("%d ",&num); //873550972 adress of num
+	printf("%d ",var); //873550972 address of num
+	printf("%d ",&var); //873550960 address of var
+	printf("%d ",*var); //-2147483647 value of num
+	printf("%d ",ptr); //873550960  address of var
+	printf("%d ",**ptr); //-2147483647 value of num
+	printf("%d ",*ptr); //873550972 adress of num
+	printf("%d ",&ptr); //873550952 address of ptr
