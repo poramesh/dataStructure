@@ -32,8 +32,188 @@ a binary tree in which for each node, value of all the nodes in left subtree is 
 in right subtreee is greater.
 
 
-      rooot
+      Rooot
     /       \
  BST        BST
 left        right subtree(greater)
 subtree(lesser or equal)
+
+
+method 1: 
+this methods keeps on calling recursively
+
+// Online C compiler to run C program online
+#include <stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+
+
+struct node{
+    int data;
+    struct node* left;
+    struct node* right;
+};
+
+struct node* getNewnode(int data){
+    struct node* newNode = (struct node*)(malloc(sizeof(struct node)));
+    newNode->data = data;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+}
+
+struct node* insert(int data, struct node* root){
+    if(root==NULL){
+        root = getNewnode(data);
+    } else if(data<=root->data){
+        root->left = insert(data, root->left);
+    } else root->right = insert(data, root->right);
+    return root;
+}
+
+bool isSubTreeLesser(struct node* root, int value){
+    if(root == NULL) return true;
+    if(root->data<=value && isSubTreeLesser(root->left,value) && isSubTreeLesser(root->right,value))
+    return true;
+    else return false;
+}
+bool isSubTreeGreater(struct node* root, int value){
+    if (root == NULL) return true;
+    if(root -> data > value && isSubTreeGreater(root->left,value) && isSubTreeGreater(root->right,value)) 
+    return true;
+    else return false;
+}
+
+bool isBinarySearchTree(struct node* root){
+    // return true if BST, false otherwise
+    if (root == NULL) return true;
+    if(isSubTreeLesser(root->left,root->data) && isSubTreeGreater(root->right,root->data) && isBinarySearchTree(root->left) && isBinarySearchTree(root->right)) 
+    return true;
+    else return false;
+    
+}
+
+
+
+int main() {
+    struct node* root = NULL;
+    root = insert(10,root);
+    root = insert(8,root);
+    root = insert(7, root);
+    root = insert(9,root);
+    root = insert(12,root);
+    root = insert(11,root);
+    root = insert(15,root);
+    root = insert(14,root);
+    root = insert(16,root);
+    bool val = isBinarySearchTree(root);
+    if(val){
+    printf("binary tree");
+    }
+    else printf("Not a binary tree");
+ 
+    return 0;
+    
+      /*
+            10
+            /\
+           8  12    
+          /\   /\
+         7  9 11 15
+                 / \
+                14  16 
+      
+      */
+}
+______________________________________________________________
+
+method 2: defining the range in the root node and the data should be within that range.
+
+                    10(-infi,+infi)
+               /           \
+(-infi,10)    8             12  (10, infi)    
+            /  \           /    \
+(-infi,8)  7   9        11      15(12,infi)
+              (8,10)   (10,12)   / \
+                                14  16 
+                            (12,15)   (15,infi)
+
+
+// Online C compiler to run C program online
+#include <stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+
+#define INT_MIN -2147483647
+#define INT_MAX +2147483647
+
+struct node{
+    int data;
+    struct node* left;
+    struct node* right;
+};
+
+struct node* getNewnode(int data){
+    struct node* newNode = (struct node*)(malloc(sizeof(struct node)));
+    newNode->data = data;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+}
+
+struct node* insert(int data, struct node* root){
+    if(root==NULL){
+        root = getNewnode(data);
+    } else if(data<=root->data){
+        root->left = insert(data, root->left);
+    } else root->right = insert(data, root->right);
+    return root;
+}
+
+
+bool isBstUtil(struct node* root, int minValue, int maxValue){
+    // return true if BST, false otherwise
+    if (root == NULL) return true;
+    if((root->data > minValue) && (root->data < maxValue) && isBstUtil(root->left,minValue,root->data) && isBstUtil(root->right,root->data,maxValue)) 
+    return true;
+    else return false;
+    
+}
+
+bool isBST(struct node* root){
+    return isBstUtil(root,INT_MIN,INT_MAX);
+}
+
+
+
+int main() {
+    struct node* root = NULL;
+    root = insert(10,root);
+    root = insert(8,root);
+    root = insert(7, root);
+    root = insert(9,root);
+    root = insert(12,root);
+    root = insert(11,root);
+    root = insert(15,root);
+    root = insert(14,root);
+    root = insert(16,root);
+    bool val = isBST(root);
+    if(val){
+    printf("binary tree");
+    }
+    else printf("Not a binary tree");
+ 
+    return 0;
+    
+      /*
+            10
+            /\
+           8  12    
+          /\   /\
+         7  9 11 15
+                 / \
+                14  16 
+      
+      */
+}
+
