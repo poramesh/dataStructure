@@ -1,12 +1,12 @@
 case 1: No child
 
-            12
+                             12
 			    /     \
 			  5        15
 			/   \     /   \
-		3      7   13    17
-  /         \         \
- 1           9         19
+         		3      7   13    17
+                        /         \         \
+                       1           9         19
 
 so we are deleting 19, we jsut need to remove the reference from the parent so we will detach the link.
 and then we need to reclaim the memory that we allocated. 
