@@ -65,7 +65,7 @@ struct node* getNewnode(int data){
 struct node* insert(int data, struct node* root){
     if(root==NULL){
         root = getNewnode(data);
-    } else if(data<=root->data){ ##have changed the logic so it owuld binary tree or not
+    } else if(data<=root->data){
         root->left = insert(data, root->left); 
     } else root->right = insert(data, root->right);
     return root;
@@ -244,24 +244,24 @@ struct node* getNewnode(int data){
 struct node* insert(int data, struct node* root){
     if(root==NULL){
         root = getNewnode(data);
-    } else if(data>=root->data){
+    } else if(data>=root->data){  //##have changed the logic so it owuld binary tree or not
         root->left = insert(data, root->left);
     } else root->right = insert(data, root->right);
     return root;
 }
-bool IsInOrder(struct node* node, int* var){
+bool IsInOrder(struct node* root, int* var){
 	if (node == NULL){
 		return true;
 	}
 	else{
-		return (IsInOrder(node->left, var) && (*var <= node->data) && (*var = node->data) && IsInOrder(node->right, var));
+		return (IsInOrder(root->left, var) && (*var <= root->data) && (*var = root->data) && IsInOrder(root->right, var));
 	}
 }
 
-bool IsBinarySearchTree3(struct node* node){ 
+bool IsBinarySearchTree(struct node* root){ 
 	int num = INT_MIN;
 	int *var = &num;  
-	return IsInOrder(node, var);
+	return IsInOrder(root, var);
 }
 int main() {
     struct node* root = NULL;
@@ -274,7 +274,7 @@ int main() {
     root = insert(15,root);
     root = insert(14,root);
     root = insert(16,root);
-    bool val = checkBST(root);
+    bool val = IsBinarySearchTree(root);
     if(val){
     printf("binary tree");
     }
