@@ -65,8 +65,8 @@ struct node* getNewnode(int data){
 struct node* insert(int data, struct node* root){
     if(root==NULL){
         root = getNewnode(data);
-    } else if(data<=root->data){
-        root->left = insert(data, root->left);
+    } else if(data<=root->data){ ##have changed the logic so it owuld binary tree or not
+        root->left = insert(data, root->left); 
     } else root->right = insert(data, root->right);
     return root;
 }
