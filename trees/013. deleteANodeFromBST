@@ -19,18 +19,18 @@ case 2: one child
 			  5        15
 			/   \     /   \
 		      3      7   13    17
-                      /         \         \
+                      /        \         \
                      1           9         19
 
 
-7 has only one child. we can link its 7's parents to his only child.
+7 has only one child. we can link  7's parents to his only child.
 so only the adress of the left subtree of 5 has changed, and also if the original tree had 8 and 11 as the child to 9 it 
 wouldnt have affected the property.
 
                              12
 			    /     \
 			  5        15
-			/   \     /   \
+			/   \      /   \
 		      3      9    13    17
                       /       / \           \
                      1       8   11          19
@@ -41,3 +41,69 @@ there is another which has only one child that is 3 and 17
 
 
 case 3: 2 children
+                               12
+			    /       \
+			  5           15
+			/   \        /    \
+		      3      7      13      17
+                      /       \      \        \
+                     1         9      14       20
+                              /  \             /
+                             8    11         18
+
+to remove the value 15 from the tree.
+
+delete(node * root, int data)
+
+we will remove the data 15 from the tree and look for the minimum value in right subtree. 
+and now  we can notice that  17 is the only child.
+
+                               12
+			    /       \
+			  5           17
+			/   \        /    \
+		      3      7      13      17
+                      /       \      \        \
+                     1         9      14       20
+                              /  \             /
+                             8    11         18
+
+all the element from the left will be less. and all the eleemt on right will greater or equal.
+it will have duplicate, once it is removed everything will be fine.
+
+***another property: if a node has a minimum value, then the node has not left child ,, if there is a left child then its lesser.
+
+by doing this we reduced the case 3 to case 2.
+                              12
+			    /       \
+			  5           17
+			/   \        /    \
+		      3      7      13      20
+                      /       \      \       /
+                     1         9      14    18
+                              /  \             
+                             8    11        
+
+find min in right sub tree, copy the value in targetted node. delete duplicate from right subtree.
+
+(or)
+
+we can find max in left , copy the value in targetted node. delete duplicate from left-subtree.
+
+                               12
+			    /       \
+			  5          15->14
+			/   \        /    \
+		      3      7      13      17
+                      /       \      \        \
+                     1         9      14       20
+                              /  \             /
+                             8    11         18
+
+by doing this we will reduce it to case 1..
+
+
+LETS WRITE CODEEEE!!!
+
+
+
