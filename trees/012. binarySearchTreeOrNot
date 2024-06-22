@@ -216,4 +216,26 @@ int main() {
       
       */
 }
+------------------------------
+Method 3: using inroder traversal
+
+bool checkBST(Node* root) {
+ static int prevData = -999;
+        static bool flag = true;
+        if(root){
+        checkBST(root->left);
+        if(root->data > prevData && flag==true){
+            flag = true;
+            prevData = root->data;
+            checkBST(root->right);
+            return flag;
+        }
+        else{
+            flag = false;
+            return flag;
+        }
+        
+    }
+    return flag;
+ }
 
