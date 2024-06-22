@@ -12,7 +12,7 @@ this is a BST
         4  7
        /    \
       1      11
-this is not a BST
+this is not a BST (11 is in the left)
 
         7
        /\
@@ -26,5 +26,14 @@ this is a BST
     1   8
        /  \
       9    12
-this is not a BST
+this is not a BST(9 is in left)
 
+a binary tree in which for each node, value of all the nodes in left subtree is lesser or equal and value of all the nodes
+in right subtreee is greater.
+
+
+      rooot
+    /       \
+ BST        BST
+left        right subtree(greater)
+subtree(lesser or equal)
