@@ -38,84 +38,75 @@ worst case o(n)
 best/avg: O(logn)
 
 
-#include<iostream>
-using namespace std;
- 
-struct Node {
-	char data;
-	struct Node *left;
-	struct Node *right;
+// Online C compiler to run C program online
+#include <stdio.h>
+#include<stdlib.h>
+
+
+struct node{
+    int data;
+    struct node* left;
+    struct node* right;
 };
 
-//Function to visit nodes in Preorder
-void Preorder(struct Node *root) {
-	// base condition for recursion
-	// if tree/sub-tree is empty, return and exit
-	if(root == NULL) return;
-
-	printf("%c ",root->data); // Print data
-	Preorder(root->left);     // Visit left subtree
-	Preorder(root->right);    // Visit right subtree
+struct node* getNewnode(int data){
+    struct node* newNode = (struct node*)(malloc(sizeof(struct node)));
+    newNode->data = data;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
 }
 
-//Function to visit nodes in Inorder
-void Inorder(Node *root) {
-	if(root == NULL) return;
-
-	Inorder(root->left);       //Visit left subtree
-	printf("%c ",root->data);  //Print data
-	Inorder(root->right);      // Visit right subtree
+struct node* insert(int data, struct node* root){
+    if(root==NULL){
+        root = getNewnode(data);
+    } else if(data<=root->data){
+        root->left = insert(data, root->left);
+    } else root->right = insert(data, root->right);
+    return root;
 }
 
-//Function to visit nodes in Postorder
-void Postorder(Node *root) {
-	if(root == NULL) return;
-
-	Postorder(root->left);    // Visit left subtree
-	Postorder(root->right);   // Visit right subtree
-	printf("%c ",root->data); // Print data
+void inorder(struct node* root){
+    if(root == NULL) return;
+    
+    inorder(root->left);
+    printf("%d, ",root->data);
+    inorder(root->right);
 }
 
-// Function to Insert Node in a Binary Search Tree
-Node* Insert(Node *root,char data) {
-	if(root == NULL) {
-		root = new Node();
-		root->data = data;
-		root->left = root->right = NULL;
-	}
-	else if(data <= root->data)
-		root->left = Insert(root->left,data);
-	else 
-		root->right = Insert(root->right,data);
-	return root;
+
+void postOrder(struct node* root){
+    if(root == NULL) return;
+    
+    postOrder(root->left);
+    postOrder(root->right);
+    printf("%d, ",root->data);
+
 }
- 
+
+
+void preOrder(struct node* root){
+    if(root == NULL) return;
+    
+    printf("%d, ",root->data);
+    preOrder(root->left);
+    preOrder(root->right);
+
+}
+
 int main() {
-	/*Code To Test the logic
-	  Creating an example tree
-	                    M
-			   / \
-			  B   Q
-			 / \   \
-			A   C   Z
-    */
-	Node* root = NULL;
-	root = Insert(root,'M'); root = Insert(root,'B');
-	root = Insert(root,'Q'); root = Insert(root,'Z'); 
-	root = Insert(root,'A'); root = Insert(root,'C');
-	//Print Nodes in Preorder. 
-	cout<<"Preorder: ";
-	Preorder(root);
-	cout<<"\n";
-	//Print Nodes in Inorder
-	cout<<"Inorder: ";
-	Inorder(root);
-	cout<<"\n";
-	//Print Nodes in Postorder
-	cout<<"Postorder: ";
-	Postorder(root);
-	cout<<"\n";
+    struct node* root = NULL;
+    root = insert(10,root);
+    root = insert(9,root);
+    root = insert(11,root);
+    root = insert(12,root);
+    printf("preorder traversal:\n");
+    preOrder(root);
+    printf("inorder traversal:\n");
+    inorder(root);
+    printf("postorder traversal:\n");
+    postOrder(root);
+    return 0;
 }
-
 
 link: https://gist.github.com/mycodeschool/10016271
