@@ -109,4 +109,8 @@ int main() {
     return 0;
 }
 
+preorder traversal: 10, 9, 11, 12
+inorder traversal: 9, 10, 11, 12
+postorder traversal: 9, 12, 11, 10,
+
 link: https://gist.github.com/mycodeschool/10016271
