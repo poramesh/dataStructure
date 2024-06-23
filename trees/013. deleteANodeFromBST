@@ -56,7 +56,7 @@ to remove the value 15 from the tree.
 delete(node * root, int data)
 
 we will remove the data 15 from the tree and look for the minimum value in right subtree. 
-and now  we can notice that  17 is the only child.
+and now  we can notice that  17 has the only child.
 
                                12
 			    /       \
