@@ -1,0 +1,75 @@
+Inorder sucessor in a BST
+
+inorder:
+1. vist left-subtree
+2. visit root
+3. visit right-subtree
+
+inorder(root){
+ if(root=NULL) return
+else inorder(root->left)
+print(root->data)
+inorder(root->right)
+}
+
+
+  
+                 15
+			         /     \
+			        10        20
+			      /   \       /   \
+		      8      12    17    25
+         /       /     /      \
+       6        11    16      27
+
+
+6,8,10,11,12,15,16,17,20,25,27
+
+
+runnning time complexiity = O(n)
+
+in a BST we want to perform most taks O(h)
+
+we can do it 
+
+case 1: node has right subtree.
+
+go deep to leftmost node in right subtree (or) find min in right subtree
+
+the sucessor of 10 is 11.
+
+case 2: no right subtree.
+
+for 8 the succesor would be 10. so its parents
+what for 12? it is 15. here it is its grandparent
+
+for 12 , the parent will already be visitedd, cause coming back after visiitng its right subtree.
+recursion should roll back further. so 15 will be succesor.
+
+"Go to the nearest ancestor for which given node would be in left subtree. "
+
+12 is in right subtree of 10 so we went to next ancestor which is 15, which is in left subtree.
+
+we design our tree in such a way taht we can store a reference for parents.
+
+struct node{
+int data;
+struct node* left;
+struct node* right;
+struct node* parent;
+};
+
+ if we will walk the tree from the root to the given node then we will walk to the all the ancestores of the
+given node. in order succesor is the deepest node or deepest ancestor in the path for the given node is in 
+left subtree.
+
+12 has only 2 ancestor. 12 is in rihgt of 10 and 15 is in left.
+
+sucessor of 6. 
+15,10,8,6 - walked path. 
+8 is the succesor
+
+
+
+code: https://gist.github.com/mycodeschool/6515e1ec66482faf9d79
+python code: https://github.com/rishijd/python-learning/blob/master/data-structures/trees-inorder-successor.py
