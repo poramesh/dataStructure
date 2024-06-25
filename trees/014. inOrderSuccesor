@@ -15,10 +15,10 @@ inorder(root->right)
 
   
                                       15
-			           /     \
-			         10        20
+			           /      \
+			         10         20
 			       /   \       /   \
-		              8       12    17    25
+		              8       12   17    25
                              /       /     /      \
                             6        11    16      27
 
@@ -28,7 +28,7 @@ inorder(root->right)
 
 runnning time complexiity = O(n)
 
-in a BST we want to perform most taks O(h)
+in BST we want to perform most task at O(h)
 
 we can do it 
 
@@ -69,6 +69,225 @@ sucessor of 6.
 15,10,8,6 - walked path. 
 8 is the succesor
 
+I APPRECIATE YOU MYCODESCHOOL, YOU GUYS ARE GOD. 
+
+// Online C compiler to run C program online
+#include <stdio.h>
+#include<stdlib.h>
+
+
+struct node{
+    int data;
+    struct node* left;
+    struct node* right;
+};
+
+int findMin(struct node* root,int data){
+    
+    while(root->left!=NULL){
+        root= root->left;
+    }
+    return root->data;
+    
+}
+
+
+
+struct node* getNewNode(int data){
+    struct node * newNode = (struct node*)(malloc(sizeof(struct node)));
+    newNode-> data = data;
+    newNode->left = newNode->right = NULL;
+    return newNode;
+}
+
+struct node * insert(int data, struct node* root){
+    if (root == NULL) return getNewNode(data);
+    else if(data <= root->data){
+        root->left = insert(data,root->left);
+    } else root->right = insert(data, root->right);
+    return root;
+}
+
+
+void inorder(struct node* root){
+    if(root == NULL) return;
+    inorder(root->left);
+    printf("%d ",root->data);
+    inorder(root->right);
+}
+
+
+
+int findSuccesor(struct node* root, struct node*current, int data){
+    if(root==NULL){
+        return 0;
+    } else if(data<root->data){
+        return findSuccesor(root->left,current,data);
+    } else if(data>root->data) return findSuccesor(root->right,current,data);
+
+    else if (root->data == data){
+        if(root->right!=NULL) {
+         int val = findMin(root->right,data);
+         printf("val=%d",val);
+        return val;
+        }
+        else {
+            struct node* ancestor = NULL;
+            while(current->data!=data){
+            if(data<current->data){
+                ancestor = current;
+                current= current->left;
+            } else current = current->right;
+            }
+            return ancestor->data;
+
+        }
+    } 
+}
+
+int main() {
+     
+     struct node * root = NULL;
+     root = insert(12,root);
+     root = insert(5,root);
+     root = insert(3, root);
+     root = insert(1, root);
+     root = insert(7, root);
+     root = insert(6, root);
+
+     root = insert(29, root);
+     root = insert(15, root);
+     root = insert(13, root);
+     root = insert(17, root);
+     root = insert(19, root);
+     root = insert(18, root);
+
+     inorder(root );
+     printf("\n");
+     //deleteNode(root, 19);
+     //inorder(root);
+     printf("lala found you succesor %d",findSuccesor(root, root, 19));
+     
+     
+    /* printf("i am the returned value %d", returnedValue);
+    
+        12
+       /     \
+      5        29
+     / \      / 
+    3   7    15  
+   /    /   / \     
+  1     6  13  17 
+                \ 
+                 19 
+                 /
+                18
+			          
+          
+          // i implement totally stupid logic and it worked haha anwyay i always recommend you to follow the logic given by the OP
+MYCODESCHOOL hurrayyyyyyyyyyyyyyyieeiieieeieiei */
+
+    
+}
+
+(or)
+
+/* C++ program to find Inorder successor in a BST */
+#include<iostream>
+using namespace std;
+struct Node {
+	int data;
+	struct Node *left;
+	struct Node *right;
+};
+
+//Function to find some data in the tree
+Node* Find(Node*root, int data) {
+	if(root == NULL) return NULL;
+	else if(root->data == data) return root;
+	else if(root->data < data) return Find(root->right,data);
+	else return Find(root->left,data);
+}
+
+//Function to find Node with minimum value in a BST
+struct Node* FindMin(struct Node* root) {
+	if(root == NULL) return NULL;
+	while(root->left != NULL)
+		root = root->left;
+	return root;
+}
+
+//Function to find Inorder Successor in a BST
+struct Node* Getsuccessor(struct Node* root,int data) {
+	// Search the Node - O(h)
+	struct Node* current = Find(root,data);
+	if(current == NULL) return NULL;
+	if(current->right != NULL) {  //Case 1: Node has right subtree
+		return FindMin(current->right); // O(h)
+	}
+	else {   //Case 2: No right subtree  - O(h)
+		struct Node* successor = NULL;
+		struct Node* ancestor = root;
+		while(ancestor != current) {
+			if(current->data < ancestor->data) {
+				successor = ancestor; // so far this is the deepest node for which current node is in left
+				ancestor = ancestor->left;
+			}
+			else
+				ancestor = ancestor->right;
+		}
+		return successor;
+	}
+}
+ 
+//Function to visit nodes in Inorder
+void Inorder(Node *root) {
+	if(root == NULL) return;
+ 
+	Inorder(root->left);       //Visit left subtree
+	printf("%d ",root->data);  //Print data
+	Inorder(root->right);      // Visit right subtree
+}
+ 
+// Function to Insert Node in a Binary Search Tree
+Node* Insert(Node *root,char data) {
+	if(root == NULL) {
+		root = new Node();
+		root->data = data;
+		root->left = root->right = NULL;
+	}
+	else if(data <= root->data)
+		root->left = Insert(root->left,data);
+	else 
+		root->right = Insert(root->right,data);
+	return root;
+}
+ 
+int main() {
+	/*Code To Test the logic
+	  Creating an example tree
+	                    5
+			   / \
+			  3   10
+			 / \   \
+			1   4   11
+    */
+	Node* root = NULL;
+	root = Insert(root,5); root = Insert(root,10);
+	root = Insert(root,3); root = Insert(root,4); 
+	root = Insert(root,1); root = Insert(root,11);
+
+	//Print Nodes in Inorder
+	cout<<"Inorder Traversal: ";
+	Inorder(root);
+	cout<<"\n";
+
+	// Find Inorder successor of some node. 
+	struct Node* successor = Getsuccessor(root,1);
+	if(successor == NULL) cout<<"No successor Found\n";
+	else
+    cout<<"Successor is "<<successor->data<<"\n";
+}
 
 
 code: https://gist.github.com/mycodeschool/6515e1ec66482faf9d79
