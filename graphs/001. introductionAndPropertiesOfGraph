@@ -1,0 +1,94 @@
+datastructure are the ways to arrange data.
+graph is another non linear data structure and has a wide no of scenarios in computer science.
+
+graph is a collection of objects or entities that we call nodes or vertices, connected to each other through
+a set of edges but in a tree connections are bond to be in a certain way, in a tree with n nodes we must have
+exactly n minus 1 edges, one edge for each parent-child relationship as we know an edge in a tree is for a parent-
+child relationship and all nodes in a tree except the root node would have a parent would have exactly one
+parent and that's why if there are n nodes there must be exactly n minus 1 edges in a tree all nodes must be reachable from the root 
+
+in graph, there are no rules dictating the connection among the nodes, a graph contains a set of nodes and a set of edges and edges can be
+connecting nodes in any possible way. 
+tree is only a special kind of graph. now graph as a concept has been studied extensively in maths.(discrete mathematics)
+
+a graph G is an ordered pair of a set V of vertices and a set E of edges.
+
+G=(V,E)
+
+an ordered pair is just a pair of mathematical objects in which the order of objects in the pair matters.
+
+V is the first object in the pair and E is the second object. 
+an ordered pair (a,b) is not equal to (b,a) if a is not equal to b.
+
+we have unordered pair, where order is not an important. 
+{a,b} = {b,a}
+ 
+
+
+   1 -- 2
+ / |    / \
+3   4   5  6 
+\    \ /  /
+  7 -- 8
+
+v = {v1,v2,v3,v4,v5,v6,v7,v8}
+
+the edge is uniquely identifief by its two endpoint.
+edges can be directed(one ways like tree) or undirected(two ways)
+
+directed:
+(first one can be origin, second one can be destination)
+(u,v)
+undirected:
+{u,v}
+
+E= {{v1,v2},{v1,v3},{v1,v4},{v2,v5},{v2,v6},{v3,v7},{v4,v8},{v7,v8},{v5,v8},{v6,v8}}
+
+would either be directed/undirected. the graph could have both directed or undirected.
+
+a directed graph or di-graph / uni directional/ ordered pairs
+an undirected graph / bi directional / unordered pairs 
+
+
+many real world system can be modeled using graph. any collection of objects have pair wise relatiobship.
+
+1. social network .
+if two users are friends then there will be edge connected them.
+social network is undirected graph, if we are friends tehn it will be mutual. so connection has be two ways.
+once the system has been modeled as a graph, a lot of problems can easily be solved by app;ying standatad algorithms in graph theory.
+
+let's say we want to suggest some connections to an user named rama one possible approach to do so can be suggesting
+friends of friends who are not connected already Rama has three friends Ella, Bob and Katie and friends of these three
+that are not connected to Rama already can be suggested.
+
+finding all nodes having length of shortest path from rama equal to 2
+
+
+2. web pages.
+interlinked web pages on the internet or the world wide web can be represented as a directed graph of web page that would
+have a unique address or URL would be a node in the graph and we can have a directed edge if a page contains link to
+another page now once again there are billions of pages on the web, here the edges are directed because
+relationship is not mutual this time if page a has a link to page b then its not necessary that page b will also have
+a link to page. 
+we can apply standaard graph theory algo to solve problems. 
+web crawling search engines use a program called web carwler that systematically browses the worldwide web to collect and store data about
+web pages. search engines can then use this data to provde quick and accueate results against search queries.
+web crawling is basically a graph traversal, the act of visting all nodes in the graph.
+
+weighted vs unweighted.
+
+3.highways and roads
+the network of highways and freeways between cities as an undirected graph I am assuming that all highways
+would be bi-directional. intra-city road network that is road network within a city would definitely have one-way roads
+nd so intra-city road network must be represented as a directed graph but intercity road network in my opinion can
+be represented as an undirected graph.
+we can label the link of the node with kms. and we can recommend the shorted path based on the different weights assigned.
+
+unweighted graph: a weighted graph with all edges having weight = 1 unit.  
+
+weighted and directed graph = intracity road network.
+highway - directed and directed grap.
+werld wide web  - unweighted and un directed graph.
+social media - unweighted and udirected graph
+ 
+
