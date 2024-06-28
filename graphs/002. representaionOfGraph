@@ -1,0 +1,248 @@
+graph is ordered pair of set (V,E)
+
+to create store the graph in computer memory. the simplest thing we can do is , we create a list to store vertices and edges.
+
+we can use array of appropriate size or dynamic list.
+
+
+
+   A -- B
+ / |    / \
+C   D   E  F 
+\    \ /  /
+  G -- H
+
+with weight
+        5
+    A -------B
+7 /  | 3    /2 \10
+/    |     /    |
+C    D     E    F 
+ \ 11  \   /9  /
+1   \    \ / /4
+    G ----H
+       6
+vertex list = A B C D E F G H 
+edge = an object wiht two field. structure or class with two fields. one to store startVertext and another to store
+endVertex.
+
+struct edge{
+   char * startVertex;
+   char *endVertex;
+   int weight;
+};
+
+or
+
+class edge{
+  string startVertex;
+  string endVertex;
+  int weight;
+}
+
+struct edge edgeList[max_size] or string vertex_list[max_size ]
+
+edge = each row has two boxes.
+A B 5
+A C 7
+A D 3
+B E 2
+B F 10 we can also F B but we just need one of them.
+C G 1
+D H 11
+E H 9
+F H 4
+G H 6
+
+our graph can also have weight associated witih edge.
+
+we have also to look at cost:
+1. time-cost of operations.(time complexity)
+2. memory usage (space complexiity) rate of size of memory consumed with respect to data.
+
+it is expressed in BIG O notation.
+
+we do not have to consume unreasonably high memory.
+
+for the vertext list = rows. right now we just have a,b and so on but if it strings then it will cosnume more momery.
+
+so we can have the reference of the string or have an index of vertex list.
+vertex list;
+A 0
+B 1
+C 2
+D 3
+E 4
+F 5 
+G 6
+H 7
+vertext = will consume O|v|
+
+edge list;
+0 1 5
+0 2 7
+0 3 3
+1 4 2
+1 5 10 
+2 6 1
+3 7 11
+4 7 9
+5 7 4
+6 7 6
+
+this is better deign
+space consumed = O|e|
+
+overall space complexiity = O|v|+|e|
+
+time cost of operation
+
+how much time will we take to find all nodes adjacent to a given node?
+we will have to perform linear search and go through start and end node.
+
+runnig time will be proportional big O of no of edges.
+
+check if given two nodes are connected?
+here as well we will have to perform linear search on edge list. we will have to look at all the entries in the edge list
+so worst case proporational to no of edges. 
+O(E)
+
+if V = n 
+then 0<= E <= n*n-1 if directed 
+    0 <=E<= n*n-1/2 if undirected
+
+
+v = n        v*v-1 =v2-v  BIG(v^2) 
+10           90
+100          9900
+1000         999000
+
+this is not efficient for performing operation.
+we need to scan the whole list and it can be v large and it is costly.
+
+the efficient design than this is having two dimentional matrix.
+
+
+vertex list;
+A 0
+B 1
+C 2
+D 3
+E 4
+F 5 
+G 6
+H 7
+
+
+      0   1   2   3   4   5   6   7
+    +---+---+---+---+---+---+---+---+
+0   | 0 | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
+    +---+---+---+---+---+---+---+---+
+1   | 1 | 0 | 0 |  0| 1 | 1 | 0 | 0 |
+    +---+---+---+---+---+---+---+---+
+2   | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
+    +---+---+---+---+---+---+---+---+
+3   | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+    +---+---+---+---+---+---+---+---+
+4   | 0 |  1| 0 | 0 | 0 | 0 | 0 | 1 |
+    +---+---+---+---+---+---+---+---+
+5   | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 1 |
+    +---+---+---+---+---+---+---+---+
+6   | 0 | 0 | 1 | 0 | 0 | 0 |0  | 1 |
+    +---+---+---+---+---+---+---+---+
+7   | 0 | 0 | 0 | 1 | 1 | 1 | 1 | 0 |
+    +---+---+---+---+---+---+---+---+
+
+if we are storin it in 8 x 8 array. 
+that is v*v array for edges.
+
+A(i,j) =  1 if edge from i to j 
+          0 otherwise
+
+A(i,j) - A(j,i) this is true for directe graph.
+
+
+the matrix we have drawn above is adhjancency matrix.
+
+scan the vertex list and find the index and then go to the row in the matrix and scan all the entire row.
+
+in  a row we will have v column. 
+
+its always a good thing to pass the index than the string.
+
+operation        time cost
+findin adjacency
+nodes              O(v)
+
+findin if two
+nodes are          O(1) (if the string is given then O(1) + O(v))
+connected 
+
+we can create an hash table to avoid O(v)
+
+our time cost is reduced with the help of adjancy matrix.
+
+
+if it is a weighted graph.
+
+  A   B   C   D   E   F   G   H
+    +---+---+---+---+---+---+---+---+
+A   | 0 | 5 | 7 | 3 | ∞ | ∞ | ∞ | ∞ |
+    +---+---+---+---+---+---+---+---+
+B   | 5 | 0 | ∞ | ∞ | 2 |10 | ∞ | ∞ |
+    +---+---+---+---+---+---+---+---+
+C   | 7 | ∞ | 0 | ∞ | ∞ | ∞ | 1 | ∞ |
+    +---+---+---+---+---+---+---+---+
+D   | 3 | ∞ | ∞ | 0 | ∞ | ∞ | ∞ |11 |
+    +---+---+---+---+---+---+---+---+
+E   | ∞ | 2 | ∞ | ∞ | 0 | ∞ | ∞ | 9 |
+    +---+---+---+---+---+---+---+---+
+F   | ∞ |10 | ∞ | ∞ | ∞ | 0 | ∞ | 4 |
+    +---+---+---+---+---+---+---+---+
+G   | ∞ | ∞ | 1 | ∞ | ∞ | ∞ | 0 | 6 |
+    +---+---+---+---+---+---+---+---+
+H   | ∞ | ∞ | ∞ | 6 |11 | 9 | 4 | 0 |
+    +---+---+---+---+---+---+---+---+
+
+a node not connected should never be a valid weigt could be inf, -inf,
+
+
+there is a big space -time tradeoff here.
+
+O(v^2) space we are wasting a lot og memory storing.
+here we are consuming 64 units where as before it was 16 units.
+
+if there V = 10^9 on social netowrk users.
+
+do you think we can ever have close to 10^18 connections in this graph? is it an user will be friends with all the users.
+its  not like not every users will not be friends with every users.
+with this assumption let's say there are 1000 friends with that user.
+
+then e = 10^9 X 10^3 / 2 = 10^12/2 = 5 X 10^11
+
+With  10^9 users and each having  10^3 connections, the total number of connections (edges) is the product of the number
+of users and the number of connections per user.
+
+
+
+5 X 10^11 << 10^18(square of no of vertices)
+
+10^18 bytles -- 1000 pb(will not fit in one physical disk)
+5*10^11 bytes --- 0.5 tb(computer will have ths much of storage)
+
+adjancency matrix is not great. it is good when graph is dense. or V square is too less to matter.
+
+most real world applicaiton is sparse so this woild not be a good idea to use.
+
+
+webpages will also not have link to all the webpages.
+
+
+we have another representaion that doesn't consume much space that is adjancency list representaion. 
+
+
+
+
+
+
+
