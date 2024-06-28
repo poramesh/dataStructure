@@ -226,6 +226,10 @@ a tree as an undirected acyclic graph, this has no simple cycle in the tree.
            F
 we can also have directed acyclic graph.(DAG)
 
+G = (V,E)
+
+
+
 
 
 
