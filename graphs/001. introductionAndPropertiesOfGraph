@@ -82,7 +82,7 @@ the network of highways and freeways between cities as an undirected graph I am 
 would be bi-directional. intra-city road network that is road network within a city would definitely have one-way roads
 nd so intra-city road network must be represented as a directed graph but intercity road network in my opinion can
 be represented as an undirected graph.
-we can label the link of the node with kms. and we can recommend the shorted path based on the different weights assigned.
+we can label the edges with weight/cost. and we can recommend the shorted path based on the different weights assigned.
 
 unweighted graph: a weighted graph with all edges having weight = 1 unit.  
 
@@ -90,5 +90,149 @@ weighted and directed graph = intracity road network.
 highway - directed and directed grap.
 werld wide web  - unweighted and un directed graph.
 social media - unweighted and udirected graph
- 
+
+
+
+
+proerties of graphs:
+
+1. self loop: origin is same as destination. interlinked webpages.
+
+
+2. multi edge or parallel edge: a ->b
+                               ->
+
+like a different airline can fly from one place to another city making it to have multiple link with differnt cost and name
+
+it is simple graph if it doesnt have self or mutli edge.
+
+3. 
+
+v1    v2
+
+v3    v4
+
+if it is a undirected graph.
+minimum possible edges could be 0. 
+v is 4
+v = {v1, v2,v3,v4}
+
+
+if it directed then each nnode can have 4 links if there is no self-loops or multiedge.
+v = {v1,v2,v3,v4}
+v =4 
+
+no of edges:
+if v =n 
+then,
+0<=e<=n*n-1, if directed
+0<=e<=n*n-1/2, if undirected
+
+this is true if there is no loops or multiedges
+
+if v = 10 e <= 90
+if v= 100 e <=9900
+
+
+
+dense - too many edges
+sparse - too few edges
+
+4. 
+
+   A -- B
+ / |    / \
+C   D   E  F 
+\    \ /  /
+  G -- H
+
+path/walk:
+a sequence of vertices where each adjacent pair is connected by an edge. 
+
+simple path/path: a path/walk in which no vertices( and thus no edges) are repeated.
+<A,B,F,H>
+<A,B,F,H,E,B,A,D> two vertices and one edge are repeated.
+
+trail: a walk in whcih no edges are repeated.
+
+to go from a to c, we need not use the complicated path but simple path
+<a,b,e,h,d,a,c> this is complicated path, 
+<a,c>
+
+strongly connected graph: if there is a path from any vertex to any other vertex.
+
+   A -- B
+ / |    / \
+C   D   E  F   CONNECTED
+\    \ /  
+  G -- H
+
+
+   A   
+ / | 
+V   V  WEAKLY CONNECTED, we cannot go from D to A or C to A
+C-->D   a directed graph is not strongly connected but can be turned into one by treating it as
+undirected than its weakly connected 
+
+   A ---> B
+   ^     /|
+   |    / |
+   |   /  |
+   |  v   |
+   D <--- C     Strongly connected
+    \     ^
+     \   /
+      \ /
+       v
+       A
+
+if its undirected graph we say it is connected. if it directed graph we say it strongly conenected.
+
+   A     B
+ / |    / \
+C   D   E  F   NOT CONNECTED, two disjoint graph.
+\    \   
+  G -- H
+
+
+closed walk: starts and ends at same vertex. the lenght of walk must be greated than 0.  lenght = no of edges
+
+  A -- B
+ / |    / \
+C   D   E  F   CONNECTED
+\    \ /  /
+  G -- H
+<A->B->E->H->D->E>
+
+simple walk: no repetition other than start and end.
+
+acyclic graph: a graph with no cycle.
+        o
+       / \
+      o   o
+     / \  / \
+    o   o o   o
+a tree as an undirected acyclic graph, this has no simple cycle in the tree.  
+
+    A
+   / \
+  v   v
+  B   C
+   \ / \
+    v   v
+    D   E
+         \
+          v
+           F
+we can also have directed acyclic graph.(DAG)
+
+
+
+
+
+
+
+
+
+
 
