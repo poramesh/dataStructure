@@ -1,0 +1,123 @@
+      0   1   2   3   4   5   6   7
+    +---+---+---+---+---+---+---+---+
+0   | 0 | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
+
+0 means self loop
+row is start point
+col is end point
+
+0 is taking up the extra memory there will be a lot of 0s so it will be sparse.
+
+for a social network with a billion(10^9) users:
+row size = 10^9
+
+if i have 1000 friends
+then no of 1s = 1000 (1kb)
+no of 0s will be 10^9-1000 (1 gb)
+
+0 is redunant info/extra memory
+
+we can just have a list of node tahts connected.
+{1,2,3} or {b,c,d}
+lets just store the indices then the name.
+
+ 0  1  2
++--+--+--+
+ 1  2  3
+
+in earlier implementaion, index was represeting the index of node  in the graph, value represented if there was a conenction
+
+here index doesnt represent anything. the value are actual indices of the nodes to which we are connected.
+instead of array we shall use linked list.
+
+   A -- B
+ / |    / \
+C   D   E  F 
+\    \ /  /
+  G -- H
+
+we can also use tree, like bst. 
+
+  +---+---+---+
+0 | 1 | 2 | 3 |
+  +---+---+---+
+1 | 0 | 4 | 5 |
+  +---+---+---+
+2 | 0 | 6 | 
+  +---+---+
+3 | 0 | 7 | 
+  +---+---+
+4 | 1 | 7 |  
+  +---+---+
+5 | 1 | 7 | 
+  +---+---+
+6 | 2 | 7 | 
+  +---+---+---+---+ 
+7 | 3 | 6 | 4 | 5 |
+  +---+---+---+---+
+
+1th node is connected to 0th,4th,5th.
+
+here we are consuming a lot less memory.
+
+we can create array of pointers of array of 8.
+ int *A[8];
+A[0] = new int[3];
+A[1] = new int[3];
+A[2] = new int[2];
+....
+A[7] = new int[4];
+
+space consumption is proportional to no of edges. 
+in most graphs e<<v^2
+
+for undirected graph we will consuming exactly 2*e memory.
+
+finding if two nodes are connected or not?
+here we have to scan through row.
+
+when we have to find if there is connection between 0 to 7 then we will have to perform linear search on 0th row.
+
+we can keep it all sorted and perform binary search.
+
+O(v) - linear search 
+and O(logv) - binary search
+
+
+                      2d array   list
+            
+finding adjacent nodes   O(v)    O(v)
+
+finding if two nodes      O(1)   O(v)
+are conencted 
+
+
+we are not saving much on time but still when we are dealing with sparse graph, then it woudlnt be so worse case. 
+
+for a social network with billion users:
+
+if max no of friends = 10^4
+
+if machine can scan 10^6 cells/second
+
+                        2d array                        list
+            
+finding adjacent nodes   10^9/10^6=1000sec=16.6min          10^4/10^6=10^-2 = 10 ms
+
+finding if two nodes      1/10^6 sec 1ms to read that one cell      10ms(we need to scan a row since we dont) 
+are conencted            which we know what to scan                       exact cell
+
+
+machine cant make users wwait for so much time 
+it does save time and space, when graph is sparse.
+
+
+
+
+
+
+ 
+
+
+
+
