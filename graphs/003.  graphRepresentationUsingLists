@@ -112,6 +112,66 @@ machine cant make users wwait for so much time
 it does save time and space, when graph is sparse.
 
 
+what would we do if graph changes?
+what if there is new edges is inserted or deleted?
+
+flip the zero to in if its on 2D array.
+if it was deletion then make the 1 -> 0
+
+in the second structure, we just need to add the new edge in the row
+
+adding is not easy in the arrays, if the arrray size is not enough.
+
+this is the reasion why we use linked list.
+
+struct node{
+int data;
+struct node* next;
+};
+struct node *A[8];
+
+
+A[0] -> 1 -> 2 -> 3 -> NULL
+A[1] -> 0 -> 4 -> 5 -> NULL
+A[2] -> 0 -> 6 -> NULL
+A[3] -> 0 -> 7 -> NULL
+A[4] -> 1 -> 7 -> NULL
+A[5] -> 1 -> 7 -> NULL
+A[6] -> 2 -> 7 -> NULL
+A[7] -> 3 -> 6 -> 4 -> 5 -> NULL
+
+
+what we have here is adjanceny list.
+if we had wieght then it will have antoher field, int weight;
+
+
+space complexity: O(E+V)
+               E<< V*V assming it is sparse matrix.
+
+what if we add new connection/delete new connection?
+
+what if instead of linked list to store all the infor about all neighbours  we use binary search tree?
+do u think we would do better, cause time cost for searching, inserting and deleting a neighbour would reduce.
+
+
+WITH THIS THOUGHT I WILL SIGN OFF, THIS IS IT FOR THIS LESSON
+
+THANK YOU SO MUCH FOR TEACHING.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
