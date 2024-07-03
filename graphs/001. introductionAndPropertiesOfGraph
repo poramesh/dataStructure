@@ -20,20 +20,20 @@ an ordered pair is just a pair of mathematical objects in which the order of obj
 V is the first object in the pair and E is the second object. 
 an ordered pair (a,b) is not equal to (b,a) if a is not equal to b.
 
-we have unordered pair, where order is not an important. 
+we have unordered pair, where order is not as important. 
 {a,b} = {b,a}
  
 
 
-   1 -- 2
- / |    / \
-3   4   5  6 
-\    \ /  /
-  7 -- 8
+   1 --- 2
+ /  |    / \
+3   4   5   6 
+ \   \ /  /
+  7 --- 8
 
 v = {v1,v2,v3,v4,v5,v6,v7,v8}
 
-the edge is uniquely identifief by its two endpoint.
+the edge is uniquely identified by its two endpoint.
 edges can be directed(one ways like tree) or undirected(two ways)
 
 directed:
@@ -55,10 +55,10 @@ many real world system can be modeled using graph. any collection of objects hav
 1. social network .
 if two users are friends then there will be edge connected them.
 social network is undirected graph, if we are friends tehn it will be mutual. so connection has be two ways.
-once the system has been modeled as a graph, a lot of problems can easily be solved by app;ying standatad algorithms in graph theory.
+once the system has been modeled as a graph, a lot of problems can easily be solved by applying standard algorithms in graph theory.
 
 let's say we want to suggest some connections to an user named rama one possible approach to do so can be suggesting
-friends of friends who are not connected already Rama has three friends Ella, Bob and Katie and friends of these three
+friends of friends who are not connected already, Rama has three friends Ella, Bob and Katie and friends of these three
 that are not connected to Rama already can be suggested.
 
 finding all nodes having length of shortest path from rama equal to 2
@@ -71,8 +71,8 @@ another page now once again there are billions of pages on the web, here the edg
 relationship is not mutual this time if page a has a link to page b then its not necessary that page b will also have
 a link to page. 
 we can apply standaard graph theory algo to solve problems. 
-web crawling search engines use a program called web carwler that systematically browses the worldwide web to collect and store data about
-web pages. search engines can then use this data to provde quick and accueate results against search queries.
+web crawling search engines use a program called web crawler that systematically browses the worldwide web to collect and store data about
+web pages. search engines can then use this data to provide quick and accurate results against search queries.
 web crawling is basically a graph traversal, the act of visting all nodes in the graph.
 
 weighted vs unweighted.
@@ -92,19 +92,18 @@ werld wide web  - unweighted and un directed graph.
 social media - unweighted and udirected graph
 
 
-
-
-proerties of graphs:
+properties of graphs:
 
 1. self loop: origin is same as destination. interlinked webpages.
 
 
 2. multi edge or parallel edge: a ->b
-                               ->
+                                |   |
+                                .-->.
 
 like a different airline can fly from one place to another city making it to have multiple link with differnt cost and name
 
-it is simple graph if it doesnt have self or mutli edge.
+it is simple graph if it doesnt have self or multi edge.
 
 3. 
 
@@ -118,12 +117,12 @@ v is 4
 v = {v1, v2,v3,v4}
 
 
-if it directed then each nnode can have 4 links if there is no self-loops or multiedge.
+if it directed then each node can have 4 links if there is no self-loops or multiedge.
 v = {v1,v2,v3,v4}
 v =4 
 
 no of edges:
-if v =n 
+if v = n 
 then,
 0<=e<=n*n-1, if directed
 0<=e<=n*n-1/2, if undirected
