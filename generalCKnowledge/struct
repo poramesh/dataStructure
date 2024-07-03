@@ -1,0 +1,64 @@
+struct item {
+    char* key;
+    int value;
+};
+is same as 
+typdef struct {
+    char* key;
+    int value;
+}item;
+
+if typedef wasnt mentioned then it would be able to insiliase only once.
+
+inialising with typedef helps, but still i prefer not to use it haha
+struct item item can be just item item if it was for typedef.
+
+When you define an array of structs like this:
+typedef struct {
+    char* key;
+    int value;
+} item;
+
+item items[] = {
+    {"foo", 10}, {"bar", 42}, {"bazz", 36}
+};
+Here's what happens:
+
+Memory Allocation: items is an array of item structs. When you define items[], the compiler allocates memory for three item structs because 
+you provided three initializers.
+
+Initialization: Each element of the items array is initialized with a key (which is a pointer to char) and a value (which is an int).
+
+Memory Layout: Each item struct in the array items occupies contiguous memory in the data segment of your program. The ke
+y member in each struct is a pointer to a character (string), which typically points to a location in memory where the actual string data is stored
+
+char* key; declares key as a pointer to a character (char). It can point to the beginning of a string in memory.
+______________________
+
+item items[] = {
+    {"foo", 10}, {"bar", 42}, {"bazz", 36}, {"buzz", 7},
+    {"bob", 11}, {"jane", 100}, {"x", 200}
+};
+defines and initializes an array of item structs. This is a convenient way to declare and initialize multiple item structs at once.
+Here’s how it works and how you can use it:
+___________
+    int myIntArray[] = {10, 20, 30, 40, 50};  // Array of 5 integers with initialization
+____________
+int myIntArray[5];  // Example: Array of 5 integers
+
+// Initializing the array elements
+myIntArray[0] = 10;
+myIntArray[1] = 20;
+myIntArray[2] = 30;
+myIntArray[3] = 40;
+myIntArray[4] = 50;
+------------------------
+char greeting[] = "Hello";  // Initialized with a string literal
+char vowels[] = {'a', 'e', 'i', 'o', 'u'};  // Initialized with individual characte
+______________________
+the declaration char p* ='hello' as you've written it is not valid in C syntax. Let's correct and explain how you can properly declare and use
+a pointer to a character array (string) in C.
+
+Correcting the Declaration
+To declare a pointer to a string literal in C, you should use the following syntax:
+const char *p = "hello";
