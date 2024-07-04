@@ -34,3 +34,23 @@ int main() {
     printf("linear_search: value of 'bob' is %d\n", found->value);
     return 0;
 }
+
+
+extra info:
+
+#include <stdio.h>
+
+struct item {
+    char* key;
+    int value;
+};
+
+int main() {
+    printf("Size of struct item: %zu bytes\n", sizeof(struct item)); //16 
+    return 0;
+}
+size of char* is 8
+and size of int is 4
+
+the totaly size of struct is 16 due to paddng. 
+Padding is extra bytes added by the compiler to align data in memory.
