@@ -35,9 +35,50 @@ int main() {
     return 0;
 }
 
+(or)
+
+// Online C compiler to run C program online
+#include <stdio.h>
+#include<stdbool.h>
+#include<string.h>
+struct item{
+    char* key;
+    int value;
+};
+
+
+bool linearSearch(int size, struct item items[], char* input){
+
+    for (int i=0;i<size;i++){
+        if(strcmp((items[i].key),input)==0){
+            return 1;
+        } 
+    }
+    return 0;
+
+}
+
+int main() {
+    struct item items[] ={{"poo",1},{"moh",20},{"aki",40},{"faa",33},{"eee",11},{"nee",12}};
+    int size = sizeof( items)/sizeof(struct item);
+    //char *input = "poo"; or char input[] = "poo";  printf("%s",input);
+    char *input = "aki";
+    
+    bool val = linearSearch(size, items, input);
+    val==1?printf("foind"): printf("not found");
+    
+    
+
+}
 
 extra info:
+-------
+strcmp compares two strings character by character and returns:
+A negative value if the first string is lexicographically less than the second.
+Zero if the two strings are equal.
+A positive value if the first string is lexicographically greater than the second.
 
+------
 #include <stdio.h>
 
 struct item {
@@ -54,3 +95,6 @@ and size of int is 4
 
 the totaly size of struct is 16 due to paddng. 
 Padding is extra bytes added by the compiler to align data in memory.
+
+
+
