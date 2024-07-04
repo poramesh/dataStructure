@@ -1,0 +1,36 @@
+
+Single quotes ('hello') are used to denote single characters in C. 'hello' is invalid syntax because it represents multiple 
+characters, which isn't allowed.
+Double quotes ("hello") are used to denote string literals in C. "hello" represents the string composed ofthe characters 
+'h', 'e', 'l', 'l', 'o', and a terminating null character ('\0').
+
+
+linear search:
+
+struct item {
+    char* key;
+    int value;
+} ;
+
+struct item* linear_search(struct item* items, size_t size, const char* key) {
+    for (size_t i=0; i<size; i++) {
+        if (strcmp(items[i].key, key) == 0) {
+            return &items[i];
+        }
+    }
+    return NULL;
+}
+
+int main() {
+    struct item items[] = {
+        {"foo", 10}, {"bar", 42}, {"bazz", 36}, {"buzz", 7},
+        {"bob", 11}, {"jane", 100}, {"x", 200}};
+    size_t num_items = sizeof(items) / sizeof(item);
+
+   struct item* found = linear_search(items, num_items, "bob");
+    if (!found) {
+        return 1;
+    }
+    printf("linear_search: value of 'bob' is %d\n", found->value);
+    return 0;
+}
