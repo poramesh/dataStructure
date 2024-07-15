@@ -67,6 +67,13 @@ we do not have to consume unreasonably high memory.
 for the vertext list = rows. right now we just have a,b and so on but if it strings then it will cosnume more momery.
 
 so we can have the reference of the string or have an index of vertex list.
+
+
+https://youcademy.org/graph-with-edge-list/
+
+this is helpful , go through it monkey aja
+
+
 vertex list;
 A 0
 B 1
@@ -98,7 +105,8 @@ overall space complexiity = O|v|+|e|
 time cost of operation
 
 how much time will we take to find all nodes adjacent to a given node?
-we will have to perform linear search and go through start and end node.
+we will have to perform linear search and go through all the entries in the edge list and find if the start and end node are given node. and for undirected graph we
+look for both start and end node. 
 
 runnig time will be proportional big O of no of edges.
 
@@ -239,8 +247,6 @@ webpages will also not have link to all the webpages.
 
 
 we have another representaion that doesn't consume much space that is adjancency list representaion. 
-
-
 
 
 
