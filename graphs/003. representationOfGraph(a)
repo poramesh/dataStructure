@@ -1,0 +1,127 @@
+NEXT IMPLEMENTATION:
+
+the efficient design than the previous dissuces implementation is having two dimentional matrix.
+
+vertex list;
+A 0
+B 1
+C 2
+D 3
+E 4
+F 5 
+G 6
+H 7
+
+
+      0   1   2   3   4   5   6   7
+    +---+---+---+---+---+---+---+---+
+0   | 0 | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
+    +---+---+---+---+---+---+---+---+
+1   | 1 | 0 | 0 |  0| 1 | 1 | 0 | 0 |
+    +---+---+---+---+---+---+---+---+
+2   | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
+    +---+---+---+---+---+---+---+---+
+3   | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+    +---+---+---+---+---+---+---+---+
+4   | 0 |  1| 0 | 0 | 0 | 0 | 0 | 1 |
+    +---+---+---+---+---+---+---+---+
+5   | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 1 |
+    +---+---+---+---+---+---+---+---+
+6   | 0 | 0 | 1 | 0 | 0 | 0 |0  | 1 |
+    +---+---+---+---+---+---+---+---+
+7   | 0 | 0 | 0 | 1 | 1 | 1 | 1 | 0 |
+    +---+---+---+---+---+---+---+---+
+
+if we are storin it in 8 x 8 array. 
+that is v*v array for edges.
+
+A(i,j) =  1 if edge from i to j 
+          0 otherwise
+
+A(i,j) - A(j,i) this is true for directe graph.
+
+
+the matrix we have drawn above is adhjancency matrix.
+
+scan the vertex list and find the index and then go to the row in the matrix and scan all the entire row.
+
+in  a row we will have v column. 
+
+its always a good thing to pass the index than the string.
+
+operation        time cost
+findin adjacency
+nodes              O(v)
+
+findin if two
+nodes are          O(1) (if the string is given then O(1) + O(v))
+connected 
+
+we can create an hash table to avoid O(v)
+
+our time cost is reduced with the help of adjancy matrix.
+
+
+if it is a weighted graph.
+
+      A   B   C   D   E   F   G   H
+    +---+---+---+---+---+---+---+---+
+A   | 0 | 5 | 7 | 3 | ∞ | ∞ | ∞ | ∞ |
+    +---+---+---+---+---+---+---+---+
+B   | 5 | 0 | ∞ | ∞ | 2 |10 | ∞ | ∞ |
+    +---+---+---+---+---+---+---+---+
+C   | 7 | ∞ | 0 | ∞ | ∞ | ∞ | 1 | ∞ |
+    +---+---+---+---+---+---+---+---+
+D   | 3 | ∞ | ∞ | 0 | ∞ | ∞ | ∞ |11 |
+    +---+---+---+---+---+---+---+---+
+E   | ∞ | 2 | ∞ | ∞ | 0 | ∞ | ∞ | 9 |
+    +---+---+---+---+---+---+---+---+
+F   | ∞ |10 | ∞ | ∞ | ∞ | 0 | ∞ | 4 |
+    +---+---+---+---+---+---+---+---+
+G   | ∞ | ∞ | 1 | ∞ | ∞ | ∞ | 0 | 6 |
+    +---+---+---+---+---+---+---+---+
+H   | ∞ | ∞ | ∞ | 6 |11 | 9 | 4 | 0 |
+    +---+---+---+---+---+---+---+---+
+
+a node not connected should never be a valid weigt could be inf, -inf,
+
+
+there is a big space -time tradeoff here.
+
+O(v^2) space we are wasting a lot og memory storing.
+here we are consuming 64 units where as before it was 16 units.
+
+if there V = 10^9 on social netowrk users.
+
+do you think we can ever have close to 10^18 connections in this graph? is it an user will be friends with all the users.
+its  not like not every users will not be friends with every users.
+with this assumption let's say there are 1000 friends with that user.
+
+then e = 10^9 X 10^3 / 2 = 10^12/2 = 5 X 10^11
+
+With  10^9 users and each having  10^3 connections, the total number of connections (edges) is the product of the number
+of users and the number of connections per user.
+
+
+
+5 X 10^11 << 10^18(square of no of vertices)
+
+10^18 bytles -- 1000 pb(will not fit in one physical disk)
+5*10^11 bytes --- 0.5 tb(computer will have ths much of storage)
+
+adjancency matrix is not great. it is good when graph is dense. or V square is too less to matter.
+
+most real world applicaiton is sparse so this woild not be a good idea to use.
+
+
+webpages will also not have link to all the webpages.
+
+
+we have another representaion that doesn't consume much space that is adjancency list representaion. 
+
+
+
+
+
+
+
