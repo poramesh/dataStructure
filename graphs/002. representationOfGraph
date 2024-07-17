@@ -105,8 +105,8 @@ overall space complexiity = O|v|+|e|
 time cost of operation
 
 how much time will we take to find all nodes adjacent to a given node?
-we will have to perform linear search and go through all the entries in the edge list and find if the start and end node are given node. and for undirected graph we
-look for both start and end node. 
+we will have to perform linear search and go through all the entries in the edge list and find if the start and end node are given node. and for undirected graph 
+we look for both start and end node. 
 
 runnig time will be proportional big O of no of edges.
 
@@ -128,127 +128,122 @@ v = n        v*v-1 =v2-v  BIG(v^2)
 this is not efficient for performing operation.
 we need to scan the whole list and it can be v large and it is costly.
 
-the efficient design than this is having two dimentional matrix.
-
-
-vertex list;
-A 0
-B 1
-C 2
-D 3
-E 4
-F 5 
-G 6
-H 7
-
-
-      0   1   2   3   4   5   6   7
-    +---+---+---+---+---+---+---+---+
-0   | 0 | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
-    +---+---+---+---+---+---+---+---+
-1   | 1 | 0 | 0 |  0| 1 | 1 | 0 | 0 |
-    +---+---+---+---+---+---+---+---+
-2   | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
-    +---+---+---+---+---+---+---+---+
-3   | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
-    +---+---+---+---+---+---+---+---+
-4   | 0 |  1| 0 | 0 | 0 | 0 | 0 | 1 |
-    +---+---+---+---+---+---+---+---+
-5   | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 1 |
-    +---+---+---+---+---+---+---+---+
-6   | 0 | 0 | 1 | 0 | 0 | 0 |0  | 1 |
-    +---+---+---+---+---+---+---+---+
-7   | 0 | 0 | 0 | 1 | 1 | 1 | 1 | 0 |
-    +---+---+---+---+---+---+---+---+
-
-if we are storin it in 8 x 8 array. 
-that is v*v array for edges.
-
-A(i,j) =  1 if edge from i to j 
-          0 otherwise
-
-A(i,j) - A(j,i) this is true for directe graph.
-
-
-the matrix we have drawn above is adhjancency matrix.
-
-scan the vertex list and find the index and then go to the row in the matrix and scan all the entire row.
-
-in  a row we will have v column. 
-
-its always a good thing to pass the index than the string.
-
-operation        time cost
-findin adjacency
-nodes              O(v)
-
-findin if two
-nodes are          O(1) (if the string is given then O(1) + O(v))
-connected 
-
-we can create an hash table to avoid O(v)
-
-our time cost is reduced with the help of adjancy matrix.
-
-
-if it is a weighted graph.
-
-  A   B   C   D   E   F   G   H
-    +---+---+---+---+---+---+---+---+
-A   | 0 | 5 | 7 | 3 | ∞ | ∞ | ∞ | ∞ |
-    +---+---+---+---+---+---+---+---+
-B   | 5 | 0 | ∞ | ∞ | 2 |10 | ∞ | ∞ |
-    +---+---+---+---+---+---+---+---+
-C   | 7 | ∞ | 0 | ∞ | ∞ | ∞ | 1 | ∞ |
-    +---+---+---+---+---+---+---+---+
-D   | 3 | ∞ | ∞ | 0 | ∞ | ∞ | ∞ |11 |
-    +---+---+---+---+---+---+---+---+
-E   | ∞ | 2 | ∞ | ∞ | 0 | ∞ | ∞ | 9 |
-    +---+---+---+---+---+---+---+---+
-F   | ∞ |10 | ∞ | ∞ | ∞ | 0 | ∞ | 4 |
-    +---+---+---+---+---+---+---+---+
-G   | ∞ | ∞ | 1 | ∞ | ∞ | ∞ | 0 | 6 |
-    +---+---+---+---+---+---+---+---+
-H   | ∞ | ∞ | ∞ | 6 |11 | 9 | 4 | 0 |
-    +---+---+---+---+---+---+---+---+
-
-a node not connected should never be a valid weigt could be inf, -inf,
-
-
-there is a big space -time tradeoff here.
-
-O(v^2) space we are wasting a lot og memory storing.
-here we are consuming 64 units where as before it was 16 units.
-
-if there V = 10^9 on social netowrk users.
-
-do you think we can ever have close to 10^18 connections in this graph? is it an user will be friends with all the users.
-its  not like not every users will not be friends with every users.
-with this assumption let's say there are 1000 friends with that user.
-
-then e = 10^9 X 10^3 / 2 = 10^12/2 = 5 X 10^11
-
-With  10^9 users and each having  10^3 connections, the total number of connections (edges) is the product of the number
-of users and the number of connections per user.
-
-
-
-5 X 10^11 << 10^18(square of no of vertices)
-
-10^18 bytles -- 1000 pb(will not fit in one physical disk)
-5*10^11 bytes --- 0.5 tb(computer will have ths much of storage)
-
-adjancency matrix is not great. it is good when graph is dense. or V square is too less to matter.
-
-most real world applicaiton is sparse so this woild not be a good idea to use.
-
-
-webpages will also not have link to all the webpages.
-
-
-we have another representaion that doesn't consume much space that is adjancency list representaion. 
 
 
 
 
+
+____________________________________________________________________________
+// Online C compiler to run C program online
+#include <stdio.h>
+#include <string.h>
+#define max_size 10
+
+struct edge{
+    int weight;
+    char* startVertex;
+    char* endVertex;
+};
+
+struct edge edgeList[max_size];
+int i =0;
+
+void insertEdges(int value,char* s, char* e){
+    if(i<max_size){
+        //printf("s=%s\n",s); //will print the same value = A
+        //printf("char*=%s\n",(char*)s); //will print the same value = A
+        edgeList[i].weight = value;
+        edgeList[i].startVertex = s;
+        edgeList[i].endVertex = (char*)e;
+        i++;
+    }else{
+        printf("edge list is full\n");
+    }
+    
+}
+
+void print(){
+    for( int j=0; j<i; j++){
+        printf("%s<->%s:%d \n", edgeList[j].startVertex, edgeList[j].endVertex,  edgeList[j].weight);
+    }
+}
+
+int findTheCountOfAdjacentNode(char* adjacentValue){
+    int count = 0;
+    for(int j=0;j<i;j++){
+        if(edgeList[j].startVertex==adjacentValue || edgeList[j].endVertex==adjacentValue){
+            count++;
+        }
+    }
+    return count;
+}
+
+int main() {
+    insertEdges(5,"A","B");
+    insertEdges(7,"A","C");
+    insertEdges(3,"A","D");
+    insertEdges(2,"B","E");
+    insertEdges(10,"B","F");
+    insertEdges(1,"C","G");
+    insertEdges(11,"D","H");
+    insertEdges(9,"E","H");
+    insertEdges(4,"F","H");
+    insertEdges(6,"G","H");
+    print();
+    int NoOfadjacentNode = findTheCountOfAdjacentNode("H");
+    printf("\n");
+    printf("The total number of connected nodes are %d", NoOfadjacentNode);
+    
+}
+
+o/p:
+
+A<->B:5 
+A<->C:7 
+A<->D:3 
+B<->E:2 
+B<->F:10 
+C<->G:1 
+D<->H:11 
+E<->H:9 
+F<->H:4 
+G<->H:6 
+
+The total number of connected nodes are 4
+
+
+/***
+ *Array of Pointers to Structures
+ * 
+ * to find all nodes adjacent to a given node?
+ * 
+ * 
+ * The key difference between using a direct structure array (struct edge edgeList[MAX_SIZE];) and using
+an array of pointers to structures (struct edge* edgeList[MAX_SIZE];) lies in memory allocation, access patterns, and flexibility.
+ 
+WHEN WE TO USE->
+
+Memory for the array of pointers is allocated at compile time.
+Each element (structure) must be dynamically allocated at runtime using malloc.
+
+struct edge* edgeList[MAX_SIZE];
+int i = 0;
+
+void insertEdge(int value, const char* s, const char* e) {
+    if (i < MAX_SIZE) {
+        edgeList[i] = (struct edge*)malloc(sizeof(struct edge));
+        if (edgeList[i] == NULL) {
+            printf("Memory allocation failed\n");
+            return;
+        }
+        edgeList[i]->weight = value;
+        edgeList[i]->startVertex = strdup(s);  // Allocate and copy string
+        edgeList[i]->endVertex = strdup(e);    // Allocate and copy string
+        i++;
+    } else {
+        printf("Edge list is full.\n");
+    }
+}
+ * 
+ ***/
 
