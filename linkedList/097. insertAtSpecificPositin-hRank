@@ -1,0 +1,16 @@
+The first line contains an integer n, the number of elements in the linked list.
+
+Each of the next n lines contains an integer SinglyLinkedListNode[i].data.
+The next line contains an integer data, the data of the node that is to be inserted.
+The last line contains an integer position.
+
+Sample Input
+n=3
+16
+13
+7
+1
+position = 2
+Sample Output
+16 13 1 7
+The initial linked list is 16->13->7. Insert 1 at the position 2 which currently has 7 in it. The updated linked list is 16->13->1->7 .
