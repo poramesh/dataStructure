@@ -1,0 +1,155 @@
+Input Format
+Our test code passes the root node of a binary tree to the preOrder function.
+
+Constraints
+1<=Nodes in the tree <= 500
+
+Output Format
+Print the tree's preorder traversal as a single line of space-separated values.
+
+Sample Input
+
+     1
+      \
+       2
+        \
+         5
+        /  \
+       3    6
+        \
+         4  
+
+Sample Output
+1 2 5 3 4 6 
+
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+struct node {
+    
+    int data;
+    struct node *left;
+    struct node *right;
+  
+};
+
+struct node* insert( struct node* root, int data ) {
+		
+	if(root == NULL) {
+	
+        struct node* node = (struct node*)malloc(sizeof(struct node));
+
+        node->data = data;
+
+        node->left = NULL;
+        node->right = NULL;
+        return node;
+	  
+	} else {
+      
+		struct node* cur;
+		
+		if(data <= root->data) {
+            cur = insert(root->left, data);
+            root->left = cur;
+		} else {
+            cur = insert(root->right, data);
+            root->right = cur;
+		}
+	
+		return root;
+	}
+}
+
+/* you only have to complete the function given below.  
+node is defined as  
+
+struct node {
+    
+    int data;
+    struct node *left;
+    struct node *right;
+  
+};
+
+*/
+void preOrder( struct node *root) {
+    if(root==NULL) return;
+    printf("%d ",root->data);
+    preOrder(root->left);
+    preOrder(root->right);
+}
+
+int main() {
+  
+    struct node* root = NULL;
+    
+    int t;
+    int data;
+
+    scanf("%d", &t);
+
+    while(t-- > 0) {
+        scanf("%d", &data);
+        root = insert(root, data);
+    }
+  
+	preOrder(root);
+    return 0;
+}
+
+
+
+Sample Input
+    
+    99
+  0|1|100
+      \
+       100
+      0|2|101
+        \
+        101
+      102|5|103
+        /  \
+    102    103
+  0|3|104   0|6|0
+        \
+        104
+        0|4|0  
+
+ void preOrder( struct node *root) {
+    if(root==NULL) return;
+    printf("%d ",root->data);
+    preOrder(root->left);
+    preOrder(root->right);
+}
+
+for the preorder => 
+99->prints(1)->null
+99->100
+99->100->prints(2)
+99->100->null
+99->100->101
+99->100->101->prints(5)
+99->100->101->102
+99->100->101->102->prints(3)
+99->100->101->102->null
+99->100->101->102->104
+99->100->101->102->104->prints(4)
+99->100->101->102->104->null
+99->100->101->102->104->null
+99->100->101
+99->100->101->103
+99->100->101->103->prints(6)
+99->100->101->103->null
+99->100->101->103->null
+99->100
+99
+end of the statements
+
+
+Sample Output
+1 2 5 3 4 6 
