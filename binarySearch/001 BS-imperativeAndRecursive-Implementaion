@@ -1,0 +1,162 @@
+____________
+INTRODUCTION
+______________
+
+given array in a sorted array(decreassing order):
+
+ A 2 6 13 21 36 47 63 81 97
+
+ we need to check if value exists in the array
+
+ x = 81 ? exists(7)
+ x = 25 ? no
+
+search(A,n,x){
+ for i = 0 to n -1 
+    if A[i] == x
+      return i
+
+return -1
+}
+
+
+best case: 1 comparisons
+worst case: n comparisons
+
+another approach:
+
+x = 13
+
+we will compare it with middle elmenet.
+
+case 1: x == A[mid]
+case 2: x < A[mid]
+case 3: x > A[mid]
+
+
+start = 0
+end = len(arr)
+mid = (start+end)/2
+
+
+ A   2 | 6| 13| 21| 36| 47| 63| 81| 97|
+     0   1  2   3   4   5   6   7   8
+
+find elemenet 13 
+
+first iteration:
+s = 0, e =8, mid = 4
+13==36? 0
+13 < 36? 1
+-> s=0, e = 3(one less than middle ele), m = 1
+second iteration:
+13== 6? 0
+13<6? 0
+13>6?1 
+-> s=2(one more mid), e = 3, m = 2
+13==13? 1 (found)
+
+
+ A   2 | 6| 13| 21| 36| 47| 63| 81| 97|
+     0   1  2   3   4   5   6   7   8
+
+find elemenet 14 
+
+first iteration:
+s = 0, e =8, mid = 4
+14==36? 0
+14 < 36? 1
+-> s = 0, e = 3(one less than middle ele), m = 1
+second iteration:
+14 == 6? 0
+14 < 6? 0
+14 > 6? 1 
+-> s = 2(one more mid), e = 3, m = 2
+14 == 13? 0 
+14 < 13 ? 1
+-> s = 3, e = 2, m = 2 (exit condition)
+
+
+binarySearch(A, n, x)
+{
+   start = 0
+   end = n-1
+   while(start<=end){
+      mid = start+end /2
+      if A[mid] == x
+         return mid
+      else if x < A[mid]{
+      end = mid-1
+      }
+      else if x>A[mid]{
+      start = mid+1
+      }
+   }
+   return -1
+}
+
+
+best case: 1 comparison
+n -> n/2 -> n/4 ......n/2^k = 1 => k = logn
+
+
+____________________________________________
+iterative implementation and common errors when overflow may occur:
+__________________________________________
+
+
+
+#include<stdio.h>
+
+int bs(int a[],int n, int x){
+while (low<=high)
+{
+    int low=0, high = n-1;
+    int mid = (low+high)/2; or int mid = low + (high -low) /2; (low+high) may overflow
+    if(x==A[mid]) return mid;
+    else if(x < A[mid]) high = mid-1;
+    else low = mid+1;
+}
+return -1;
+}
+
+int main(){
+  int A[] = {2,4,5,7,14,12,56};
+  int ele;
+  printf("enter the number to search");
+  scanf("%s", &ele);
+  int size = A.size() 
+  int index = bs(A,size, ele );
+  if index!==1 printf("element found at index %d", index);
+  else printf("element not found");
+}
+
+
+__________________________
+Recursive implementation
+___________________________
+
+this is a good example of divide and conquer alogirthm.
+
+
+int binarySearch(int a[],low,high,x){
+    if(low>high) return -1; //exit condition
+    mid = low+(low-high)/2;
+    if (x==mid) return mid; //base condition
+    else if(x<A[mid]) return binarySearch(A,low,mid-1,x);
+    else return binarySearch(A,mid+1,high,x);
+}
+return -1;
+}
+
+since return statement is used, it goes back to its called fucntion once exeuction is completed,
+it returns -1 on its way.
+
+0log(n)
+
+which implementation is better? iterative may seem a good approach if no need of storing the state of fucntion or data 
+in the memory while recursive calls happens.
+anything that we can implement recursion we can write it using iteration.anything that we can wrrite using
+iteration can be wrriten using recursion.
+
+
