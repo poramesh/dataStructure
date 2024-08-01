@@ -1,0 +1,17 @@
+a * b = hcf(a,b) * lcm(a,b)
+
+15*5 = hcf(15,5) * lcm(15,5)
+
+ gcd(int a, int b) { 
+    if (a == 0) 
+        return b;  
+    return gcd(b % a, a);  
+} 
+
+lets find hcf(5,15) -> return hcf(15%5,5) -> hcf(0,5) : if(a==0) return b which 5 here.
+
+find hcf(15,25) -> return hcf(25%15,15) -> hcf(10,15) -> return hcf(15%10,10) -> hcf(5,10) -> return hcf(10%5,5) -> hcf(0,5) -> return b that is 5!!
+
+just finding gcd will help us find lcm too.
+
+this is a euclean algo!
