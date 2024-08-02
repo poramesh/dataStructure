@@ -1,0 +1,99 @@
+You have a long flowerbed in which some of the plots are planted, and some are not. However, flowers cannot be planted in adjacent plots.
+
+Given an integer array flowerbed containing 0's and 1's, where 0 means empty and 1 means not empty, and an integer n, return true if n new 
+flowers can be planted in the flowerbed without violating the no-adjacent-flowers rule and false otherwise.
+
+Example 1:
+Input: flowerbed = [1,0,0,0,1], n = 1
+Output: true
+
+Example 2:
+Input: flowerbed = [1,0,0,0,1], n = 2
+Output: false
+ 
+
+Constraints:
+
+1 <= flowerbed.length <= 2 * 104
+flowerbed[i] is 0 or 1.
+There are no two adjacent flowers in flowerbed.
+0 <= n <= flowerbed.length
+
+
+solution:
+
+class Solution:
+
+    def canPlaceFlowers(self, flowerbed: List[int], n: int) -> bool:
+
+        for i in range(len(flowerbed)): 
+            left = i == 0 or flowerbed[i-1] == 0 
+#If i == 0 is True, the expression flowerbed[i-1] == 0 is not evaluated because of the or operator. 
+#The result of the left condition is True when i == 0, so no out-of-bounds access occurs.
+            right = i == len(flowerbed)-1 or flowerbed[i+1] == 0
+
+            if(flowerbed[i]==0 and left and right):
+                n=n-1
+                flowerbed[i] = 1
+        
+        if(n<=0):
+            return True
+        else: return False
+
+n is <=0 cause we might end w this:
+
+flowerbed = [0,0,1,0,0]
+n =1
+
+and this logic didnt work cause i didnt check the plot in the first and last index.
+
+class Solution:
+
+    def canPlaceFlowers(self, flowerbed: List[int], n: int) -> bool:
+
+        for i in range(len(flowerbed)-2):
+            left = flowerbed[i]
+            right = flowerbed[i+2]
+
+            if(flowerbed[i+1]==0 and (left==0 and right ==0)):
+                n=n-1
+                flowerbed[i+1] = 1
+        
+        if(n==0):
+            return True
+        else: return False
+
+
+
+I REALLY LIKE THIS APPROACH:::::
+
+Utilize 3 pointers: previous, current ( i ), and next.
+If the plots at positions previous, current, and next are all 0, a flower can be placed, leading to an increment in the counter.
+If the previous and next pointers fall outside the array, they are treated as 0.
+If count >= n, it signifies that flowers can be placed.
+
+
+
+var canPlaceFlowers = function(flowerbed, n) {
+    let count = 0;
+    let pre = -1;
+    let next = 1;
+
+    for (let i = 0; i < flowerbed.length; i++, pre++, next++) {
+        if ((getValue(flowerbed, pre) + getValue(flowerbed, i) + getValue(flowerbed, next)) == 0) {
+            flowerbed[i] = 1;
+            count++;
+        }
+    }
+
+    return count >= n;
+};
+
+var getValue = function(flowerbed, i) {
+    if (i < 0 || i >= flowerbed.length) {
+        return 0;
+    }
+    return flowerbed[i];
+}
+
+link: https://leetcode.com/problems/can-place-flowers/solutions/4451371/easy-short-beats-99-with-explanation/?envType=study-plan-v2&envId=leetcode-75
