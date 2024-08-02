@@ -14,4 +14,74 @@ find hcf(15,25) -> return hcf(25%15,15) -> hcf(10,15) -> return hcf(15%10,10) ->
 
 just finding gcd will help us find lcm too.
 
-this is a euclean algo!
+this is a eucledian algo!
+
+this piece of code looks elegant!
+
+int gcd(int a, int b) {
+     return b == 0 ? a : gcd(b, a % b);
+}
+
+
+
+problem:
+
+
+For two strings s and t, we say "t divides s" if and only if s = t + t + t + ... + t + t (i.e., t is concatenated with itself one or more times).
+
+Given two strings str1 and str2, return the largest string x such that x divides both str1 and str2.
+
+Example 1:
+
+Input: str1 = "ABCABC", str2 = "ABC"
+Output: "ABC"
+Example 2:
+
+Input: str1 = "ABABAB", str2 = "ABAB"
+Output: "AB"
+Example 3:
+
+Input: str1 = "LEET", str2 = "CODE"
+Output: ""
+
+solution
+
+java script:
+
+/**
+ * @param {string} str1
+ * @param {string} str2
+ * @return {string}
+ */
+var gcdOfStrings = function(str1, str2) {
+
+    if(str1+ str2 != str2+str1){
+        return ""
+    }
+    let word1_len =str1.length
+    let word2_len = str2.length
+    
+    const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+
+
+    let gcd_val = gcd(word1_len,word2_len)
+    
+    return str1.substring(0,gcd_val) 
+
+};
+
+python:
+
+
+class Solution:
+    def gcdOfStrings(self, str1: str, str2: str) -> str:
+
+        if (str1+str2 != str2+str1):
+            return ""
+
+        word1_len = len(str1)
+        word2_len = len(str2)
+
+        gcd_of_strings = gcd(word1_len, word2_len)
+
+        return str1[:gcd_of_strings]
