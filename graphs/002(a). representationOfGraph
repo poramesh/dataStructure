@@ -27,7 +27,7 @@ edge = an object wiht two field. structure or class with two fields. one to stor
 endVertex.
 
 struct edge{
-   char * startVertex;
+   char *startVertex;
    char *endVertex;
    int weight;
 };
@@ -64,7 +64,8 @@ it is expressed in BIG O notation.
 
 we do not have to consume unreasonably high memory.
 
-for the vertext list = rows. right now we just have a,b and so on but if it strings then it will cosnume more momery.
+for the vertext list = rows. 
+right now we just have a,b and so on but if it strings then it will cosnume more momery.
 
 so we can have the reference of the string or have an index of vertex list.
 
@@ -146,9 +147,9 @@ struct edge{
 };
 
 struct edge edgeList[max_size];
-int i =0;
+int i = 0;
 
-void insertEdges(int value,char* s, char* e){
+void insertEdges(int value, char* s, char* e){
     if(i<max_size){
         //printf("s=%s\n",s); //will print the same value = A
         //printf("char*=%s\n",(char*)s); //will print the same value = A
@@ -215,8 +216,6 @@ The total number of connected nodes are 4
 /***
  *Array of Pointers to Structures
  * 
- * to find all nodes adjacent to a given node?
- * 
  * 
  * The key difference between using a direct structure array (struct edge edgeList[MAX_SIZE];) and using
 an array of pointers to structures (struct edge* edgeList[MAX_SIZE];) lies in memory allocation, access patterns, and flexibility.
@@ -226,8 +225,7 @@ WHEN WE TO USE->
 Memory for the array of pointers is allocated at compile time.
 Each element (structure) must be dynamically allocated at runtime using malloc.
 
-struct edge* edgeList[MAX_SIZE];
-int i = 0;
+cint i = 0;
 
 void insertEdge(int value, const char* s, const char* e) {
     if (i < MAX_SIZE) {
@@ -246,4 +244,86 @@ void insertEdge(int value, const char* s, const char* e) {
 }
  * 
  ***/
+
+
+
+the above code can also be wrttein like this:
+
+// Online C compiler to run C program online
+#include <stdio.h>
+#include <string.h>
+#define max_size 10
+
+struct edge{
+    int weight;
+    char startVertex;
+    char endVertex;
+};
+
+struct edge edgeList[max_size];
+int i = 0;
+
+void insertEdges(int value, char s, char e){
+    if(i<max_size){
+        //printf("s=%s\n",s); //will print the same value = A
+        //printf("char*=%s\n",(char*)s); //will print the same value = A
+        edgeList[i].weight = value;
+        edgeList[i].startVertex = s;
+        edgeList[i].endVertex = e;
+        i++;
+    }else{
+        printf("edge list is full\n");
+    }
+    
+}
+
+void print(){
+    for( int j=0; j<i; j++){
+        printf("%c<->%c:%d \n", edgeList[j].startVertex, edgeList[j].endVertex,  edgeList[j].weight);
+    }
+}
+
+int findTheCountOfAdjacentNode(char adjacentValue){
+    int count = 0;
+    for(int j=0;j<i;j++){
+        if(edgeList[j].startVertex==adjacentValue || edgeList[j].endVertex==adjacentValue){
+            count++;
+        }
+    }
+    return count;
+}
+
+int twoNodeConnected(char a, char b){
+    int count = 0; 
+    for(int j=0;j<i;j++){
+        if((edgeList[j].startVertex==a && edgeList[j].endVertex==b)||(edgeList[j].startVertex ==b &&edgeList[j].endVertex==a)){
+            count = 1;
+        }
+        return count;
+    }
+    return count;
+}
+
+
+
+int main() {
+    insertEdges(5,'A','B');
+    insertEdges(7,'A','C');
+    insertEdges(3,'A','D');
+    insertEdges(2,'B','E');
+    insertEdges(10,'B','F');
+    insertEdges(1,'C','G');
+    insertEdges(11,'D','H');
+    insertEdges(9,'E','H');
+    insertEdges(4,'F','H');
+    insertEdges(6,'G','H');
+    print();
+    int NoOfadjacentNode = findTheCountOfAdjacentNode('H');
+    printf("\n");
+    printf("The total number of connected nodes are %d\n", NoOfadjacentNode);
+    
+    int count = twoNodeConnected('A','V');
+    count == 1? printf("Connected"):printf("not connected");
+    
+}
 
