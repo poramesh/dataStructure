@@ -176,6 +176,138 @@ THANK YOU SO MUCH FOR TEACHING.
 
 
 
+
+1. Define the Node Structure
+Define a structure for the nodes of the linked list, where each node represents a vertex connected to the current vertex.
+
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define the node structure for the adjacency list
+typedef struct Node {
+    int vertex;            // The vertex this node represents
+    struct Node* next;     // Pointer to the next node in the list
+} Node;
+
+
+2. Define the Graph Structure
+Define the structure for the graph, which includes an array of pointers to the linked list nodes.
+
+// Define the graph structure
+#define NUM_VERTICES 8  // Adjust as needed for your graph
+
+typedef struct Graph {
+    Node* adjLists[NUM_VERTICES]; // Array of adjacency lists
+} Graph;
+
+
+
+3. Initialize the Graph
+Initialize the graph by setting all adjacency lists to NULL.
+void initializeGraph(Graph* graph) {
+    for (int i = 0; i < NUM_VERTICES; i++) {
+        graph->adjLists[i] = NULL;  // Start with empty adjacency lists
+    }
+}
+
+
+
+4. Add an Edge
+Write a function to add an edge between two vertices. This function will add a new node to the linked list of the starting vertex.
+
+void addEdge(Graph* graph, int startVertex, int endVertex) {
+    // Create a new node for the end vertex
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->vertex = endVertex;
+    newNode->next = graph->adjLists[startVertex];
+    graph->adjLists[startVertex] = newNode;  // Insert node at the head of the list
+}
+
+
+
+
+5. Print the Graph
+Write a function to print the adjacency list representation of the graph.
+
+
+void printGraph(Graph* graph) {
+    for (int i = 0; i < NUM_VERTICES; i++) {
+        Node* temp = graph->adjLists[i];
+        printf("A[%d] -> ", i);
+        while (temp) {
+            printf("%d -> ", temp->vertex);
+            temp = temp->next;
+        }
+        printf("NULL\n");
+    }
+}
+
+
+6. Main Function
+Use the functions to create the graph and add edges as per the adjacency list provided.
+
+int main() {
+    Graph graph;
+
+    // Initialize the graph
+    initializeGraph(&graph);
+
+    // Add edges as per the adjacency list
+    addEdge(&graph, 0, 1);
+    addEdge(&graph, 0, 2);
+    addEdge(&graph, 0, 3);
+    addEdge(&graph, 1, 0);
+    addEdge(&graph, 1, 4);
+    addEdge(&graph, 1, 5);
+    addEdge(&graph, 2, 0);
+    addEdge(&graph, 2, 6);
+    addEdge(&graph, 3, 0);
+    addEdge(&graph, 3, 7);
+    addEdge(&graph, 4, 1);
+    addEdge(&graph, 4, 7);
+    addEdge(&graph, 5, 1);
+    addEdge(&graph, 5, 7);
+    addEdge(&graph, 6, 2);
+    addEdge(&graph, 6, 7);
+    addEdge(&graph, 7, 3);
+    addEdge(&graph, 7, 6);
+    addEdge(&graph, 7, 4);
+    addEdge(&graph, 7, 5);
+
+    // Print the adjacency list
+    printGraph(&graph);
+
+    // Clean up memory (optional but recommended)
+    for (int i = 0; i < NUM_VERTICES; i++) {
+        Node* temp = graph.adjLists[i];
+        while (temp) {
+            Node* next = temp->next;
+            free(temp);
+            temp = next;
+        }
+    }
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
 
 
