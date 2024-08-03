@@ -135,6 +135,79 @@ we need to scan the whole list and it can be v large and it is costly.
 
 
 ____________________________________________________________________________
+
+how to store a char/string as single digit number:
+
+#include<stdio.h>
+
+int main(){
+    char a[]= {'A','B','C','D','E','F','G','H','I','J'};
+    
+    for (int i =0;i<10;i++){
+        printf("%c ", a[i]); ;//A B C D E F G H I J 
+    }
+}
+
+If you want to use an array of char*, you are dealing with an array of string pointers (C strings). Each element of this array should be a string
+(a char array terminated by a null character '\0')
+
+#include <stdio.h>
+
+int main() {
+    char* a[10];
+    a[0] = "A";
+    a[1] = "B";
+    a[2] = "C";
+    a[3] = "D";
+    a[4] = "E";
+    a[5] = "F";
+    a[6] = "G";
+    a[7] = "H";
+    a[8] = "I";
+    a[9] = "J";
+    
+    for (int i = 0; i < 10; i++) {
+        printf("%s ", a[i]);
+    }
+    
+    return 0;
+}
+
+
+and to find the character
+
+
+#include <stdio.h>
+
+void find(char tofind, char a[], int length) {
+    for(int i = 0; i < length; i++) {
+        if(a[i] == tofind) {
+            printf("\nFound\n");
+            return; // Exit the function once the element is found
+        }
+    }
+    printf("\nNot Found\n"); // If the element is not found in the array
+}
+
+int main() {
+    char a[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
+    int length = sizeof(a) / sizeof(a[0]); // Calculate the length of the array
+    
+    for (int i = 0; i < length; i++) {
+        printf("%c ", a[i]); // A B C D E F G H I J
+    }
+    
+    find('A', a, length); // Test the find function
+    find('Z', a, length); // Test the find function with a character not in the array
+    
+    return 0;
+}
+
+
+full logic:
+
+
+
 // Online C compiler to run C program online
 #include <stdio.h>
 #include <string.h>
