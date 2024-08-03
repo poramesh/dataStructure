@@ -87,8 +87,8 @@ we can label the edges with weight/cost. and we can recommend the shorted path b
 unweighted graph: a weighted graph with all edges having weight = 1 unit.  
 
 weighted and directed graph = intracity road network.
-highway - directed and directed grap.
-werld wide web  - unweighted and un directed graph.
+highway - directed and weighted graph.
+world wide web  - unweighted and un directed graph.
 social media - unweighted and udirected graph
 
 
@@ -201,7 +201,7 @@ closed walk: starts and ends at same vertex. the lenght of walk must be greated 
 C   D   E  F   CONNECTED
 \    \ /  /
   G -- H
-<A->B->E->H->D->E>
+<A->B->E->H->D->A>
 
 simple walk: no repetition other than start and end.
 
@@ -226,16 +226,3 @@ a tree as an undirected acyclic graph, this has no simple cycle in the tree.
 we can also have directed acyclic graph.(DAG)
 
 G = (V,E)
-
-
-
-
-
-
-
-
-
-
-
-
-
