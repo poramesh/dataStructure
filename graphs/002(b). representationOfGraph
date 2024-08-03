@@ -2,6 +2,17 @@ NEXT IMPLEMENTATION:
 
 the efficient design than the previous dissuces implementation is having two dimentional matrix.
 
+
+        5
+    A -------B
+7 /  | 3    /2 \10
+/    |     /    |
+C    D     E    F 
+ \ 11  \   /9  /
+1   \    \ / /4
+    G ----H
+       6
+
 vertex list;
 A 0
 B 1
@@ -22,8 +33,7 @@ H 7
 2   | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
     +---+---+---+---+---+---+---+---+
 3   | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
-    +---+---+---+---+---+---+---+---+
-4   | 0 |  1| 0 | 0 | 0 | 0 | 0 | 1 |
+c4   | 0 |  1| 0 | 0 | 0 | 0 | 0 | 1 |
     +---+---+---+---+---+---+---+---+
 5   | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 1 |
     +---+---+---+---+---+---+---+---+
@@ -120,8 +130,192 @@ webpages will also not have link to all the webpages.
 we have another representaion that doesn't consume much space that is adjancency list representaion. 
 
 
+#include <stdio.h>
+#include <limits.h>
+
+// Define the structure
+struct edge {
+    int value;
+    char leftVertex;
+    char rightVertex;
+};
+
+// Initialize the edge list with 7x7 elements
+struct edge edgeList[8][8];  // 8x8 to accommodate vertices A-H
+int i = 0;
+int j = 0;
+
+// Function to convert vertex character to index
+int vertexIndex(char vertex) {
+    printf("%d ",vertex);
+    return vertex - 'A';
+    
+}
+
+// Function to insert edges into the edge list
+void insertEdges(int val, char start, char end) {
+    int startIdx = vertexIndex(c);
+    int endIdx = vertexIndex(end);
+    edgeList[startIdx][endIdx].value = val;
+    edgeList[startIdx][endIdx].leftVertex = start;
+    edgeList[startIdx][endIdx].rightVertex = end;
+    edgeList[endIdx][startIdx].value = val;  // For undirected graph, add the reverse edge
+    edgeList[endIdx][startIdx].leftVertex = end;
+    edgeList[endIdx][startIdx].rightVertex = start;
+}
+
+// Function to initialize the edge list with infinity (or a large value)
+void initializeEdgeList() {
+    for (i = 0; i < 8; i++) {
+        for (j = 0; j < 8; j++) {
+            edgeList[i][j].value = INT_MAX;  // Use INT_MAX to represent infinity
+            edgeList[i][j].leftVertex = ' ';
+            edgeList[i][j].rightVertex = ' '; // Or use NULL if you need a non-null pointer
+            if (i == j) {
+                edgeList[i][j].value = 0;  // Distance to itself is zero
+            }
+        }
+    }
+}
+
+int main() {
+    initializeEdgeList();
+
+    insertEdges(5, 'A', 'B');
+    insertEdges(7, 'A', 'C');
+    insertEdges(3, 'A', 'D');
+    insertEdges(2, 'B', 'E');
+    insertEdges(10, 'B', 'F');
+    insertEdges(1, 'C', 'G');
+    insertEdges(11, 'D', 'H');
+    insertEdges(9, 'E', 'H');
+    insertEdges(4, 'F', 'H');
+    insertEdges(6, 'G', 'H');
+
+    // Print the edge list to verify
+    for (i = 0; i < 8; i++) {
+        for (j = 0; j < 8; j++) {
+            if (edgeList[i][j].value == INT_MAX) {
+                printf(" ∞ ");
+            } else {
+                printf("%2d ", edgeList[i][j].value);
+            }
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
 
 
 
+
+
+
+____________________________________________________________________________________________________________
+
+#include <stdio.h>
+#include <ctype.h> // For toupper function
+
+#define NUM_VERTICES 26 // Number of vertices from A to Z
+
+// Function to convert vertex character to index
+int vertexIndex(const char *vertex) {
+    if (strlen(vertex) == 1) {
+        char ch = toupper(vertex[0]); // Convert to uppercase to handle lowercase input
+        if (ch >= 'A' && ch <= 'Z') {
+            return ch - 'A'; // Convert 'A' to 0, 'B' to 1, ..., 'Z' to 25
+        }
+    }
+    return -1; // Invalid vertex
+}
+
+int main() {
+    // Test cases
+    printf("Index of A: %d\n", vertexIndex("A")); // Output: 0
+    printf("Index of B: %d\n", vertexIndex("B")); // Output: 1
+    printf("Index of Z: %d\n", vertexIndex("Z")); // Output: 25
+    printf("Index of a: %d\n", vertexIndex("a")); // Output: 0 (case insensitive)
+    printf("Index of X: %d\n", vertexIndex("X")); // Output: 23
+    printf("Index of Y: %d\n", vertexIndex("Y")); // Output: 24
+
+    return 0;
+}
+
+
+__________________________________________________________________________________________________________
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define MAX_VERTICES 100
+
+// Array of vertex names
+const char *vertexNames[MAX_VERTICES];
+int numVertices = 0;
+
+// Function to add a vertex name and return its index
+int addVertex(const char *vertex) {
+    if (numVertices >= MAX_VERTICES) {
+        printf("Vertex list is full.\n");
+        return -1;
+    }
+    vertexNames[numVertices] = vertex;
+    return numVertices++;
+}
+
+// Function to find the index of a vertex name
+int vertexIndex(const char *vertex) {
+    for (int i = 0; i < numVertices; i++) {
+        if (strcmp(vertexNames[i], vertex) == 0) {
+            return i;
+        }
+    }
+    return -1; // Invalid vertex
+}
+
+int main() {
+    // Add vertices
+    addVertex("vertexA");
+    addVertex("vertexB");
+    addVertex("vertexC");
+
+    // Test cases
+    printf("Index of vertexA: %d\n", vertexIndex("vertexA")); // Output: 0
+    printf("Index of vertexB: %d\n", vertexIndex("vertexB")); // Output: 1
+    printf("Index of vertexC: %d\n", vertexIndex("vertexC")); // Output: 2
+    printf("Index of vertexD: %d\n", vertexIndex("vertexD")); // Output: -1 (not found)
+
+    return 0;
+}
+
+
+
+_______________________________________________________________________________-
+
+#define NUM_VERTICES 8
+
+// Define the structure
+struct edge {
+    int value;
+    char *leftVertex;
+    char *rightVertex;
+};
+
+// List of vertex names
+const char *vertexNames[NUM_VERTICES] = {"bangalore", "mumbai", "delhi", "chennai", "kolkata", "hyderabad", "pune", "jaipur"};
+
+// Initialize the edge list with NUM_VERTICES x NUM_VERTICES elements
+struct edge edgeList[NUM_VERTICES][NUM_VERTICES];
+
+// Function to find the index of a vertex name
+int vertexIndex(const char *vertex) {
+    for (int i = 0; i < NUM_VERTICES; i++) {
+        if (strcmp(vertexNames[i], vertex) == 0) {
+            return i;
+        }
+    }
+    return -1; // Invalid vertex
+}
 
 
