@@ -1,0 +1,135 @@
+when Graph graph is created what does the memory looks like
+
+
+_____________________________________
+#define max_len 10
+
+struct node {
+    int data;
+    struct node* next;
+}; 
+
+struct Graph {
+    struct node* adjList[max_len];
+};
+
+
+struct Graph myGraph;
+________________________________
+
+Size of struct node:
+
+4 bytes (int) + 8 bytes (pointer) = 12 bytes.
+
+due to alignment requirements, the structure may be padded to the nearest multiple of the largest member (8 bytes). This means struct 
+node might be padded to 16 bytes to maintain alignment.
+
+
+
+Size of adjList in struct Graph:
+
+struct node* adjList[max_len]: An array of 10 pointers.
+
+Each pointer is 8 bytes on a 64-bit system.
+Total size of adjList: 10 pointers * 8 bytes per pointer = 80 bytes.
+
+//This will occupy 80 bytes in memory for the adjList array, with each element being a pointer to struct node. Initially, 
+these pointers will be uninitialized or set to NULL if you initialize them.
+
+
+Address      | Value
+------------ | -----
+0x1000       | (pointer to `struct node`, initially NULL or uninitialized)  // adjList[0]
+0x1008       | (pointer to `struct node`, initially NULL or uninitialized)  // adjList[1]
+0x1010       | (pointer to `struct node`, initially NULL or uninitialized)  // adjList[2]
+0x1018       | (pointer to `struct node`, initially NULL or uninitialized)  // adjList[3]
+0x1020       | (pointer to `struct node`, initially NULL or uninitialized)  // adjList[4]
+0x1028       | (pointer to `struct node`, initially NULL or uninitialized)  // adjList[5]
+0x1030       | (pointer to `struct node`, initially NULL or uninitialized)  // adjList[6]
+0x1038       | (pointer to `struct node`, initially NULL or uninitialized)  // adjList[7]
+0x1040       | (pointer to `struct node`, initially NULL or uninitialized)  // adjList[8]
+0x1048       | (pointer to `struct node`, initially NULL or uninitialized)  // adjList[9]
+
+
+
+
+here only pointer is created, When a pointer to a struct node is created in C, it holds the memory address of the struct node it points to.
+The pointer itself only occupies space sufficient to store a memory address (typically 8 bytes on a 64-bit system or 4 
+bytes on a 32-bit system), but it does not allocate memory for the struct node it points to.
+You need to explicitly allocate memory for the struct node using functions like malloc
+
+
+take this better example:
+
+struct node {
+    int data;
+    struct node* next;
+};
+
+
+pointer declaration:
+struct node* ptr;
+
+Allocation:
+ptr = (struct node*)malloc(sizeof(struct node));
+
+Address      | Value
+------------ | -----
+0x1000       | 0x2000 (address of the allocated struct node)
+
+Address      | Value
+------------ | -----
+0x2000       | (int data, 4 bytes)
+0x2004       | (padding, 4 bytes for alignment)
+0x2008       | (struct node* next, 8 bytes)
+
+Pointer Declaration: 
+
+When you declare a pointer to a struct node, it only occupies space for the address (8 bytes
+on a 64-bit system).
+
+Pointer Initialization: 
+
+The pointer itself does not allocate memory for the struct node. You need to use malloc to 
+allocate memory for the actual struct node and then assign the address of this allocated memory to the pointer.
+
+Memory Allocation:
+
+After using malloc, the pointer holds the starting address of the allocated memory block for
+the struct node.
+
+
+____________________________________________
+
+when you define a node as just an array.
+
+#define max_len 10
+
+struct node {
+    int data;
+    struct node* next;
+};
+
+struct Graph {
+    struct node adjList[max_len]; //An array of 10 struct node elements.
+    //10 nodes * 16 bytes per node (with alignment) = 160 bytes.
+};
+
+Graph graph will have this
+
+
+Address      | Value
+------------ | -----
+0x1000       | (data for adjList[0])
+0x1004       | (pointer for adjList[0])
+0x1008       | (padding for alignment)
+0x1010       | (data for adjList[1])
+0x1014       | (pointer for adjList[1])
+0x1018       | (padding for alignment)
+...
+0x10A0       | (data for adjList[9])
+0x10A4       | (pointer for adjList[9])
+0x10A8       | (padding for alignment)
+
+
+
