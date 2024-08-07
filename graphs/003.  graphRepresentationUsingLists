@@ -252,6 +252,9 @@ int main() {
     // Initialize the graph
     initializeGraph(&graph);
 
+//When passing graph by value, a copy is made, and modifications in the function do not affect the original graph.
+//When passing graph by reference, the original graph is modified.
+
     // Add edges as per the adjacency list
     addEdge(&graph, 0, 1);
     addEdge(&graph, 0, 2);
@@ -292,9 +295,108 @@ int main() {
 
 
 
+complete code:
+
+#include<stdio.h>
+#define max_len 8
+#include<stdlib.h>
+
+/***
+A[0] -> 1 -> 2 -> 3 -> NULL
+A[1] -> 0 -> 4 -> 5 -> NULL
+A[2] -> 0 -> 6 -> NULL
+A[3] -> 0 -> 7 -> NULL
+A[4] -> 1 -> 7 -> NULL
+A[5] -> 1 -> 7 -> NULL
+A[6] -> 2 -> 7 -> NULL
+A[7] -> 3 -> 6 -> 4 -> 5 -> NULL
+***/
 
 
 
+struct Node{
+    int vertex;
+    struct Node * next;
+};
+
+struct Graph{
+    struct Node * adjList[max_len];
+};
+
+
+void initialiseGraph(struct Graph *graph){
+
+    for (int i=0;i<max_len;i++){
+        graph->adjList[i] = NULL;
+    }
+}
+
+void addEdge(struct Graph * graph, int startVertex, int endVertex){
+    struct Node* newEdge = (struct Node*)(malloc(sizeof(struct Node)));
+    newEdge->vertex = endVertex;
+    newEdge->next = graph->adjList[startVertex];
+    graph->adjList[startVertex] = newEdge;
+}
+
+
+void printEdges(struct Graph *graph){
+    
+    for (int i =0;i<max_len;i++){
+        struct Node* temp = graph->adjList[i];
+        printf("%d ",i);
+        while(temp){
+            printf("%d ",temp->vertex);
+            temp = temp->next;
+        }
+        printf("\n");
+    }
+    
+}
+
+
+int main(){
+    
+    struct Graph graph; // it holds an instance of the Graph structure, which includes an array of pointers to Node structures. 
+    
+    initialiseGraph(&graph);
+    
+    addEdge(&graph, 0, 1);
+    addEdge(&graph, 0, 2);
+    addEdge(&graph, 0, 3);
+    addEdge(&graph, 1, 0);
+    addEdge(&graph, 1, 4);
+    addEdge(&graph, 1, 5);
+    addEdge(&graph, 2, 0);
+    addEdge(&graph, 2, 6);
+    addEdge(&graph, 3, 0);
+    addEdge(&graph, 3, 7);
+    addEdge(&graph, 4, 1);
+    addEdge(&graph, 4, 7);
+    addEdge(&graph, 5, 1);
+    addEdge(&graph, 5, 7);
+    addEdge(&graph, 6, 2);
+    addEdge(&graph, 6, 7);
+    addEdge(&graph, 7, 3);
+    addEdge(&graph, 7, 6);
+    addEdge(&graph, 7, 4);
+    addEdge(&graph, 7, 5);
+    
+    printEdges(&graph);
+
+}
+
+
+
+o/p
+
+0 3 2 1 
+1 5 4 0 
+2 6 0 
+3 7 0 
+4 7 1 
+5 7 1 
+6 7 2 
+7 5 4 6 3 
 
 
 
