@@ -10,3 +10,26 @@
 	printf("%d ",**ptr); //-2147483647 value of num
 	printf("%d ",*ptr); //873550972 adress of num
 	printf("%d ",&ptr); //873550952 address of ptr
+
+
+#include <stdio.h>
+#include <limits.h>
+
+int main() {
+    int num = INT_MIN;
+    int *var = &num; 
+    int **ptr = &var;
+
+    printf("num: %d\n", num);            // Value of num: -2147483648
+    printf("&num: %p\n", (void*)&num);   // Address of num: 0x7ffd7cd441ac
+    printf("var: %p\n", (void*)var);     // Address of num (stored in var): 0x7ffd7cd441ac
+    printf("&var: %p\n", (void*)&var);   // Address of var: 0x7ffd7cd441a0: 0x7ffd7cd441a0
+    printf("*var: %d\n", *var);          // Value of num (dereferenced var): -2147483648
+    printf("ptr: %p\n", (void*)ptr);     // Address of var (stored in ptr): 0x7ffd7cd441a0
+    printf("**ptr: %d\n", **ptr);        // Value of num (dereferenced ptr): -2147483648
+    printf("*ptr: %p\n", (void*)*ptr);   // Address of num (dereferenced ptr): 0x7ffd7cd441ac
+    printf("&ptr: %p\n", (void*)&ptr);   // Address of ptr: 0x7ffd7cd44198
+
+    return 0;
+}
+
