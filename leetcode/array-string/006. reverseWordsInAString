@@ -1,0 +1,157 @@
+Given an input string s, reverse the order of the words.
+
+A word is defined as a sequence of non-space characters. The words in s will be separated by at least one space.
+Return a string of the words in reverse order concatenated by a single space.
+
+Note that s may contain leading or trailing spaces or multiple spaces between two words. The returned string should only have a single space
+separating the words. Do not include any extra spaces.
+
+ 
+
+Example 1:
+
+Input: s = "the sky is blue"
+Output: "blue is sky the"
+
+Example 2:
+
+Input: s = "  hello world  "
+Output: "world hello"
+Explanation: Your reversed string should not contain leading or trailing spaces.
+
+Example 3:
+
+Input: s = "a good   example"
+Output: "example good a"
+Explanation: You need to reduce multiple spaces between two words to a single space in the reversed string.
+ 
+
+Constraints:
+
+1 <= s.length <= 104
+s contains English letters (upper-case and lower-case), digits, and spaces ' '.
+There is at least one word in s.
+
+
+
+solution:
+
+""""
+Handling Multiple Spaces: The split(" ") method will not handle multiple spaces between words properly. To handle this, you should use split()
+without arguments, which splits by any whitespace and removes extra spaces.
+
+
+so use split() never use split(" ")
+
+""""
+
+class Solution(object):
+    def reverseWords(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        words = s.split()
+        reversed_words = words[::-1]
+        reversed_string = " ".join(reversed_words)
+        return reversed_string
+
+
+__________________________
+using pointers::
+________________________
+
+
+
+initially convert the string to list: 
+
+s= "   pooja   mohan    akilesh    "
+
+converted to list:
+[' ', ' ', ' ', 'p', 'o', 'o', 'j', 'a', ' ', ' ', ' ', 'm', 'o', 'h', 'a', 'n', ' ', ' ', ' ', ' ', 'a', 'k', 'i', 'l', 'e', 's', 'h', ' ', ' ', ' ', ' ']
+
+reversed the list:
+[' ', ' ', ' ', ' ', 'h', 's', 'e', 'l', 'i', 'k', 'a', ' ', ' ', ' ', ' ', 'n', 'a', 'h', 'o', 'm', ' ', ' ', ' ', 'a', 'j', 'o', 'o', 'p', ' ', ' ', ' ']
+
+now we reverse the word:
+[' ', ' ', ' ', ' ', 'a', 'k', 'i', 'l', 'e', 's', 'h', ' ', ' ', ' ', ' ', 'm', 'o', 'h', 'a', 'n', ' ', ' ', ' ', 'p', 'o', 'o', 'j', 'a', ' ', ' ', ' ']
+
+now we will remove the extra space by swapping wihtin the array:
+
+['a', 'k', 'i', 'l', 'e', 's', 'h', ' ', 'm', 'o', 'h', 'a', 'n', ' ', 'p', 'o', 'o', 'j', 'a', 'n', ' ', ' ', ' ', 'p', 'o', 'o', 'j', 'a', ' ', ' ', ' ']
+
+
+and then do this: return ''.join(a[:i])
+
+ASTEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+
+
+class Solution:
+    def reverseWords(self, s: str) -> str:
+        if s is None:
+            return None
+        print(s)
+        a = list(s)
+        print(a)
+        n = len(a)
+        
+        # Step 1: Reverse the entire string
+        self.reverse(a, 0, n - 1)
+        
+        # Step 2: Reverse each word
+        self.reverseEachWord(a, n)
+        
+        # Step 3: Clean up spaces and return the result
+        return self.cleanSpaces(a, n)
+    
+
+    def reverseEachWord(self, a: list, n: int):
+        i = 0
+        while i < n:
+            # Skip spaces
+            while i < n and a[i] == ' ':
+                i += 1
+            # Find the end of the current word
+            j = i
+            while j < n and a[j] != ' ':
+                j += 1
+            # Reverse the current word
+            self.reverse(a, i, j - 1)
+            i = j + 1
+    
+    def cleanSpaces(self, a: list, n: int) -> str:
+        i = 0
+        j = 0
+        
+        while j < n:
+            # Skip spaces
+            while j < n and a[j] == ' ':
+                j += 1
+
+            while j < n and a[j] != ' ':
+                a[i] = a[j]
+                i += 1
+                j += 1
+            # Skip additional spaces
+            while j < n and a[j] == ' ':
+                j += 1
+            if j < n:
+                a[i] = ' '
+                i += 1
+            print(":",a)
+        return ''.join(a[:i])
+    
+    def reverse(self, a: list, i: int, j: int):
+        while i < j:
+            a[i], a[j] = a[j], a[i]
+            i += 1
+            j -= 1
+        print(a)
+
+# Create an instance of the Solution class
+solution = Solution()
+
+# Test the method
+ans = solution.reverseWords("   pooja   mohan    akilesh    ")
+print(ans)  # Expected output: "akilesh mohan pooja"
+
