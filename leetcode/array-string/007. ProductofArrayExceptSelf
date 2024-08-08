@@ -1,0 +1,179 @@
+Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].
+The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.
+You must write an algorithm that runs in O(n) time and without using the division operation.
+
+ 
+
+Example 1:
+
+Input: nums = [1,2,3,4]
+Output: [24,12,8,6]
+
+Example 2:
+
+Input: nums = [-1,1,0,-3,3]
+Output: [0,0,9,0,0]
+ 
+
+Constraints:
+
+2 <= nums.length <= 105
+-30 <= nums[i] <= 30
+The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.
+
+
+solution:
+
+1. creating two for loops
+
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        length = len(nums)
+        product = []
+
+        for i in range(length):
+            pro = 1
+            for j in range(length): 
+                if i == j:
+                     continue
+                pro = nums[j]*pro
+            
+            product.append(pro)
+return product 
+
+2. Dividing the product of array with the number
+
+but this wouldnt work cause divide my zero would result in an error.
+
+
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        length = len(nums)
+        pro = 1
+        ans = []
+        
+        for i in nums:
+            pro = pro *i
+        
+        for i in range(length):
+            a = pro/nums[i]
+            ans.append(a)
+        
+        return ans
+
+3. using prefix and suffix
+
+I REALLY WONDER HOW ANYONE OCMES W THIS :(
+
+initially we find the prefic product:
+i/P: [1,2,3,4]
+
+
+[1, 1]
+[1, 1, 2]
+[1, 1, 2, 6]
+
+and then suffix:
+
+[1, 1, 4, 1]
+[1, 12, 4, 1]
+[24, 12, 4, 1]
+
+multuplying prefix and suffix would give this result:
+
+[24, 12, 8, 6]
+
+ans[i] would be given by ans[i] = pre[i] * suff[i]. Why? Because the pre[i] * suff[i] contains product of every element before i and every element
+after i but not the element at index i (and that is the reson why we excluded a[i] in our prefix and suffix product).
+
+
+
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        length = len(nums)
+        pre = []
+        suf = [1]*length
+        pre.append(1)
+        ans = []
+        for i in range(1,length):
+            pro = nums[i-1]*pre[i-1]
+            pre.append(pro)
+
+
+        for i in range(0, length-1)[::-1]:
+            pro = nums[i+1]*suf[i+1]
+            suf[i] = pro
+
+
+        for i in range(length):
+            ans.append(suf[i]*pre[i])
+
+            
+        return ans
+
+
+4. Directly store the product of prefix and suffix into the final answer array
+
+we would not need seprate array.
+
+i/p: [1,2,3,4]
+
+first loop
+[1, 1, 1, 1]
+1
+[1, 1, 1, 1]
+2
+[1, 1, 2, 1]
+6
+[1, 1, 2, 6]
+24
+
+second loop where it gets started with curr = 1
+[1, 1, 2, 6]
+4
+[1, 1, 8, 6]
+12
+[1, 12, 8, 6]
+24
+[24, 12, 8, 6]
+24
+
+end result =>
+[24, 12, 8, 6]
+
+
+1
+2
+6
+24
+4
+12
+24
+24
+
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        length = len(nums)
+        ans = [1]*length
+        curr = 1
+        for i in range(length):
+            ans[i] = ans[i]*curr
+            curr = nums[i]*curr
+            print(ans)
+
+        curr = 1 
+        for i in range(0, length)[::-1]:
+            ans[i] = ans[i]*curr
+            curr = nums[i]*curr
+            print(ans)            
+        return ans
+
+----------------------------------------------------------------
+n=5
+for i in range(n-1, -1, -1):
+   print(i)
+
+
+4,3,2,1,0
+            
+            
