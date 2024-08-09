@@ -32,6 +32,12 @@ SOLutiON:
 
 HOWWW DO THEY COME UP WITH SUCH SOLUTIONNNNNSNSNSNNS::::
 
+wahts happening here ;
+initially we are setting first and second variable with infinity
+and whenever the number comes in with less than value we assign it to first and then if its lesser thna first then second is assigned.
+
+if number is lesser than second is found then we return trueeeee
+
 class Solution:
   def increasingTriplet(self,nums):
     first = second = float('inf')
