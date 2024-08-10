@@ -1,0 +1,65 @@
+If the array height = [1, 3, 2, 5], the ith line represents:
+
+You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints
+of the ith line are (i, 0) and (i, height[i]).
+
+For: 𝑖 = 0, the line is from (0,0) to (0,1).
+For: 𝑖 = 1, the line is from (1,0) to (1,3).
+For: 𝑖 = 2, the line is from (2,0) to (2,2).
+For: 𝑖 = 3, the line is from (3,0) to (3,5).
+
+Find two lines that together with the x-axis form a container, such that the container contains the most water.
+
+Return the maximum amount of water a container can store.
+Notice that you may not slant the container.
+
+
+
+
+
+
+JUST PUTTING IT OUT HERE CAUSE I MANAGED TO CAME UP W THIS SOLUTION BUT IT DOESNT PASS ALL THE TEST CASES SO I AM NOT ENTIRELY HAPPE.
+
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        i=0
+        n = len(height)
+        max_water = -inf
+        while(i<n):
+            w=0
+            j=i
+            while (j<n):
+                if(height[i]>height[j]):
+                    val = height[j]*w
+                else: 
+                    val = height[i]*w
+                
+                if(val>max_water):
+                    max_water = val
+                
+                w+=1
+                j+=1
+            
+            i+=1
+        
+        return max_water
+
+THE TRICK IS NOT THE HEIGHT, IT IS THE WIDTH.
+
+class Solution:
+    def maxArea(self, height):
+        i, j = 0, len(height) - 1
+        water = 0
+        while i < j:
+            water = max(water, (j - i) * min(height[i], height[j]))
+            if height[i] < height[j]:
+                i += 1
+            else:
+                j -= 1
+        return water
+
+
+     
+            
+        
+ 
