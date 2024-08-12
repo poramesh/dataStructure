@@ -84,3 +84,7 @@ example: Lambda for Immediate Execution:
 
 (lambda x: x + 1)(5)  # Output: 6
 The lambda function is immediately called with 5 as an argument.
+
+
+/ = floating point division 5/2 = 2.5
+// = integer  5/2 = 2
