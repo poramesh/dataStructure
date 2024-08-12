@@ -40,3 +40,47 @@ class Solution:
             else:
                 l+=1           
         return ans
+
+(or)
+
+class Solution:
+    def maxOperations(self, nums, k):
+        cnt, ans = Counter(nums), 0
+        print(cnt) #Counter({1: 1, 2: 1, 3: 1, 4: 1})
+        for val in cnt:
+            print(cnt[val],cnt[k-val])
+            ans += cnt[k - val] 
+            #we are doind min here, cause we want to intialise cnt[k-val] as value, as 0 when there exists no such k-val.
+            print(ans)
+            print()
+
+
+        return ans//2
+
+
+
+The question which is asked: how many pairs can be constructed, such that sum in each pair is equal to k. Imagine, that k = 8 and we have numbers
+2, 2, 2, 6, 6, 6, 6, 6, 6. Then we can construct 3 pairs in this case. In general if we have c1 times of number x and c2 times of number k - x, we
+can construct min(c1, c2) pairs with numbers x, k - x. So, all we need to do is to use Counter(nums) to calculate frequency of each number and
+then iterate over each number val, try to find number equal to k - val and update ans by min(freq, cnt[k - val]). Note also, that when we do this,
+we count each pair exaclty 2 times, so we need to divide answer by 2 in the end.
+
+Question: what happens, if k = 8, and we working wigh case 4, 4, 4, 4, 4, 4, 4? Then there can be constructed 7//2 = 3 pairs, but when 
+we count we count it 7 times. However in the end we will divide it by 2 and everything will work fine: because there can be only one
+number like this: k//2 (if k is odd or if there is no such pairs, everythin will be OK as well)
+
+(or)
+
+return (lambda c: sum(min(c[n], c[k-n]) for n in c))(Counter(nums))//2
+
+c: sum (min)
+
+
+So Counter(nums) is passed as the argument c to the lambda function, and it returns the computed sum.
+
+
+
+example: Lambda for Immediate Execution:
+
+(lambda x: x + 1)(5)  # Output: 6
+The lambda function is immediately called with 5 as an argument.
