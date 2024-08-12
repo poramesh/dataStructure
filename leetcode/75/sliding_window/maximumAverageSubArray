@@ -22,3 +22,44 @@ Constraints:
 n == nums.length
 1 <= k <= n <= 105
 -104 <= nums[i] <= 104
+
+
+Solution:
+
+PASSED ONLY 121/127 test cases
+
+class Solution:
+    def findMaxAverage(self, nums: List[int], k: int) -> float:
+
+        arr = -inf
+        for i in range(len(nums)-k+1):
+            arr = max(arr,(sum(nums[i:i+k]))/k)
+
+        return arr  
+
+(OR) THIS IS SOOO COOL APPROACHHH WHY DO I NOT COME W THIS SHIT>
+
+
+class Solution:
+    def findMaxAverage(self, nums: List[int], k: int) -> float:
+        
+        currSum = maxSum = sum(nums[:k])         # Initialize currSum and maxSum to the sum of the initial k elements
+
+        # Start the loop from the kth element 
+        # Iterate until you reach the end
+        for i in range(k, len(nums)):
+
+            # Subtract the left element of the window
+            # Add the right element of the window
+            currSum += nums[i] - nums[i - k]
+            
+            maxSum = max(maxSum, currSum)
+
+        return maxSum / k
+
+
+        initially you find the sum until the kth element from the beginning 
+         and then you procedd to enter the loop until the end of the list.
+         inisde the loop we will adding the previous sum with curent new element and subtract the 
+         first element by i-k which will get the sum of the next contigious block, and then we
+         check if its equal to max sum. and the loop continees until the end.
