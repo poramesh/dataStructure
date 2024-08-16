@@ -31,3 +31,10 @@ class Solution:
                 max = alt
         
         return max
+
+
+
+(or)
+
+  def largestAltitude(self, A):
+        return max(0, max(accumulate(A)))
