@@ -39,3 +39,94 @@ Constraints:
 
 1 <= word1.length, word2.length <= 105
 word1 and word2 contain only lowercase English letters.
+
+
+
+Operation 1: allows us to swap any two symbols, so what matters in the end not order of them, but 
+how many of each symbol we have. Imagine we have (6, 3, 3, 5, 6, 6) frequencies of symbols, than we need to have the
+same frequencies for the second string as well. So, we need to check if we have the same elements, but in different order 
+(that is one is anagramm of another), how we can efficiently check it? We can sort both of them and compare, or we can use Counter
+again to check if these two lists have the same elements! Yes, we use here Counter of Counter and to be honest I see it first time, 
+but it is not that difficult.
+
+Operation 2: allows us to rename our letters, but we need to use the same letters: it means, that set of letters in first and 
+second strings should be the same.
+
+
+
+
+from collections import Counter
+
+class Solution:
+    def closeStrings(self, word1: str, word2: str) -> bool:
+
+        if(len(word1) != len(word2)):
+            print("herere ia m")
+            return False
+        
+        dict_word1 = Counter(word1)
+        dict_word2 = Counter(word2)
+
+        print(dict_word1)
+        print(dict_word2)
+
+        sorted_counter1 = dict(sorted(dict_word1.items())) #no need of dict or sort.
+        sorted_counter2 = dict(sorted(dict_word2.items()))
+
+        print(sorted_counter1)
+        print(sorted_counter2)
+
+        if(sorted_counter1 == sorted_counter2):
+            return True
+
+        sorted_values1 = sorted(dict_word1.values())
+        sorted_values2 = sorted(dict_word2.values())
+
+        print(sorted_values1, sorted_values2)
+
+
+        if(dict_word1.keys() != dict_word2.keys()):
+            return False
+        
+        if(sorted_values1 == sorted_values2):
+            return True
+word1 =
+"cabbba"
+word2 =
+"abbccc"
+
+o/p:
+
+Counter({'b': 3, 'a': 2, 'c': 1})
+Counter({'c': 3, 'b': 2, 'a': 1})
+{'a': 2, 'b': 3, 'c': 1}
+{'a': 1, 'b': 2, 'c': 3}
+[1, 2, 3] [1, 2, 3]
+
+
+
+class Solution:
+    def closeStrings(self, w1, w2):
+        return set(w1) == set(w2) and Counter(Counter(w1).values()) == Counter(Counter(w2).values())
+
+
+//
+
+
+w1 = "aabbc"
+w2 = "ddeef"
+
+# Breakdown
+counter1 = Counter(w1)               # Counter({'a': 2, 'b': 2, 'c': 1})
+counter2 = Counter(w2)               # Counter({'d': 2, 'e': 2, 'f': 1})
+
+counter1_values = Counter(counter1.values())  # Counter({2: 2, 1: 1})
+counter2_values = Counter(counter2.values())  # Counter({2: 2, 1: 1})
+
+
+(or)
+
+class Solution:
+    def closeStrings(self, word1: str, word2: str) -> bool:
+        c1, c2 = Counter(word1),  Counter(word2)
+        return sorted(c2.values()) == sorted(c1.values()) and c1.keys() == c2.keys()
