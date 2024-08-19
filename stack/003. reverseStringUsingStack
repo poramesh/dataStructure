@@ -21,7 +21,7 @@ int main() {
     char c[200];
     printf("enter the string");
     gets(c);
-    reverse(c,strlen(c);
+    reverse(c,strlen(c));
     printf("%s",c);
 }
 (or)
