@@ -113,7 +113,9 @@ struct node* root;
 int main()
 {
   root=NULL; 
-  char *word="bugun seminer vardi!";  //In the statement char *word = "bugun seminer vardi!";, you are declaring a pointer to a character (char*) named word and initializing it with the memory address of the first character of the string "bugun seminer vardi!".
+  char *word="bugun seminer vardi!";  //In the statement char *word = "bugun seminer vardi!";, 
+you are declaring a pointer to a character (char*) named word and initializing it with the memory address 
+of the first character of the string "bugun seminer vardi!".
                                      
   reverse_string(word);
   print();
