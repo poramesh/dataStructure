@@ -191,12 +191,29 @@ void reverse(Node** head) {
     }
     *head = prev;
 }
-//Node** head: This is a double pointer to a Node. It's typically used to pass a pointer to a function so that the function can modify the pointer itself, such as updating it to point to a different node.
-//*head: When you dereference head with *head, you get the value stored at the memory address pointed to by head. In this case, the value is a pointer to the head of a linked list.
+
+/***
+//Node** head: This is a double pointer to a Node. It's typically used to pass a pointer to a function so that the function can modify the pointer itself,
+such as updating it to point to a different node.
+//*head: When you dereference head with *head, you get the value stored at the memory address pointed to by head.
+In this case, the value is a pointer to the head of a linked list.
+	int num = INT_MIN;
+	int *var = &num; 
+	int **ptr = &var;
+	printf("%d ",num); //-2147483647 value of num
+	printf("%d ",&num); //873550972 adress of num
+	printf("%d ",var); //873550972 address of num
+	printf("%d ",&var); //873550960 address of var
+	printf("%d ",*var); //-2147483647 value of num
+	printf("%d ",ptr); //873550960  address of var
+	printf("%d ",**ptr); //-2147483647 value of num
+	printf("%d ",*ptr); //873550972 adress of num
+	printf("%d ",&ptr); //873550952 address of ptr
+***/
 
 
 void push(Node** head, int value) {
-    Node* temphead = *head;
+    Node* temphead = *head; //**head holds the adress of head. and *head is the value
     Node* temp = (Node*)malloc(sizeof(Node));
     temp->value = value;
     temp->next = NULL;
