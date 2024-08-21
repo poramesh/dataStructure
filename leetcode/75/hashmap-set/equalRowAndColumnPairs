@@ -1,0 +1,69 @@
+Input: grid = [[3,2,1],
+               [1,7,6],
+               [2,7,7]]
+Output: 1
+Explanation: There is 1 equal row and column pair:
+- (Row 2, Column 1): [2,7,7]
+
+Input: grid = [[3,1,2,2],
+               [1,4,4,5],
+               [2,4,2,2],
+               [2,4,2,2]]
+Output: 3
+Explanation: There are 3 equal row and column pairs:
+- (Row 0, Column 0): [3,1,2,2]
+- (Row 2, Column 2): [2,4,2,2]
+- (Row 3, Column 2): [2,4,2,2]
+
+
+solution:
+
+class Solution:                                
+    def equalPairs(self, grid: List[List[int]]) -> int:
+
+        tpse = Counter(zip(*grid))   #if you dont * then it will treat it all as list.  
+        grid = Counter(map(tuple,grid))                                           
+        return  sum(tpse[t]*grid[t] for t in tpse)  # <-- compute the number of identical pairs
+
+JUST FOR REFERENCE:
+tpse: Counter({(3, 1, 2): 1, (2, 7, 7): 1, (1, 6, 7): 1})
+grid: Counter({(3, 2, 1): 1, (1, 7, 6): 1, (2, 7, 7): 1})
+for loop:
+(3, 1, 2)
+(2, 7, 7)
+(1, 6, 7)
+
+
+Counter({(3, 1, 2, 2): 1, (1, 4, 4, 4): 1, (2, 4, 2, 2): 1, (2, 5, 2, 2): 1})
+Counter({(2, 4, 2, 2): 2, (3, 1, 2, 2): 1, (1, 4, 4, 5): 1})
+(3, 1, 2, 2)
+(1, 4, 4, 4)
+(2, 4, 2, 2)
+(2, 5, 2, 2)
+
+
+
+int equalPairs(vector<vector<int>>& g) {
+    int res = 0, n = g.size();
+    for (int i = 0; i < n; ++i)
+        for (int j = 0; j < n; ++j) {
+            int k = 0;
+            while (k < n && g[i][k] == g[k][j])
+                ++k;
+            res += k == n;
+        }
+    return res;
+}
+! ! !     ! ! !     ! ! ! 
+!           !           !
+!           !           !
+
+!          !           !
+! ! !    ! ! !     ! ! !
+!          !           !
+
+!          !           !
+!          !           !
+! ! !    ! ! !    ! !  !
+
+
