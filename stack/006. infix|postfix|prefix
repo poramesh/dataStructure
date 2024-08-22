@@ -235,6 +235,26 @@ So this expression (if you are storing digit characters on c):
 
 ++n[c-'0'];
 
+
+
+#include <stdio.h>
+
+int main() {
+    char char_literal = '6';
+    int int_literal = 6;
+
+    printf("'6' as a character literal: %d\n", char_literal);
+    printf("6 as an integer literal: %d\n", int_literal);
+
+    return 0;
+}
+
+o/P;
+'6' as a character literal: 54
+6 as an integer literal: 6
+
+
+
 ------
 
 scanf("%s", characters); reads characters from the input stream until a whitespace character (space, tab, newline, etc.)
