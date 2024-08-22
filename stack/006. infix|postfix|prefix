@@ -15,7 +15,7 @@ a*b+c*d-e
 {(ab*)(cd*)+}-e
 {(ab*)(cd*)+}e-
 ab*cd*+e-
-2 3*5 4*+9 = 17
+2 3*5 4*+9- = 17
 
 prefix: 
 (2*3)+(5*4)-9
@@ -31,6 +31,13 @@ remember to use your brain to apply order of operations.
 
 --------
 // Online C compiler to run C program online
+
+IN THIS BELOW CODE. WE ARE PERFORMING POSTFIX OPERATION, 2 3*5 4*+9-
+WHERE THE VALUES IS PUSHED IN IF THEY ARE DIGITS, IF IT ENCOUNTERS THE OPERATOR, IT POPS THE VALUE AND PERFORMS THE OPERATION 
+AND THEN IT PUSHES THE RESULT BACK TO THE STACK, CONTINUES THIS OPERATION UNTIL END OF THE STRING>
+
+
+
 #include <stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -92,7 +99,7 @@ int evaluateExp(char exp[]){
 int main() {
     
     char c[40];
-    printf("enter the expression \n"); //(2*3)+(5*4)-9
+    printf("enter the expression \n"); //2 3*5 4*+9-
     scanf("%s",c);
     //scanf("%[^\n]s",c);
 
