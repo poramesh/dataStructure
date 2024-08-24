@@ -42,6 +42,7 @@ result -> [-4, 6]
 but in
 [4, -6] 4 and -6 will collide and stronger asteroids will remain, as 6 is stronger than 4 , so -6 will remain resulting [-6].
 
+[10, -11] //it comes out of the loop
 
 
 solution:
