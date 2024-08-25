@@ -20,9 +20,12 @@ we can use modulo operation.
 
 
 current position = rear
-next position = (rear+1)%n
+next position = (rear+1)%n e
+
+(5+1)%10 = 6
+
+
 previous postition = (rear+n-1)%n #addig n so it is always positive.
-printing=(first+rear%n)
 count = (rear+n-front)%n+1
 to check if its full: (rear+1)%MAX_SIZE == front ? true : false;
 
@@ -55,7 +58,7 @@ void goGetInTheQueue(int ele){
         rear = rear+1;
         front = front+1;
     } else {
-        rear= rear+1;
+        rear= (rear+1)%n;
     }
     q[rear]=ele;
 }
@@ -64,8 +67,8 @@ void getPopped(){
     if(isEmpty()){
         printf("There's nothing to pop");
     }else if(rear==front){
-        rear=rear-1;
-        front=front-1;
+        rear=-1;
+        front=-1;
     } else {
         front=(front+1)%max_size;
     }
@@ -78,7 +81,7 @@ void printTheQueue(){
         int count = (rear-front+max_size)%max_size+1;
         int i=front;
         while(count){
-            printf("%d",q[i]);
+            printf("%d",q[i%max_size]);
             i++;
             count--;
         }
