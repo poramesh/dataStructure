@@ -1,0 +1,96 @@
+Given the head of a singly linked list, group all the nodes with odd indices together followed by the nodes with even indices, and return the reordered list.
+
+The first node is considered odd, and the second node is even, and so on.
+
+Note that the relative order inside both the even and odd groups should remain as it was in the input.
+
+You must solve the problem in O(1) extra space complexity and O(n) time complexity.
+
+
+example 1:
+
+Input: head = [1,2,3,4,5]
+Output: [1,3,5,2,4]
+
+example 2:
+Input: head = [2,1,3,5,6,4,7]
+Output: [2,3,6,7,1,5,4]
+ 
+
+Constraints:
+
+The number of nodes in the linked list is in the range [0, 104].
+-106 <= Node.val <= 106
+
+
+SOLUTION:
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+struct ListNode* oddEvenList(struct ListNode* head) {
+
+   if(head!=NULL){
+   struct ListNode* odd = head;
+   struct ListNode* even= head->next;
+   struct ListNode* evenHead = even;
+
+   while(even!=NULL && even->next!=NULL){
+    odd->next = odd->next->next;
+    even->next = even->next->next;
+    odd = odd->next;
+    even = even->next;
+   }
+   odd->next = evenHead;
+   }
+   return head;
+    
+}
+
+
+
+
+VISUALISING
+
+
+odd = head ([1000]), points to node 1
+even = head->next ([1001]), points to node 2
+evenHead = even ([1001]), holds the start of the even list
+
+Step-by-Step Processing:
+Step 1: Initial Setup
+
+odd  -> [1000] 1 -> [1001] 2 -> [1002] 3 -> [1003] 4 -> [1004] 5 -> [1005] 6 -> [1006] 7 -> NULL
+even ->        [1001] 2 -> [1002] 3 -> [1003] 4 -> [1004] 5 -> [1005] 6 -> [1006] 7 -> NULL
+evenHead ->    [1001] 2 -> [1003] 4 -> [1005] 6 -> NULL
+
+Step 2: First Loop Iteration
+
+odd  -> [1000] 1 -> [1002] 3 -> [1003] 4 -> [1004] 5 -> [1005] 6 -> [1006] 7 -> NULL
+even ->        [1001] 2 -> [1003] 4 -> [1004] 5 -> [1005] 6 -> [1006] 7 -> NULL
+evenHead ->    [1001] 2 -> [1003] 4 -> [1005] 6 -> NULL
+
+Step 3:
+
+odd  -> [1000] 1 -> [1002] 3 -> [1004] 5 -> [1005] 6 -> [1006] 7 -> NULL
+even ->        [1001] 2 -> [1003] 4 -> [1005] 6 -> [1006] 7 -> NULL
+evenHead ->    [1001] 2 -> [1003] 4 -> [1005] 6 -> NULL
+
+
+Step 4: Third Loop Iteration
+
+odd  -> [1000] 1 -> [1002] 3 -> [1004] 5 -> [1006] 7 -> NULL
+even ->        [1001] 2 -> [1003] 4 -> [1005] 6 -> NULL
+evenHead ->    [1001] 2 -> [1003] 4 -> [1005] 6 -> NULL
+
+Step 5: Combine Odd and Even Lists
+Now, the loop terminates since even is NULL. We connect the end of the odd list ([1006] 7) to the start of the even list (evenHead, i.e., [1001] 2).
+
+Final result:
+
+head -> [1000] 1 -> [1002] 3 -> [1004] 5 -> [1006] 7 -> [1001] 2 -> [1003] 4 -> [1005] 6 -> NULL
+The odd nodes (1 -> 3 -> 5 -> 7) are followed by the even nodes (2 -> 4 -> 6).
