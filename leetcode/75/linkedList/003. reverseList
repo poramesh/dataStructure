@@ -55,4 +55,57 @@ class Solution:
         head = prev
 
         return head
+
+
+
+
+(or)
+
+public ListNode reverseList(ListNode head) {
+    /* iterative solution */
+    ListNode newHead = null;
+    while (head != null) {
+        ListNode next = head.next;
+        head.next = newHead;
+        newHead = head;
+        head = next;
+    }
+    return newHead;
+}
+
+
+USING RECURSION:
+
+
+public ListNode reverseList(ListNode head) {
+    /* recursive solution */
+    return reverseListInt(head, null);
+}
+
+private ListNode reverseListInt(ListNode head, ListNode newHead) {
+    if (head == null)
+        return newHead;
+    ListNode next = head.next;
+    head.next = newHead;
+    return reverseListInt(next, head);
+}
+
+
+
+(OR)
+GOAT CODE:
+
+
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        // base case
+        if(head == null || head.next == null) return head;
         
+        ListNode newHead = reverseList(head.next);
+        
+        head.next.next = head;
+        head.next = null;
+
+        return newHead;
+    }
+}
