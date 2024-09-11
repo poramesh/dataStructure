@@ -57,6 +57,13 @@ struct ListNode* oddEvenList(struct ListNode* head) {
 VISUALISING
 
 
+if we try to interchange the order then
+
+If either of these pointers is not moved properly, or if there's a logic error that leads to overwriting the next pointer incorrectly, 
+it could cause an infinite loop or disconnected nodes.
+
+
+
 odd = head ([1000]), points to node 1
 even = head->next ([1001]), points to node 2
 evenHead = even ([1001]), holds the start of the even list
