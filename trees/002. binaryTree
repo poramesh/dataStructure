@@ -46,7 +46,10 @@ complete binary tree: all levels except possibly the last are completely filled 
                                4  5   6  7
                               /\ /      
                              8 9 10
-there are three edges in the above tree and 4 nodes traversing until leaf path.
+there are 9 edges in the above tree, and the path from the root to the leaf nodes contains between 3 and 4 nodes
+
+Path from 1 to 8: 1 → 2 → 4 → 8 (4 nodes).
+Path from 1 to 6: 1 → 3 → 6 (3 nodes).
 
 
 max no of nodes at level i is 2^i
@@ -91,28 +94,33 @@ So,
 And, in general,^
 
  2^(d + 1) - 1 =  2^d + 2^d - 1 + ... + 2^1 + 2^0
-In a complete binary tree of height d there will be at least 2^d nodes. Levels through d - 1 form a full tree and there is at least 1 node in the next level (at the left).
+In a complete binary tree of height d there will be at least 2^d nodes. Levels through d - 1 form a full tree and there is at least 1 
+node in the next level (at the left).
 
 balanced binary tree:
-difference between height of left and right subtree for every node is not more than k(mostly 1)
+difference between height of left and right subtree for every node is not more than k(mostly 1 or any numner)
 => height of left - height of right
 height = no of edges in longest path from root to leaf.
-heoght of an empty tree is -1
-height of tree with 1 node is 0
+heoght of an empty tree is -1 (there is no edge nor nodes.)
+height of tree with 1 node is 0 (for example  1  -> this has no edge at all so its 0 )
 
 
                                    0
                                  /    \
-                                2     1
+                                2     0
                                 /      /\
                                0      0  0
                               /\         /\  
                              0 0        0  0 
 
-there are three edges in the above tree and 4 nodes traversing until leaf path.
-height of LST is 1 and RST is -1 => 1-(-1)= 2
+(the above node values are the different between lst and rst) since it contains 2 it is not balanced bInARY TREE.  
+
+there are three edges in the above tree and 4 nodes traversing until leaf path. (you count the height from the down)
+height of LST of 2 is 1 and height of RST of 2 is is -1 => 1-(-1)= 2
+height of LST of root node is 2 and height of RST of root node is 2 => 2-2 = 0
 
 we can implement binary tree using:
+
 a. dynamically created nodes.
 
 struct node{
