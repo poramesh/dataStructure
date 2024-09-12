@@ -30,7 +30,7 @@ O(n) for remove operation
 for n search, log2(n) comparisons
 if 1 comaprson = 10^-6 sec
 n = 2^31
-  = 31*10^10-6 sec
+  = 2^31*10-6 sec
 
 when we BST we can have O(logn) to perform all the operation, by making all of them balanced.
 
