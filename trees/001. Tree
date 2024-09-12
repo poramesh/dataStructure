@@ -4,7 +4,8 @@ Befoere implementing something we need to decide which data structure to use;;fo
 cost of operations, memory usage and ease of implementaion.
 trees are a ds which are used to store the hirearchial data.
 eg: organisational hirearchy of the company.
-Tress could be defined as a collection of entities called nodes linked together to simulate the hierarchy. tree is a non linear data structure, it is a hierarchial structure. 
+Tress could be defined as a collection of entities called nodes linked together to simulate the hierarchy. tree is a non linear data structure, it is a
+hierarchial structure. 
 
 the top most node in the tree is called a root of the tree..
 
@@ -35,7 +36,7 @@ the link is no bidirectional. we can go from 1 to 2 but we cant go from 2 to 1.
 4,5,and 6 are grandchildren of 1
 
 if we can go from a to b
-then a is ancestor of b (1, 2 and 5 are ancestor of 5)
+then a is ancestor of b (4, 6 and 5 are ancestor of 1)
 and b is descendant of a (10 is descent of 1 2 and 5)
 what are the common ancestor of 4 and 9 =>2 and 1
 6 and 7 are not sibbling as they doont have same parent but they have grandparents so they are cousins.
@@ -88,7 +89,8 @@ node* left;
 node*right;
 }
 
-we have two pointers cause we atmost are going to have two childrens. and its specific to BT. for other generic tree with any no of nodes we will use diff structutre.
+we have two pointers cause we atmost are going to have two childrens. and its specific to BT. for other generic tree with any no of nodes
+we will use diff structutre.
 
 applications:
 storing naturally hierachial data: eg - file system
