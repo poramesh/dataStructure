@@ -35,7 +35,7 @@ struct node{
     struct node *right;
 };
 
-struct node* a[MAX]; 
+struct node* a[MAX];  //a[MAX] creates an array with MAX elements, and each element of this array is of type struct node* (a pointer to a node).
 
 int front = -1;
 int rear = -1;
