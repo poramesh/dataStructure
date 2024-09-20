@@ -1,0 +1,313 @@
+
+Consider all the leaves of a binary tree, from left to right order, the values of those leaves form a leaf value sequence.
+For example, in the given tree above, the leaf value sequence is (6, 7, 4, 9, 8).
+
+Two binary trees are considered leaf-similar if their leaf value sequence is the same.
+Return true if and only if the two given trees with head nodes root1 and root2 are leaf-similar.
+
+
+
+Example 1:
+
+
+Input: root1 = [3,5,1,6,2,9,8,null,null,7,4], root2 = [3,5,1,6,7,4,2,null,null,null,null,null,null,9,8]
+Output: true
+
+        3
+       / \
+      5   1
+     / \ / \
+    6  2 9  8
+      / \
+     7   4
+
+        3
+       / \
+      5   1
+     / \ / \
+    6  7 4  2
+             / \
+            9   8
+
+
+Example 2:
+
+Input: root1 = [1,2,3], root2 = [1,3,2]
+Output: false
+
+    1
+   / \
+  2   3
+
+    1
+   / \
+  3   2
+ 
+
+Constraints:
+
+The number of nodes in each tree will be in the range [1, 200].
+Both of the given trees will have values in the range [0, 200].
+
+
+
+c++
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+
+    bool leafSimilar(TreeNode* root1, TreeNode* root2) {
+        string t1, t2;
+        DFS(root1, t1);
+        DFS(root2, t2);
+        return t1==t2;
+    }
+    
+    void DFS(TreeNode* root, string&s) {
+        if(root==NULL) return;
+        if(root->left==NULL&&root->right==NULL) s+=to_string(root->val)+"#";
+        DFS(root->left, s);
+        DFS(root->right, s);
+    }        
+};
+
+
+
+
+(or)
+
+
+    bool leafSimilar(TreeNode* root1, TreeNode* root2) {
+        stack<TreeNode*> s1 , s2;
+        s1.push(root1); s2.push(root2);
+        while (!s1.empty() && !s2.empty())
+            if (dfs(s1) != dfs(s2)) return false;
+        return s1.empty() && s2.empty();
+    }
+
+    int dfs(stack<TreeNode*>& s) {
+        while (true) {
+            TreeNode* node = s.top(); s.pop();
+            if (node->right) s.push(node->right);
+            if (node->left) s.push(node->left);
+            if (!node->left && !node->right) return node->val;
+        }
+    }
+
+        3                                       
+       / \
+      5   1
+     / \ / \
+    6  2 9  8
+      / \
+     7   4
+
+        3
+       / \
+      5   1
+     / \ / \
+    6  7 4  2
+             / \
+            9   8
+
+
+s1:3
+treenode:3     
+s1: 5,1   
+treenode:5     
+s1: 6,2,1 
+treenode:6     
+s1:2,1 
+
+return 6
+
+s2:3
+treenode:3
+s2:5,1
+treenode:5
+s2:6,7,1
+treenode: 6
+s2:7,1
+
+return 6
+__________________
+s1:2,1
+treenode: 2
+s1:7,4,1
+treenode: 7
+s1:4,1
+
+return 7
+
+s2:7,1
+treenode:7
+s2:1
+
+return 7
+
+(or)
+same logic with python.
+
+
+def leafSimilar(self, root1, root2):
+        """
+        :type root1: TreeNode
+        :type root2: TreeNode
+        :rtype: bool
+        """
+        return self.iterative(root1,[]) == self.iterative(root2,[])
+        
+    def iterative(self,root,s):
+        if root is not None:
+            stack = []
+            stack.append(root)
+            while stack:
+                x = stack.pop(-1)
+                if x.left is None and x.right is None:
+                    s.append(x.val)
+                    continue
+                if x.right is not None:
+                    stack.append(x.right)
+                if x.left is not None:
+                    stack.append(x.left)
+        return s
+
+
+(or)
+
+understanding yield haha
+
+python:
+
+    def leafSimilar(self, root1, root2):
+        def dfs(n):
+            if not n:
+                return
+            if not n.left and not n.right:
+                print(n.val)
+                yield n.val
+            yield from dfs(n.left)
+            yield from dfs(n.right)
+        return all(a == b for a, b in zip_longest(dfs(root1), dfs(root2)))))
+
+6
+6
+7
+7
+4
+4
+9
+9
+8
+8
+
+
+negaitve case:
+2
+3
+
+
+
+dfs(root1) and dfs(root2):
+
+These calls to the dfs function yield the leaf values of the trees rooted at root1 and root2, respectively.
+Each call returns a generator that produces the leaf values as it traverses the tree.
+
+zip_longest:
+
+This function comes from the itertools module and pairs elements from two or more iterables
+(in this case, the two generators from dfs(root1) and dfs(root2)).
+
+It continues producing pairs until the longest iterable is exhausted. If one iterable is shorter, it 
+fills in the missing values with a specified fillvalue (which defaults to None).
+
+This means that if one tree has more leaf nodes than the other, zip_longest will still pair them up, allowing for comparison without causing an error.
+
+Generator Expression:
+
+(a == b for a, b in zip_longest(dfs(root1), dfs(root2)))
+
+
+This is a generator expression that iterates over each pair (a, b) produced by zip_longest.
+It checks if each corresponding pair of leaf values is equal (a == b).
+
+
+all() Function:
+
+The all() function takes an iterable (in this case, the generator expression) and returns True if all elements
+in the iterable are true (or if the iterable is empty).
+
+If any of the comparisons (e.g., a == b) is False, all() will return False.
+
+
+
+Example Walkthrough
+
+Imagine we have two trees with the following leaf sequences:
+
+Tree 1 leaf values: 6, 7, 4
+Tree 2 leaf values: 6, 7, 8
+
+When you run the code:
+
+dfs(root1) yields 6, 7, 4.
+dfs(root2) yields 6, 7, 8.
+
+zip_longest pairs them as:
+
+(6, 6)
+(7, 7)
+(4, 8)
+
+The generator expression evaluates:
+
+6 == 6 → True
+7 == 7 → True
+4 == 8 → False
+
+Finally, all() evaluates to False because not all pairs are equal.
+
+(or)
+
+
+class Solution:
+    def leafSimilar(self, root1: TreeNode, root2: TreeNode) -> bool:
+
+        def dfs(root):                              #     Example: 
+                                                    #         root1:         root2:
+                                                    #            _____3__             __3__
+                                                    #           /         \           /     \
+                                                    #          5__         1         5       1__
+                                                    #         /   \       / \       / \     /   \
+                                                    #       *6*    2    *9* *8*   *6* *7* *4*    2
+                                                    #             / \                           / \
+                                                    #           *7* *4*                       *9* *8*
+                                                    #   root1:
+            if not root: return []                  #       node      dfs(root.left)+dfs(root.right)
+                                                    #       ––––      ––––––––––––––––––––––––––––––
+                                                             
+            if not root.left and not root.right:    #        2              [7] + [4]   = [7,4]
+                return [root.val]                   #        5              [6] + [7,4] = [6,7,4]
+                                                    #        1              [9] + [8]   = [9,8]
+            return dfs(root.left) + dfs(root.right) #        3          [6,7,4] + [9,8] = [6,7,4,9,8] <--
+                                                    #
+        return dfs(root1) == dfs(root2)             #   root2:
+                                                    #       node      dfs(root.left)+dfs(root.right)
+                                                    #       ––––      ––––––––––––––––––––––––––––––
+                                                    #        5            [6] + [7]     = [6,7]
+                                                    #        2            [9] + [8]     = [9,8]
+                                                    #        1            [4] + [9,8]   = [4,9,8]
+                                                    #        3          [6,7] + [4,9,8] = [6,7,4,9,8] <--
+
+                                                    #       Return True
