@@ -181,16 +181,6 @@ int goodNodes(struct TreeNode* root){
     return count;
 }
 
-                   3
-                 /   \
-                1     4
-               / \   / \
-              3   1 1   2
-             / \      \
-            5   null   5
-           /
-          4
-
 //
 l: 5 r: 5 
 l: 5 r: 5 
@@ -204,6 +194,120 @@ l: 4 r: 4
 l: 4 r: 4 
 l: 3 r: 4 
 
+                   3
+                 /   \
+                1     4
+               / \   / \
+              3   1 1   2
+             / \      \
+            5   null   5
+           /
+          4
+
+
+(or)
+
+
+Tree Structure Breakdown
+Root: 3: (3 >= 3) is true (1), so return 2 + 2 + 1 = 5.
+Left Subtree:
+.Node 1 (left child of 3): (1 >= 3) is false (0), so return 2+ 0 + 0 = 2.
+   .Node 3 (left child of 1): (3 >= 3) is true (1), so return 1 + 0 + 1 = return 2.
+       .Node 5 (left child of 3): (5 >= 5) is true (1), so return 0 + 0 + 1 = return 1.
+            .Node 4 (left child of 5): (4 >= 5) is false (0), so return 0 + 0 + 0 = 0.
+   .Node 1 (right child of 1): (1 >= 3) is false (0), so return 2 + 0 + 0 = 2.
+Right Subtree:
+.Node 4 (right child of 3):(4 >= 4) is true (1), so return 1 + 0 + 1 = 2.
+   .Node 1 (left child of 4): 0+1+0: return 1
+       .Node 5 (right child of 5): 0+0+1 return 1
+   .Node 2 (right child of 4): (2 >= 4) is false (0), so return 0 + 0 + 0 = return 0.
 
 
 
+    def goodNodes(self, r, ma=-10000):
+        return self.goodNodes(r.left, max(ma, r.val)) + self.goodNodes(r.right, max(ma, r.val)) + (r.val >= ma) if r else 0
+
+
+(or)
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+class Solution: 
+    def goodNodes(self, r: TreeNode, ma=float('-inf')) -> int:
+        if r is None:
+            return 0
+        
+        # Count this node if its value is greater than or equal to the maximum value seen so far
+        good = 1 if r.val >= ma else 0
+        
+        # Update the maximum value for the next recursive calls
+        ma = max(ma, r.val)
+        
+        # Recur for left and right children
+        good += self.goodNodes(r.left, ma)
+        good += self.goodNodes(r.right, ma)
+        
+        return good
+
+
+        3
+       / \
+      1   4
+     / \
+    3   1
+
+Start at the root node (3):
+
+ma = -10000 (initial value): Call goodNodes(3), update ma to max(-10000, 3) = 3.
+
+Move to the left child (1): Call goodNodes(1, 3), update ma to max(3, 1) = 3.
+
+Move to the left child (3): Call goodNodes(3, 3), update ma to max(3, 3) = 3.
+
+Both left and right children of this node are None, so both calls return 0.
+(3 >= 3) is true (1), so return 0 + 0 + 1 = 1.
+
+Go back to node (1) and move to the right child (1): Call goodNodes(1, 3), update ma to max(3, 1) = 3.
+Both left and right children are None, so both calls return 0.
+(1 >= 3) is false (0), so return 0 + 0 + 0 = 0.
+
+Now, back at node (1), we combine results: left = 1 (from node 3), right = 0 (from node 1).
+(1 >= 3) is false (0), so return 1 + 0 + 0 = 1.
+
+Back at the root node (3):
+
+Now, move to the right child (4): Call goodNodes(4, 3), update ma to max(3, 4) = 4.
+
+Both left and right children are None, so both calls return 0.
+(4 >= 4) is true (1), so return 0 + 0 + 1 = 1.
+
+Finally, combine results at the root:
+
+left = 1 (from node 1), right = 1 (from node 4).
+(3 >= 3) is true (1), so return 1 + 1 + 1 = 3.
+
+(or)
+
+
+
+
+class Solution: 
+    def goodNodes(self, root: TreeNode) -> int:
+          self.ans = 0
+          maxV = root.val
+          self.check(maxV, root)
+          return self.ans
+    
+    
+    def check(self, maxV, current):
+        if current == None: return
+        if current.val >= maxV:
+            self.ans += 1
+            maxV = current.val
+        
+        self.check(maxV, current.left)
+        self.check(maxV, current.right)
