@@ -142,3 +142,117 @@ total = 4
     1   3 -2
    /
  -1
+
+
+
+class Solution(object):
+    def pathSum(self, root, target):
+        # define global result and path
+        self.result = 0
+        cache = {0:1} //ensure if the root node and target is 0, it adds on the result
+        
+        # recursive to get result
+        self.dfs(root, target, 0, cache)
+        
+        # return result
+        return self.result
+    
+    def dfs(self, root, target, currPathSum, cache):
+        if root is None:
+            return  
+        currPathSum += root.val
+        oldPathSum = currPathSum - target
+
+        self.result += cache.get(oldPathSum, 0)
+        cache[currPathSum] = cache.get(currPathSum, 0) + 1
+
+        self.dfs(root.left, target, currPathSum, cache)
+        self.dfs(root.right, target, currPathSum, cache)
+        print(cache, currPathSum)
+        cache[currPathSum] -= 1
+
+
+
+Logic Explanation
+
+The key idea is to use a cumulative sum (currPathSum) from the root to the current node. If there exists a previous
+prefix sum in the path (stored in cache) such that subtracting this prefix sum from currPathSum equals 
+the target, then a path with the target sum exists between those two points.
+
+Here’s how the code works step-by-step:
+
+Cumulative Path Sum (currPathSum): As we traverse the tree, we calculate a cumulative sum from the root to each node.
+
+Finding Target Paths with oldPathSum: For each node, we check if there's a previous cumulative path sum 
+(oldPathSum) that would make the difference between currPathSum and oldPathSum equal to the target.
+
+oldPathSum = currPathSum - target
+If oldPathSum is found in cache, it means there’s a path from that previous sum up to the current node that has the target sum.
+
+Updating the Cache:
+
+Add the currPathSum to cache, which tracks how many times this cumulative sum has been seen.
+When we return from a node (after processing its left and right subtrees), decrement the count of 
+currPathSum in the cache to backtrack correctly.
+
+Example Walkthrough
+
+Let’s use an example to understand this process more clearly.
+
+Consider a binary tree like this:
+
+markdown
+        10
+       /  \
+      5   -3
+     / \    \
+    3   2    11
+   / \   \
+  3  -2   1
+
+Suppose target = 8.
+
+Starting at the Root (10):
+
+currPathSum = 10
+oldPathSum = 10 - 8 = 2
+cache does not contain 2, so we don’t increment self.result.
+Update cache with {10: 1} (1 occurrence of cumulative sum 10).
+Move to Left Child (5):
+
+currPathSum = 10 + 5 = 15
+oldPathSum = 15 - 8 = 7
+cache does not contain 7, so self.result remains unchanged.
+Update cache with {10: 1, 15: 1}.
+Move to Left Child (3):
+
+currPathSum = 15 + 3 = 18
+oldPathSum = 18 - 8 = 10
+cache contains 10, which means there’s a path from the root (sum 10) to this node that has the target sum.
+Increment self.result by 1.
+Update cache with {10: 1, 15: 1, 18: 1}.
+Move to Left Child (3) again:
+
+currPathSum = 18 + 3 = 21
+oldPathSum = 21 - 8 = 13
+cache does not contain 13, so self.result remains unchanged.
+Update cache with {10: 1, 15: 1, 18: 1, 21: 1}.
+Backtrack (return to the previous node, and update cache):
+
+After finishing the subtree of a node, decrement currPathSum in cache for that node to avoid counting paths from sibling nodes incorrectly.
+
+
+Why Adding and Subtracting Works?
+
+The subtraction (currPathSum - target) allows us to see if a previous prefix sum (path sum up to some ancestor node) has
+made it so that a path ending at the current node would sum to the target.
+
+By keeping track of cumulative sums and their occurrences in cache, the code can check for each node if there 
+exists a previous sum that would result in a target path ending at the current node. The addition and removal
+from cache are essential for accurately counting all paths without double-counting overlapping paths.
+
+This technique makes the algorithm efficient by avoiding recalculating the sum of each possible path from scratch. 
+Instead, it leverages cumulative sums and a hashmap to track occurrences, achieving an 
+
+O(N) time complexity.
+
