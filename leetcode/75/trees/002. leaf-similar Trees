@@ -87,16 +87,27 @@ public:
 
 (or)
 
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 
     bool leafSimilar(TreeNode* root1, TreeNode* root2) {
-        stack<TreeNode*> s1 , s2;
+        stack<TreeNode*> s1 , s2; // basically created a stack s1 and s2 of type treeNode which holds the adress of the TreeNode
         s1.push(root1); s2.push(root2);
         while (!s1.empty() && !s2.empty())
             if (dfs(s1) != dfs(s2)) return false;
         return s1.empty() && s2.empty();
     }
 
-    int dfs(stack<TreeNode*>& s) {
+    int dfs(stack<TreeNode*>& s) { //s is the adress of the stack, which is used to manipulate with the data.
         while (true) {
             TreeNode* node = s.top(); s.pop();
             if (node->right) s.push(node->right);
@@ -160,6 +171,14 @@ return 7
 same logic with python.
 
 
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
 def leafSimilar(self, root1, root2):
         """
         :type root1: TreeNode
@@ -189,16 +208,23 @@ def leafSimilar(self, root1, root2):
 understanding yield haha
 
 python:
-
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
     def leafSimilar(self, root1, root2):
         def dfs(n):
             if not n:
                 return
             if not n.left and not n.right:
-                print(n.val)
+                //print(n.val)
                 yield n.val
             yield from dfs(n.left)
             yield from dfs(n.right)
+
         return all(a == b for a, b in zip_longest(dfs(root1), dfs(root2)))))
 
 6
