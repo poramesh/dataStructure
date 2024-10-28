@@ -248,7 +248,7 @@ class Solution:
         ma = max(ma, r.val)
         
         # Recur for left and right children
-        good += self.goodNodes(r.left, ma)
+        good += self.goodNodes(r.left, ma) // it gets add on like good = good + goodNodes()
         good += self.goodNodes(r.right, ma)
         
         return good
