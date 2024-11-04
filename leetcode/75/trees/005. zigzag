@@ -1,0 +1,101 @@
+Longest zigzag in the binary tree
+
+You are given the root of a binary tree.
+
+A ZigZag path for a binary tree is defined as follow:
+
+Choose any node in the binary tree and a direction (right or left).
+If the current direction is right, move to the right child of the current node; otherwise, move to the left child.
+Change the direction from right to left or from left to right.
+Repeat the second and third steps until you can't move in the tree.
+Zigzag length is defined as the number of nodes visited - 1. (A single node has a length of 0).
+
+Return the longest ZigZag path contained in that tree.
+
+       1
+      / \
+     2   3
+      \   \
+       4   5
+      /     \
+     6       7
+
+longest zigzsg is 1->2->4->6 which is 3
+
+
+class Solution:
+    def __init__(self):
+        self.max = 0  # Initialize the max variable to track the longest ZigZag path
+
+    def longestZigZag(self, root):
+        if not root:
+            return 0
+        self.path(root.left, 0, False)  
+        self.path(root.right, 0, True)  
+        return self.max
+
+    def path(self, node, depth, direction):
+        self.max = max(self.max, depth)
+        if not node:
+            return
+        self.path(node.left, depth + 1 if direction else 0, False)//if previous direction was right, and now going left, we add 1 to depth, else starting again as 0
+        self.path(node.right, depth + 1 if not direction else 0, True)
+
+
+
+         1
+          \
+           1
+          / \
+         1   1
+            / \
+           1   1
+            \   
+             1
+              \
+               1
+if you print(depth) before self.max
+
+0
+0
+1
+0
+2
+0
+1
+0
+2
+3
+0
+1
+0
+0
+1
+0
+
+
+          1
+        /   \
+       1     1
+        \   
+         1 
+       /   \
+      1     1
+       \
+        1
+
+
+0
+0
+1
+2
+0
+3
+4
+0
+0
+1
+0
+0
+1
+0
