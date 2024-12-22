@@ -42,22 +42,40 @@ class Solution:
             su = max(su, sum(1 for cha in ch if cha in "aeiou"))
         return su
 
+
 (or)
 
 class Solution:
     def maxVowels(self, s: str, k: int) -> int:
 
         max_sum = count = sum(1 for i in range(k) if s[i] in "aeiou")   
-
+        # Iterate through the string starting from the k-th index
         for i in range(k,len(s)):
 
-            if s[i-k] in "aeoiu": count-=1
-            if s[i] in "aeiou": count+=1
+            if s[i-k] in "aeoiu": count-=1             # Check if the character sliding out of the window is a vowel
+            if s[i] in "aeiou": count+=1                       # Check if the new character sliding into the window is a vowel
             max_sum = max(count,max_sum)
 
 
         return max_sum
 
+
+Input: s = "aeiou", k = 2
+
+i = 2 
+s[2-2= 0] 
+s[3] 
+
+i = 3
+s[3-2=1]
+s[3]
+
+i = 4
+s[4-2=2]
+s[4]
+
+
+you can notice how window is sliding between 2
 
 (or)
 
@@ -77,17 +95,25 @@ class Solution:
         return ans
 
 
-(or)
+Initialization:
+ans = 0, currCount = 0, vowels = "aeiou"
 
-int vowels[26] = {1,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1};
-int maxVowels(string s, int k) {
-    int max_vow = 0;
-    for (auto i = 0, cur_vow = 0; i < s.size(); ++i) {
-        cur_vow += vowels[s[i] - 'a'];
-        if (i >= k)
-            cur_vow -= vowels[s[i - k] - 'a'];
-        max_vow = max(max_vow, cur_vow);
-    }
-    return max_vow;
-}
-            
+
+Iteration:
+i = 0: s[0] = 'a' → vowel → currCount = 1, ans = 1
+i = 1: s[1] = 'b' → not a vowel → currCount = 1, ans = 1
+i = 2: s[2] = 'c' → not a vowel → currCount = 1, ans = 1
+i = 3: s[3] = 'i' → vowel → currCount = 2
+(Now, window = s[1:4] = 'bci') → ans = 2
+i = 4: s[4] = 'i' → vowel → currCount = 3
+(Window = s[2:5] = 'cii') → ans = 3
+i = 5: s[5] = 'i' → vowel → currCount = 3
+(Window = s[3:6] = 'iii') → ans = 3
+i = 6: s[6] = 'd' → not a vowel → currCount = 2
+(Window = s[4:7] = 'iid') → ans = 3
+i = 7: s[7] = 'e' → vowel → currCount = 2
+(Window = s[5:8] = 'ide') → ans = 3
+i = 8: s[8] = 'f' → not a vowel → currCount = 1
+(Window = s[6:9] = 'def') → ans = 3
+
+
