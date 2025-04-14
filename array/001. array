@@ -54,11 +54,15 @@ print(res)
 
 N = input()
 A = [int(x) for x in input().split()] //int
-#A = input()s.plit() // store as string
+#A = input().split() // store as string
 #A = input() #store its as str
-#
-
+###
+text = "IBM HackerRank test"
+words = text.split()
+print(words)  # ['IBM', 'HackerRank', 'test']
+###
 A = input().split() #list
 
 
 print(' '.join([str(x) for x in reversed(A)]))
+
