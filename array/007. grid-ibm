@@ -1,0 +1,54 @@
+A grid like representation of an image is divided into n rows and m columns, with each cell containing pixel intensity values.
+the aim is to improve the visibility og specific objects in the image.
+
+each pixel located at position (i,j) within the grid corresponds to a specific element in the image, where 0<=i<n and 0<=j<m.
+the pixels intensity or value is denoted by pixelIntensity[i][j]
+
+the goal is to adjust the intesnity of each pixel to ensure that no pixel in the previous rows, where 0<=i'<i in the same column, has a
+brighntness higher or equal to the given pixel. to achieve this, a pixels intesnity can be increased at a cost of one unit per unit of increase.
+
+
+
+
+A grid with the three rows and two colums is givenL pixelIntensity=[2,5,[7,4],[3,5]].
+currently, the intensity lvels in cells (1,1),(2,0), and (2,1) are not apprpritate
+
+2,5
+7,4
+3,5  
+
+2,5
+7,6
+8,7
+
+    
+add 5 to the third row of the first column to get values 2, 7 and 8. add 2 to the second and third rows in 
+the seconf column to get values 5, 6, and 7. both columns are now strictly increasing from top to bottonm as 
+required, the cost og the enhancement is 5+3+2=9 whic is minimum possible
+
+
+
+def getMinimumCost(pixelIntensity):
+    rows = len(pixelIntensity)
+    cols = len(pixelIntensity[0])
+    total_cost = 0
+
+    for col in range(cols):
+        for row in range(1, rows):
+            if pixelIntensity[row][col] <= pixelIntensity[row - 1][col]:
+                required = pixelIntensity[row - 1][col] + 1
+                diff = required - pixelIntensity[row][col]
+                pixelIntensity[row][col] = required
+                total_cost += diff
+
+    return total_cost
+
+
+# Sample input
+pixelIntensity = [
+    [2, 5],
+    [7, 4],
+    [3, 5]
+]
+
+print(getMinimumCost(pixelIntensity))  # ✅ Expected Output: 9
