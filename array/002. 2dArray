@@ -140,3 +140,16 @@ def array2D(arr):
                 maxSum = hourglass
                 
     return maxSum
+
+
+
+So, if:
+arr[0] = [1, 1, 1, 0, 0, 0]
+         # 0  1  2  3  4  5  ← indexes
+Then:
+arr[0][1:4] = [1, 1, 0]
+
+That’s the same as:
+arr[0][1] + arr[0][2] + arr[0][3]
+→ 1 + 1 + 0
+You got it exactly right — it's picking 3 elements in a row, starting from index 1.
