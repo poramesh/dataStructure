@@ -52,6 +52,56 @@ print(getMinServers(expected_load, servers))  # Output should be 2
 
 
 
+
+
+first example:
+
+servers = [1, 3, 5]
+expected_load = 6
+
+
+Let’s try combinations manually first:
+1 + 3 + 5 = 9 too much
+1 + 3 = 4 
+1 + 5 = 6 → valid
+3 + 5 = 8 
+
+Just 6? Not available 
+So, best valid combo is 1 + 5 = 6, which uses 2 servers.
+
+Step-by-step Execution:
+Initial:
+dp = [0, inf, inf, inf, inf, inf, inf]
+Server 1:
+load 6: inf
+load 5: inf
+load 4: inf
+load 3: inf
+load 2: inf
+load 1: dp[0] + 1 = 1
+dp = [0, 1, inf, inf, inf, inf, inf]
+
+Server 3:
+load 6: inf
+load 5: inf
+load 4: dp[1] + 1 = 1 + 1 = 2
+load 3: dp[0] + 1 = 1
+dp = [0, 1, inf, 1, 2, inf, inf]
+
+Server 5:
+load 6: dp[1] + 1 = 1 + 1 = 2 ✅
+load 5: dp[0] + 1 = 1
+dp = [0, 1, inf, 1, 2, 1, 2]
+
+Server 6:
+Final dp[6] = 2 → Answer: 2 servers (1 and 5)
+Final Answer:
+getMinServers([1, 3, 5], 6) → 2
+
+
+
+second example:
+
 Step 1: Initialize the dp array
 The idea of the dp array is:
 dp[i] = minimum number of servers needed to get a total load of i.
@@ -124,6 +174,6 @@ Visual Summary of dp after each step:
 
 After server	dp[0]	dp[1]	dp[2]	dp[3]
 init	        0	    ∞	    ∞	    ∞
-[1]	          0	    1	    ∞	    ∞
-[1,1] 	      0	    1	    2	    ∞
-[1,1,2]	      0	    1	    1	    2
+[1]	            0	    1	    ∞	    ∞
+[1,1] 	        0	    1	    2	    ∞
+[1,1,2]	        0	    1	    1	    2
