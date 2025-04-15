@@ -1,0 +1,129 @@
+An application needs to be deployed across multiple servers with a load balancer. there are n servers available. where each server i can handle
+server[i] requests. the capacity of each server is always a power of 2 (1,2,4,8,16 etc)
+
+given the array server and an integer expected_load, determine the minium number of servers needed so their total request handling
+capacity exactly equals the expected_load. if no combination of servers can exactly meet the expected_load return -1
+
+
+EXAMPLE;
+
+suppose n=4, servers = [1,1,2,4] and expected_load is 3
+
+it is optimal to choose the first and the third, or the second and the third servers serving a total of 1+2 = expected_load =3
+requests, return the minimim number of servers needed, 2.
+
+
+function description:
+complete the function getMinServers in the editor with the following parameters:
+int expected_load the number of requests to be served.
+int server[n]; the number of requests the servers can serve
+
+return:
+int: the miniimum number of servers such that the sum of the toatl requests they can serve is exactly expected_load
+
+
+
+
+
+sol:
+
+def getMinServers(expected_load, server):
+    # Initialize the dp array with a large number
+    # dp[i] represents the minimum number of servers required to serve i requests
+    dp = [float('inf')] * (expected_load + 1)
+    dp[0] = 0  # No servers needed to serve 0 requests
+
+    # Iterate over each server's capacity
+    for s in server:
+        # Update dp array for each load in reverse order (to avoid overwriting values we need)
+        for load in range(expected_load, s - 1, -1):
+            dp[load] = min(dp[load], dp[load - s] + 1)
+
+    # If dp[expected_load] is still infinity, it means it's not possible to serve the exact load
+    return dp[expected_load] if dp[expected_load] != float('inf') else -1
+
+# Test the function
+n = 4
+servers = [1, 1, 2, 4]
+expected_load = 3
+
+print(getMinServers(expected_load, servers))  # Output should be 2
+
+
+
+
+Step 1: Initialize the dp array
+The idea of the dp array is:
+dp[i] = minimum number of servers needed to get a total load of i.
+
+We initialize it as:
+dp = [0, inf, inf, inf]
+
+This means:
+dp[0] = 0 → No servers needed to reach a load of 0
+dp[1] = inf → Currently not possible to reach a load of 1
+dp[2] = inf
+dp[3] = inf
+
+Step 2: Process each server one-by-one
+Server with capacity 1:
+We iterate load from 3 down to 1.
+load = 3:
+dp[3] = min(dp[3], dp[3 - 1] + 1)
+→ dp[3] = min(inf, inf + 1) → still inf
+
+load = 2:
+dp[2] = min(dp[2], dp[2 - 1] + 1)
+→ dp[2] = min(inf, inf + 1) → still inf
+
+load = 1:
+dp[1] = min(dp[1], dp[0] + 1)
+→ dp[1] = min(inf, 0 + 1) → 1
+
+Now, dp = [0, 1, inf, inf]
+----------
+Second server with capacity 1:
+load = 3:
+dp[3] = min(dp[3], dp[2] + 1)
+→ dp[3] = min(inf, inf + 1) → still inf
+
+load = 2:
+dp[2] = min(dp[2], dp[1] + 1)
+→ dp[2] = min(inf, 1 + 1) → 2
+
+load = 1:
+dp[1] = min(dp[1], dp[0] + 1)
+→ dp[1] = min(1, 1) → stays 1
+
+Now, dp = [0, 1, 2, inf]
+-----------
+Third server with capacity 2:
+load = 3:
+dp[3] = min(dp[3], dp[1] + 1)
+→ dp[3] = min(inf, 1 + 1) → 2
+
+load = 2:
+dp[2] = min(dp[2], dp[0] + 1)
+→ dp[2] = min(2, 0 + 1) → 1
+
+Now, dp = [0, 1, 1, 2]
+------
+Fourth server with capacity 4:
+Skip this server because its capacity (4) is greater than the expected load (3), so it cannot contribute.
+
+Step 3: Result
+We check dp[expected_load] which is dp[3] = 2.
+
+That means we can serve 3 requests using a minimum of 2 servers.
+In this case, that’s either:
+
+server[0] (1) + server[2] (2), or
+server[1] (1) + server[2] (2)
+
+Visual Summary of dp after each step:
+
+After server	dp[0]	dp[1]	dp[2]	dp[3]
+init	        0	    ∞	    ∞	    ∞
+[1]	          0	    1	    ∞	    ∞
+[1,1] 	      0	    1	    2	    ∞
+[1,1,2]	      0	    1	    1	    2
