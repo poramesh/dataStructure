@@ -177,3 +177,65 @@ init	        0	    ∞	    ∞	    ∞
 [1]	            0	    1	    ∞	    ∞
 [1,1] 	        0	    1	    2	    ∞
 [1,1,2]	        0	    1	    1	    2
+
+
+
+
+
+
+
+let's look at what would happen if this were treated like the coin change problem, where each coin (server) can be used multiple times instead of just once.
+
+Setup:
+Servers: [1, 3, 5]
+Target load: 6
+
+Each server can be reused unlimited times ← ❗(this is the coin change setup)
+
+Code (coin change style — forward order):
+
+def coinStyleMinServers(expected_load, servers):
+    dp = [float('inf')] * (expected_load + 1)
+    dp[0] = 0
+
+    for s in servers:
+        for load in range(s, expected_load + 1):  # FORWARD order allows reuse
+            dp[load] = min(dp[load], dp[load - s] + 1)
+
+    return dp[expected_load] if dp[expected_load] != float('inf') else -1
+
+Step-by-step Execution:
+
+Initial:
+dp = [0, inf, inf, inf, inf, inf, inf]
+Server 1 (can be reused):
+dp[1] = dp[0] + 1 = 1
+dp[2] = dp[1] + 1 = 2
+dp[3] = dp[2] + 1 = 3
+dp[4] = dp[3] + 1 = 4
+dp[5] = dp[4] + 1 = 5
+dp[6] = dp[5] + 1 = 6
+
+dp = [0, 1, 2, 3, 4, 5, 6]
+
+Server 3 (can be reused):
+dp[3] = min(3, dp[0] + 1) = 1  
+dp[4] = min(4, dp[1] + 1) = 2
+dp[5] = min(5, dp[2] + 1) = 3
+dp[6] = min(6, dp[3] + 1) = 2  
+
+dp = [0, 1, 2, 1, 2, 3, 2]
+
+Server 5 (can be reused):
+dp[5] = min(3, dp[0] + 1) = 1 
+dp[6] = min(2, dp[1] + 1) = 2 (unchanged)
+
+dp = [0, 1, 2, 1, 2, 1, 2]
+
+Final dp[6] = 2
+You can reach load 6 using:
+3 + 3, or
+1 + 5
+
+Both use only 2 servers, but unlike the previous problem, you could have also done 1 + 1 + 1 + 1 + 1 + 1 if you wanted.
+
