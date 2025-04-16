@@ -1,0 +1,96 @@
+Bubble Sort is a comparison-based sorting algorithm.
+It works by repeatedly scanning the array from left to right, comparing adjacent elements, and swapping them if they are out of order.
+In each pass, the largest unsorted element "bubbles up" to its correct position.
+
+
+
+def bubble_sort(arr):
+    n = len(arr)
+    for k in range(n - 1):
+        swapped = False
+
+        for i in range(n - k - 1):
+            if arr[i] > arr[i + 1]:
+                arr[i], arr[i + 1] = arr[i + 1], arr[i]
+                swapped = True
+
+        if not swapped:
+            break
+
+    return arr
+
+if __name__ == "__main__":
+    A = [2, 7, 4, 1, 5, 3]
+    print("Original array:", A)
+    sorted_array = bubble_sort(A)
+    print("Sorted array:  ", sorted_array)
+
+
+Step-by-Step Process:
+Given array A = [2, 7, 4, 1, 5, 3] (index 0 to 5):
+
+Pass 1:
+Compare and swap if left element is greater than the right:
+2 < 7 → No swap
+7 > 4 → Swap → [2, 4, 7, 1, 5, 3]
+7 > 1 → Swap → [2, 4, 1, 7, 5, 3]
+7 > 5 → Swap → [2, 4, 1, 5, 7, 3]
+7 > 3 → Swap → [2, 4, 1, 5, 3, 7]
+
+7 is now at the correct position.
+
+Pass 2:
+Repeat process till index 4:
+2 < 4 → No swap
+4 > 1 → Swap
+4 < 5 → No swap
+5 > 3 → Swap
+5 is now at index 4.
+[2, 1, 4, 3, 5, 7]
+
+Subsequent Passes:
+Continue similarly until the array is fully sorted.
+With each pass, the next-largest unsorted element bubbles to its correct position.
+After n-1 passes (for array size n), the array is sorted.
+
+
+Pass 3:
+Compare 2 and 1 → swap → [1, 2, 4, 3, 5, 7]
+Compare 2 and 4 → no swap
+Compare 4 and 3 → swap → [1, 2, 3, 4, 5, 7]
+
+4 is now in place
+
+Pass 4:
+Compare 1 and 2 → no swap
+Compare 2 and 3 → no swap
+Compare 3 and 4 → no swap
+No swaps → Array is sorted → break early!
+
+
+
+Case	              Time Complexity	     Explanation
+Best Case	          O(n)	               Already sorted → only 1 pass,   no swaps
+Average	            O(n²)	               Partial sorting needed
+Worst Case	        O(n²)	               Reversely sorted → maximum swaps
+
+
+
+
+With break:
+We use a swapped flag. If no swap happens in an entire pass, it means the array is already sorted — so we use break to stop early and avoid more iterations.
+
+arr = [1, 2, 3, 4, 5]
+# First pass:
+# Compare 1 & 2 → OK
+# Compare 2 & 3 → OK
+# Compare 3 & 4 → OK
+# Compare 4 & 5 → OK
+# No swaps → `swapped = False` → BREAK
+
+# No need for 2nd, 3rd... passes
+
+
+
+
+
