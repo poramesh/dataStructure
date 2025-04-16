@@ -1,0 +1,100 @@
+
+You are given n items with weights[i] and values[i], and a maximum weight W.
+You can either pick an item or skip it (0 or 1 choice per item).
+Find the maximum total value you can carry without exceeding the weight limit W.
+
+Example:
+
+weights = [1, 3, 4, 5]
+values = [1, 4, 5, 7]
+W = 7
+# Output: 9
+# Explanation: Pick item with weight 3 (value 4) and item with weight 4 (value 5)
+
+
+
+
+sol:
+
+def knapsack_optimized(weights, values, W):
+    n = len(weights)
+    dp = [0] * (W + 1)
+
+    for i in range(n):  # Loop through items
+        for w in range(W, weights[i] - 1, -1):  # Loop backwards to prevent reuse
+            dp[w] = max(dp[w], values[i] + dp[w - weights[i]])
+
+    return dp[W]
+
+Example:
+weights = [2, 3]
+values  = [3, 4]
+W = 5
+
+
+
+modalu, navu dp array create madtivi with all zeros and then loop start madtivi, where we are going from reverse cause it can be used only once alva.
+ivaga 5 ne dp array alli nav 2 na add madbodu, illi navu value mukantra adan add madtivi, so dp[5] = dp[5] or dp[5-2] and now dp[3] alli en illa so adake 0+value add madtiiv
+just to say it can fit 2 
+and next alli when we go for next weight 3, illi navy dp[5-3] = dp[2] alli value ide so aa value mathe ivagind value add madi, max tagontivi,
+if we were to do for dp[4-3] whch is liek dp[1] ali sone so ivaga navu bari 4 matra accomodate madoke aguthe.
+
+Step 1: Initialize dp
+We’ll use a 1D array dp of size W+1 = 6:
+dp = [0, 0, 0, 0, 0, 0]  # indices = weight capacities from 0 to 5
+
+Step 2: Loop Through Items
+We now loop over each item and update dp from right to left.
+item 0: weight = 2, value = 3
+
+We loop w from 5 down to 2:
+ in range(5, 1, -1):  # w = 5 to 2
+    dp[w] = max(dp[w], values[i] + dp[w - weights[i]])
+    dp[w] = max(dp[w], 3 + dp[w - 2])
+Breakdown:
+w = 5 → dp[5] = max(dp[5],values+ dp[5-weights[0]])= max(dp[5],3+dp[5-2]) = max(0, 3 + dp[3]) = max(0, 3 + 0) = 3
+w = 4 → dp[4] = max(dp[4],values+ dp[4-weights[0]])= max(dp[4],3+dp[4-2]) = max(0, 3 + dp[2]) = max(0, 3 + 0) = 3
+w = 3 → dp[3] = max(dp[3],values+ dp[3-weights[0]])= max(dp[3],3+dp[3-2]) = max(0, 3 + dp[1]) = max(0, 3 + 0) = 3
+w = 2 → dp[2] = max(dp[2],values+ dp[2-weights[0]])= max(dp[2],3+dp[2-2]) = max(0, 3 + dp[0]) = max(0, 3 + 0) = 3
+Updated dp after item 0:
+dp = [0, 0, 3, 3, 3, 3]
+
+
+Item 1: weight = 3, value = 4
+Now loop w from 5 down to 3:
+
+for w in range(5, 2, -1):  # w = 5 to 3
+    dp[w] = max(dp[w], 4 + dp[w - 3])
+Breakdown:
+w = 5 → dp[5] = max(dp[5], values + dp[5 - weight[1]]) = max(dp[5], 4+ dp[5-3])= max(3, 4 + dp[2]) = max(3, 4 + 3) = 7
+w = 4 → dp[4] = max(dp[4], values + dp[4 - weight[1]]) = max(dp[5], 4+ dp[4-3])= max(3, 4 +dp[1] ) = max(3, 4 + 0) = 4
+w = 3 → dp[3] = max(3, 4 + dp[0]) = max(3, 4 + 0) = 4
+
+Final dp after item 1:
+dp = [0, 0, 3, 4, 4, 7]
+
+
+
+
+and this one if we need to keep track of values.
+
+
+def knapsack(weights, values, W):
+    n = len(weights)
+    
+    # Step 1: Create a 2D DP table (n+1 x W+1), initialized to 0
+    dp = [[0] * (W + 1) for _ in range(n + 1)]
+
+    # Step 2: Fill the table
+    for i in range(1, n + 1):           # Loop through each item
+        for w in range(W + 1):          # Loop through each capacity
+            if weights[i - 1] <= w:
+                # Option 1: Skip the item
+                # Option 2: Pick the item and add its value to the remaining capacity
+                dp[i][w] = max(dp[i - 1][w], values[i - 1] + dp[i - 1][w - weights[i - 1]])
+            else:
+                # Item too heavy, can't pick it
+                dp[i][w] = dp[i - 1][w]
+
+    # Step 3: Return the final answer
+    return dp[n][W]
