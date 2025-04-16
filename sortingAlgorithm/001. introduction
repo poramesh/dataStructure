@@ -1,0 +1,34 @@
+Introduction to Sorting Algorithms
+
+1. Importance of Sorting:
+Sorting helps in organizing data for better readability and faster searching.
+Examples: arranging cards in hand, sorting hotel options by price or rating, dictionaries, medal tallies.
+
+2. Definition of Sorting:
+Arranging elements in increasing or decreasing order based on a specific property.
+Lists should be homogeneous (same type of elements).
+
+3. Common Use Case:
+Sorting a list of integers in increasing or decreasing order.
+Sorting can also be done based on custom properties like number of factors, guest ratings, lexicographic order, etc.
+
+4. Sorted Data and Searching:
+Unsorted data requires Linear Search (O(n) time).
+Sorted data enables Binary Search (O(log n) time), which is significantly faster.
+
+5. Real-World Implication:
+Large datasets benefit from sorting due to reduced computation time when performing searches.
+
+6. Sorting Algorithms to Study:
+Basic: Bubble Sort, Selection Sort, Insertion Sort.
+Efficient: Merge Sort, Quick Sort, Heap Sort.
+Non-Comparison Based: Counting Sort, Radix Sort.
+Many more exist beyond these.
+
+7. Classification Parameters:
+Time Complexity: Efficiency of the algorithm as data size increases.
+Space Complexity: Amount of extra memory used.
+Stability: Maintains relative order of elements with equal keys.
+Internal vs External Sort: Based on whether sorting is done in RAM or external storage.
+Recursive vs Non-Recursive: Based on the algorithm's design.
+
