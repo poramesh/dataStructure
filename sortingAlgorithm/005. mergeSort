@@ -239,5 +239,11 @@ Sorted array: [1, 2, 3, 4, 5, 6, 7, 8]
 
 
 
-
-
+Property	        Value
+Type	            Divide and Conquer
+Recursive	        Yes
+Stable	            Yes
+In-place	        No
+Time Complexity	    Θ(n log n)
+Space Complexity	Θ(n) or Θ(n log n)
+Use case	        When stability is required or time matters more than space
