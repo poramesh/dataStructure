@@ -1,0 +1,91 @@
+Divide the array into:
+Sorted part (initially first element)
+Unsorted part (rest of the array)
+
+For each element in the unsorted part:
+Pick the element (store in value).
+Create a "hole" (shift elements right if they are greater than value).
+Insert value in the correct position (the hole).
+
+
+
+def insertion_sort(A):
+    n = len(A)
+    for i in range(1, n):
+        value = A[i]
+        hole = i
+        print("value =", value, "hole=",hole)
+
+        while hole > 0 and A[hole - 1] > value:
+            print("array before",A)
+            A[hole] = A[hole - 1]  # shift right
+            hole -= 1
+            print("the array in while", A)
+            print("hole",hole)
+        
+        A[hole] = value
+        print("after for loop", A)
+        print("\n")
+
+
+print(insertion_sort([7, 2, 4, 1, 5, 3]))
+
+
+
+
+value = 2 hole= 1 (intiially)
+array before [7, 2, 4, 1, 5, 3] (before making any changes to the while loop )
+the array in while [7, 7, 4, 1, 5, 3] (illi ivaga, we are movin the value further cause that where it belong based on comparison)
+hole 0 (decreasing by -1 so that we can left side of the array, since it is 0 it will end)
+after for loop [2, 7, 4, 1, 5, 3]
+
+
+value = 4 hole= 2 (next value in the array, and we are gonna compare to its left)
+array before [2, 7, 4, 1, 5, 3] (before making any changes)
+the array in while [2, 7, 7, 1, 5, 3] (7 is greater than 4 so it belongs on right)
+hole 1 (now A[0] =2 is not greater than 4 so it exits the loop)
+after for loop [2, 4, 7, 1, 5, 3]
+
+
+value = 1 hole= 3 (this loop will help you understand the concepts well. PAY ATTENTION, P =))
+array before [2, 4, 7, 1, 5, 3]
+the array in while [2, 4, 7, 7, 5, 3] (magic you can see next when it enters while loop and loop at how array value changed)
+hole 2 (now holeis reduced to compare left side of the array, so it is not less than 0 and A[2]=4 is greater than the value that is 1)
+array before [2, 4, 7, 7, 5, 3] (so the hole is moved to left cause value is less and the 4 is pushed to right by this command A[hole] = A[hole-1])
+the array in while [2, 4, 4, 7, 5, 3]
+hole 1
+array before [2, 4, 4, 7, 5, 3] (2 is also less than 1 so 2 is pushed to the right, making a space for the smaller value)
+the array in while [2, 2, 4, 7, 5, 3]
+hole 0
+after for loop [1, 2, 4, 7, 5, 3]
+
+
+value = 5 hole= 4
+array before [1, 2, 4, 7, 5, 3]
+the array in while [1, 2, 4, 7, 7, 3]
+hole 3
+after for loop [1, 2, 4, 5, 7, 3]
+
+
+value = 3 hole= 5
+array before [1, 2, 4, 5, 7, 3]
+the array in while [1, 2, 4, 5, 7, 7]
+hole 4
+array before [1, 2, 4, 5, 7, 7]
+the array in while [1, 2, 4, 5, 5, 7]
+hole 3
+array before [1, 2, 4, 5, 5, 7]
+the array in while [1, 2, 4, 4, 5, 7]
+hole 2
+after for loop [1, 2, 3, 4, 5, 7]
+
+
+
+Given: A = [7, 2, 4, 1, 5, 3]
+
+Pass-by-pass:
+i = 1: 2 inserted before 7 → [2, 7, 4, 1, 5, 3]
+i = 2: 4 inserted before 7 → [2, 4, 7, 1, 5, 3]
+i = 3: 1 inserted at start → [1, 2, 4, 7, 5, 3]
+i = 4: 5 inserted between 4 & 7 → [1, 2, 4, 5, 7, 3]
+i = 5: 3 inserted between 2 & 4 → [1, 2, 3, 4, 5, 7]
