@@ -1,0 +1,243 @@
+What is Merge Sort?
+A Divide and Conquer algorithm.
+Time Complexity: O(n log n) in the worst case.
+Much faster than O(n²) algorithms like Bubble, Insertion, or Selection Sort.
+
+Core Idea
+Break the array into subarrays, sort each recursively, then merge them.
+If an array has only one element, it is already sorted.
+
+Steps of Merge Sort
+1. Divide the array into two halves:
+Use a mid index to split.
+Left = A[0 to mid-1], Right = A[mid to n-1].
+
+2. Recursively sort both halves:
+Call MergeSort(left) andMergeSort(right).
+
+3. Merge the sorted halves:
+Use a Merge(left, right, A) function to merge back into A.
+
+
+def merge_sort(A):
+    if len(A) < 2:
+        return  # Already sorted
+
+    mid = len(A) // 2   #is used for commenting and not // ughgghghhghgh cause i mistook why 2 has been commenteed haha
+    left = A[:mid]
+    right = A[mid:]
+
+    merge_sort(left)
+    merge_sort(right)
+
+    merge(left, right, A)  # Merge sorted halves back into A
+
+
+Merge Logic (Merging Two Sorted Arrays)
+1. Initialize three pointers:
+i = 0 (index for Left), j = 0 (index for Right), k = 0 (index for A).
+
+2.Loop while both i < nL and j < nR:
+If L[i] <= R[j]:
+A[k] = L[i], increment i
+Else:
+A[k] = R[j], increment j
+Always increment k
+
+3. After the loop, handle leftovers:
+Copy remaining elements of L (if any) to A
+Copy remaining elements of R (if any) to A
+
+def merge(L, R, A):
+    i = j = k = 0
+    print(left, right)    
+    print("arr",arr)
+    while i < len(L) and j < len(R):
+        if L[i] <= R[j]:
+            A[k] = L[i]
+            i += 1
+        else:
+            A[k] = R[j]
+            j += 1
+        k += 1
+
+    while i < len(L):
+        A[k] = L[i]
+        i += 1
+        k += 1
+
+    while j < len(R):
+        A[k] = R[j]
+        j += 1
+        k += 1
+
+simple ex:
+
+                           [5, 4, 3, 2, 1]
+                          /           \
+                    [5, 4]           [3, 2, 1]
+                    /    \           /      \
+                 [5]    [4]      [3]      [2, 1]
+                                          /   \
+                                       [2]   [1]
+
+→ Merges:
+
+- [5] + [4]       → [4, 5]
+- [2] + [1]       → [1, 2]
+- [3] + [1, 2]    → [1, 2, 3]
+- [4, 5] + [1, 2, 3] → [1, 2, 3, 4, 5]
+
+SO, here when it reaches merging the first time, it merges the orignial array so it is not returning anything, l=[5] r=[4],arr[5,4] => now after merging => a[4,5]
+and now when the recursion for this ends, it goes back to it previous where it stopped, now it is where it sstarts from [3,2,1] => and it manges to merge with [1,2,3]
+when it goes back, it calls merge function cause both left and right is done =>
+
+                          [5, 4, 3, 2, 1]
+                          /           \
+                    [4, 5]           [1, 2, 3]
+
+
+l=[4,5] and r=[1,2,3] and arr[5,4,3,2,1] => which will be [1,4,3,2,1]=>now r is incremented =>[1,2,3,2,1]=> now r is incremenet again=>[1,2,3,2,1]=> now r is incrememnetd and now 3<3 so it comes out of while loop
+the other while loop will adds in all the values [1,2,3,4,5] !!!!
+"ASTEEEE, ENU TALE NOVILA"
+               
+
+[5, 4, 3, 2, 1]
+├── [5, 4]
+│   ├── [5]
+│   └── [4]
+│   └── merge → [4, 5]
+├── [3, 2, 1]
+│   ├── [3]
+│   └── [2, 1]
+│       ├── [2]
+│       └── [1]
+│       └── merge → [1, 2]
+│   └── merge → [1, 2, 3]
+└── Final merge → [1, 2, 3, 4, 5]
+
+
+
+
+
+FULL CODE:
+
+def merge_sort(arr):
+    if len(arr) < 2:
+        return  
+
+    mid = len(arr) // 2
+    left = arr[:mid]
+    right = arr[mid:]
+
+    merge_sort(left)
+    merge_sort(right)
+
+    merge(left, right, arr)
+    print(arr)
+
+def merge(left, right, arr):
+    nL = len(left)
+    nR = len(right)
+    i = j = k = 0
+    
+    print("before it merges", left, right,arr)    
+
+
+    while i < nL and j < nR:
+        if left[i] <= right[j]:
+            arr[k] = left[i]
+            i += 1
+        else:
+            arr[k] = right[j]
+            j += 1
+        k += 1
+    print("beofre procedding with further", arr)
+
+    while i < nL:
+        arr[k] = left[i]
+        i += 1
+        k += 1
+
+    # Copy any remaining elements from right
+    while j < nR:
+        arr[k] = right[j]
+        j += 1
+        k += 1
+        
+    print("after mergining",arr)
+   
+
+# Example usage:
+if __name__ == "__main__":
+    A = [5,4,3,2,1]
+    print("Original array:", A)
+    merge_sort(A)
+    print("Sorted array:", A)
+
+
+Original array: [5, 4, 3, 2, 1]
+before it merges [5] [4] [5, 4]
+beofre procedding with further [4, 4]
+after mergining [4, 5]
+[4, 5]
+before it merges [2] [1] [2, 1]
+beofre procedding with further [1, 1]
+after mergining [1, 2]
+[1, 2]
+before it merges [3] [1, 2] [3, 2, 1]
+beofre procedding with further [1, 2, 1]
+after mergining [1, 2, 3]
+[1, 2, 3]
+before it merges [4, 5] [1, 2, 3] [5, 4, 3, 2, 1]
+beofre procedding with further [1, 2, 3, 2, 1]
+after mergining [1, 2, 3, 4, 5]
+[1, 2, 3, 4, 5]
+Sorted array: [1, 2, 3, 4, 5]
+
+
+AND ANOTHER EXAMPLE:
+
+
+[2, 4, 1, 6, 8, 5, 3, 7]
+├── [2, 4, 1, 6]
+│   ├── [2, 4]
+│   │   ├── [2]
+│   │   └── [4]
+│   │   └── merge → [2, 4]
+│   ├── [1, 6]
+│   │   ├── [1]
+│   │   └── [6]
+│   │   └── merge → [1, 6]
+│   └── merge → [1, 2, 4, 6]
+├── [8, 5, 3, 7]
+│   ├── [8, 5]
+│   │   ├── [8]
+│   │   └── [5]
+│   │   └── merge → [5, 8]
+│   ├── [3, 7]
+│   │   ├── [3]
+│   │   └── [7]
+│   │   └── merge → [3, 7]
+│   └── merge → [3, 5, 7, 8]
+└── Final merge → [1, 2, 3, 4, 5, 6, 7, 8]
+
+
+
+
+
+
+Original array: [2, 4, 1, 6, 8, 5, 3, 7]
+[2] [4] arr =[2, 4]
+[1] [6] arr = [1, 6]
+[2, 4] [1, 6] arr [2, 4, 1, 6]
+[8] [5] arr = [8, 5]
+[3] [7] arr = [3, 7]
+[5, 8] [3, 7] arr = [8, 5, 3, 7]
+[1, 2, 4, 6] [3, 5, 7, 8] arr = [2, 4, 1, 6, 8, 5, 3, 7]
+Sorted array: [1, 2, 3, 4, 5, 6, 7, 8]
+
+
+
+
+
