@@ -89,3 +89,10 @@ i = 2: 4 inserted before 7 → [2, 4, 7, 1, 5, 3]
 i = 3: 1 inserted at start → [1, 2, 4, 7, 5, 3]
 i = 4: 5 inserted between 4 & 7 → [1, 2, 4, 5, 7, 3]
 i = 5: 3 inserted between 2 & 4 → [1, 2, 3, 4, 5, 7]
+
+
+
+Case	     Time	Explanation
+Best Case	 O(n)	Already sorted array → no shifting needed
+Average	     O(n²)	About n²/4 comparisons on average
+Worst Case	 O(n²)	Reverse sorted → max shifting at each step
