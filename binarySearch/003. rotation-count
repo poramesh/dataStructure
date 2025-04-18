@@ -1,3 +1,27 @@
+
+ finding the rotation count of a circularly sorted array using a modified binary search:
+
+
+Problem Overview:
+Input: A sorted array that has been rotated k times. The array is distinct (no duplicates).
+Output: Find how many times the array has been rotated.
+
+Concept:
+The goal is to find the index of the smallest element in the array, as the number of rotations is equal to the index of the smallest element.
+
+Naive Approach (Linear Search):
+1. Start by scanning the whole array.
+2. Compare each element to find the minimum element.
+3. The index of the minimum element is the number of rotations.
+Time Complexity: O(n) since it requires scanning through the entire array.
+
+
+
+
+
+
+
+
 def count_rotations(arr):
     n = len(arr)
     low = 0
