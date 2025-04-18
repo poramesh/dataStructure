@@ -141,10 +141,10 @@ this is a good example of divide and conquer alogirthm.
 
 int binarySearch(int a[],low,high,x){
     if(low>high) return -1; //exit condition
-    mid = low+(low-high)/2;
-    if (x==mid) return mid; //base condition
-    else if(x<A[mid]) return binarySearch(A,low,mid-1,x);
-    else return binarySearch(A,mid+1,high,x);
+    mid = low+(high-low)/2;
+    if (a[mid] == x) return mid; //base condition
+    else if(x<a[mid]) return binarySearch(a,low,mid-1,x);
+    else return binarySearch(a,mid+1,high,x);
 }
 return -1;
 }
@@ -158,5 +158,37 @@ which implementation is better? iterative may seem a good approach if no need of
 in the memory while recursive calls happens.
 anything that we can implement recursion we can write it using iteration.anything that we can wrrite using
 iteration can be wrriten using recursion.
+
+
+
+Let’s say you are searching for x = 6 in the array a = [1, 3, 5, 6, 8, 10, 12]. So low = 0, high = 6.
+
+
+Now suppose you're searching for x = 9:
+
+
+binarySearch(a, 0, 6, 9)
+    mid = 3 → a[3] = 7 → 9 > 7 → go right
+
+    └── binarySearch(a, 4, 6, 9)
+          mid = 5 → a[5] = 11 → 9 < 11 → go left
+
+          └── binarySearch(a, 4, 4, 9)
+                mid = 4 → a[4] = 9 → match found → return 4
+
+
+Now suppose you're searching for x = 9:
+
+binarySearch(a, 0, 6, 10)
+    mid = 3 → a[3] = 7 → 10 > 7 → go right
+
+    └── binarySearch(a, 4, 6, 10)
+          mid = 5 → a[5] = 11 → 10 < 11 → go left
+
+          └── binarySearch(a, 4, 4, 10)
+                mid = 4 → a[4] = 9 → 10 > 9 → go right
+
+                └── binarySearch(a, 5, 4, 10)
+                      low > high → return -1 (not found)
 
 
