@@ -1,0 +1,58 @@
+def count_rotations(arr):
+    n = len(arr)
+    low = 0
+    high = n - 1
+
+    while low <= high:
+        # Case 1: Already sorted
+        if arr[low] <= arr[high]:
+            return low
+
+        mid = (low + high) // 2
+        next_idx = (mid + 1) % n
+        prev_idx = (mid - 1 + n) % n
+        print("mid=",mid, "prev=",prev_idx, "next=",next_idx,"array-mid=",arr[mid], "array-prev",arr[prev_idx],"array-next=",arr[next_idx])
+        # Case 2: Mid is the smallest
+        if arr[mid] <= arr[prev_idx] and arr[mid] <= arr[next_idx]:
+            return mid
+
+        # Case 3: Right half is sorted, search left
+        elif arr[mid] <= arr[high]:
+            high = mid - 1
+
+        # Case 4: Left half is sorted, search right
+        elif arr[mid] >= arr[low]:
+            low = mid + 1
+
+    return -1  # Should not happen if array is circularly sorted
+
+
+
+arr = [15, 18, 2, 3, 6, 12]
+15 is not less than 12
+here the mid is index 2 =>arr[2]=2 
+arr[2]<=arr[1]=> 2<=18
+arr[2]<=arr[3]=> 2<=3
+
+it is the mid where it has been rotated until so return 2.
+
+
+
+another example covering all the loops:
+arr = [18,19,20,21,2,3,4,6,12,15,16]
+mid=5 prev=4 next=6 array-mid=3 array-prev=2 array-next= 4
+here 3 is not less than 2 but 3 is less than 4, and 3 is less than 16 so it needs to go the left side of the array.
+
+arr = [18,19,20,21,2] low=0, high=4, mid=2
+mid=2 prev=1 next=3 array-mid=20 array-prev=19 array-next= 21
+here 18 is greater than 2 so, it doesnt return low, in the next condition it checks for mid, is 20 less than 19? no and is 20 less than 21? yes 
+and then it should go to the right side of mid since a[mid] = 20 is greater than a[0]=18
+
+arr[21,2] low=3, high=4 , mid=3
+mid= 3 prev= 2 next= 4 array-mid= 21 array-prev=20 array-next= 2
+here 21 is not less than 2, and 21 is not less than 20 and 21 is definetely not less than 2
+and now it goes 21 is not less than 2 so it goes to next else condition 21 is is greater than 2 so mid is moved to right
+
+and now when it checked the if conidtion the condition is met and it returns.
+
+Array is rotated 4 times.
