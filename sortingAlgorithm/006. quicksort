@@ -1,0 +1,136 @@
+Quicksort algo:
+
+
+def partition(arr, start, end):
+    pivot = arr[end]
+    p_index = start
+
+    for i in range(start, end):
+        if arr[i] <= pivot:
+            arr[i], arr[p_index] = arr[p_index], arr[i]
+            p_index += 1
+
+    arr[p_index], arr[end] = arr[end], arr[p_index]
+    return p_index
+
+def quick_sort(arr, start, end):
+    if start < end:
+        p_index = partition(arr, start, end)
+        quick_sort(arr, start, p_index - 1)
+        quick_sort(arr, p_index + 1, end)
+
+# Example usage
+arr = [9, 4, 7, 6, 3, 1, 5]
+quick_sort(arr, 0, len(arr) - 1)
+print("Sorted array:", arr)
+
+
+
+whats happening here is that?
+we start off by doing the partition => and here we shift the lesser than values of pivot to the left. 
+
+
+1st Partition (start=0, end=6)
+pivot = 5
+Initial:
+arr = [9, 4, 7, 6, 3, 1, 5]
+       ^                 ^
+    p_index            pivot (5)
+Loop through indices 0 to 5:
+
+i = 0 → 9 > 5 → skip
+i = 1 → 4 ≤ 5 → swap 4 with arr[p_index=0] → [4, 9, 7, 6, 3, 1, 5], p_index = 1
+i = 2 → 7 > 5 → skip
+i = 3 → 6 > 5 → skip
+i = 4 → 3 ≤ 5 → swap 3 with arr[p_index=1] → [4, 3, 7, 6, 9, 1, 5], p_index = 2
+i = 5 → 1 ≤ 5 → swap 1 with arr[p_index=2] → [4, 3, 1, 6, 9, 7, 5], p_index = 3
+Finally, swap pivot (5) with arr[p_index=3]:
+arr = [4, 3, 1, 5, 9, 7, 6]
+Now, pivot 5 is at index 3.
+
+Now recursive calls:
+quick_sort(arr, 0, 2) → sort left of pivot (indexes 0 to 2)
+quick_sort(arr, 4, 6) → sort right of pivot (indexes 4 to 6)
+
+
+2nd Partition (start=0, end=2)
+Subarray: [4, 3, 1]
+pivot = 1, p_index = 0
+i = 0 → 4 > 1 → skip
+i = 1 → 3 > 1 → skip
+Swap pivot (1) with arr[p_index=0]:
+arr = [1, 3, 4, 5, 9, 7, 6]
+
+Recursive calls:
+quick_sort(arr, 0, -1) → base case (do nothing)
+quick_sort(arr, 1, 2) → sort [3, 4]
+
+
+3rd Partition (start=1, end=2)
+subarray:[3,4]
+pivot = 4, p_index = 1 
+i = 1 → 3 ≤ 4 → swap with arr[1]  and p_index is 1 (same)
+p_index = 2
+Swap pivot (4) with arr[2] (same): since p_index is 2 and p_end is 2 so it swapped wiht itself. 
+arr = [1, 3, 4, 5, 9, 7, 6]
+
+Recursive calls:
+quick_sort(arr, 1, 1) ->base case  and quick_sort(arr, 3, 2) → base cases (do nothing)
+
+
+
+4th Partition (start=4, end=6)
+Subarray: [9, 7, 6], pivot = 6, p_index = 4
+i = 4 → 9 > 6 → skip
+i = 5 → 7 > 6 → skip
+Swap pivot (6) with arr[4]:
+arr = [1, 3, 4, 5, 6, 7, 9]
+
+Recursive calls:
+quick_sort(arr, 4, 3) and quick_sort(arr, 5, 6)
+
+
+5th Partition (start=5, end=6)
+Subarray: [7, 9], pivot = 9, p_index = 5
+i = 5 → 7 ≤ 9 → swap with arr[5] (same), p_index = 6
+Swap pivot (9) with arr[6] (same):
+arr = [1, 3, 4, 5, 6, 7, 9]
+
+Recursive calls: base cases now, so recursion ends.
+
+
+[1, 3, 4, 5, 6, 7, 9]
+
+
+
+
+                            [9, 4, 7, 6, 3, 1, 5]
+                                  pivot=5
+                                /        \
+                         [4, 3, 1]       [9, 7, 6]
+                      pivot=1(0-2)       pivot=6 (4-6)
+                        /        \       /        \
+                     [](0-(-1)  [3, 4]  []        [7, 9]
+                                pivot=4           pivot=9
+                               /      \           /     \
+                            [3]       []        [7]     []
+Each node is a quick_sort() call, and each branch shows how the array was split around the pivot.
+
+
+
+quick_sort([9, 4, 7, 6, 3, 1, 5], pivot=5) [arr,0,6]
+→ After partition: [4, 3, 1, 5, 7, 6, 9] (3 is the p_index)
+├── quick_sort([4, 3, 1], [arr,0,2]
+│   → After partition: [1, 3, 4] ((0 is th p_index))
+│   ├── quick_sort([], base case) [arr,0,-1]
+│   └── quick_sort([3, 4], pivot=4) [arr,1,2) 
+│       → After partition: [3, 4] (1 is the)(3 is less than 4 and here value of start is 1, and end is 2 where 3 is swapped with itself cause a[2] = arr[p_index=start=1]) 2 is p_index
+│       ├── quick_sort([3], base case) [arr,1,1]
+│       └── quick_sort([], base case) [arr,3,2]
+└── quick_sort([9, 7, 6], pivot=6 [arr,4,6] 
+    → After partition: [6, 7, 9] p_index = 4
+    ├── quick_sort([6], arr[arr,4,3] => base case
+        quick_sort([7,9]), [arr,5,6]
+        ->After partition: [7,9] p_index=6
+        ├── quick_sort([7]) [arr,5,5] =>base case
+        └── quick_sort([9]) [arr,7,7] => base case)
