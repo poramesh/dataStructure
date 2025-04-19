@@ -96,3 +96,21 @@ Case	     Time	Explanation
 Best Case	 O(n)	Already sorted array → no shifting needed
 Average	     O(n²)	About n²/4 comparisons on average
 Worst Case	 O(n²)	Reverse sorted → max shifting at each step
+
+
+
+
+def insertion_sort(A):
+    n = len(A)
+    for i in range(1, n):
+        value = A[i]
+        hole = i
+
+        while hole > 0 and A[hole - 1] > value:
+            A[hole] = A[hole - 1]  # shift right
+            hole -= 1
+        
+        A[hole] = value
+
+
+print(insertion_sort([7, 2, 4, 1, 5, 3]))
