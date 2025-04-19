@@ -13,6 +13,14 @@ Optimized Approach: Binary Search
 Use a modified binary search by leveraging the fact that:
 In a circularly sorted array with distinct elements, at least one half of the array is always sorted.
 
+arr = [15, 18, 19, 20, 3, 6, 12]
+
+
+now we are a[3] = 20, and we have got to find 3, so we check 20 is less than 12? no so it is not.
+now we check if a[low] =15 is less than 3 , it is not so , now we see starting is also not started so we make the low = 4, high =6
+here 5 is the mid a[5]=6 , and 6 is less than 12 and 6 is greater than 3 so it goes to left. so high becomes mid-1 => low =4, high=5
+here mid = 4 arr[4] =3, the array is found so it returns.
+
 
 
 def circular_array_search(arr, target):
