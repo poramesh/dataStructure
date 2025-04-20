@@ -26,6 +26,10 @@ if __name__ == "__main__":
     print("Sorted array:  ", sorted_array)
 
 
+If we didn't do n - k - 1:
+We’d keep comparing already sorted elements, which wastes time and could lead to unnecessary swaps if logic wasn’t precise.
+
+
 Step-by-Step Process:
 Given array A = [2, 7, 4, 1, 5, 3] (index 0 to 5):
 
@@ -92,5 +96,8 @@ arr = [1, 2, 3, 4, 5]
 
 
 
+n=5 (its already minused to no need to mincu is n-k-1)
+k = 0 1 2 3 4 5 
+n-k=5 4 3 2 1 0 
 
 
