@@ -8,6 +8,19 @@ you're defining a structure named node, which contains two members: an integer n
 The reason why struct node *next; is used instead of just node *next; is because when you're defining the struct, the compiler doesn't yet know what node is,
 since it's being defined in the same statement. To resolve this, you explicitly specify struct node to tell the compiler that next will be a pointer to a structure of type node.
 
+and we why the semicolon is needed:
+In C/C++, when you define a struct, you're telling the compiler:
+“Here’s a new type, and I’m ending the definition now.”
+So that semicolon marks the end of the struct declaration — similar to how you end a regular statement with a ;.
+
+Analogy:Think of it like a variable declaration:
+int a;   // semicolon ends the declaration
+Similarly:
+struct node {
+    int data;
+    struct node *next;
+}; // semicolon ends the type definition
+
 In Python, you typically don't use struct to define data structures like you do in languages like C or C++. Instead, you can use classes to achieve similar functionality. 
 class Node:
     def __init__(self, data):
