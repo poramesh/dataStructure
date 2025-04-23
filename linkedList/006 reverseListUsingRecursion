@@ -102,3 +102,23 @@ void reverseRecursion(struct node* p) {
     q->next = p;
     p->next = NULL;
 }
+
+
+
+if we dont do p->next = NULL 
+then:
+
+When you reverse the link q->next = p, you create a new backward link (e.g., 4 → 3). But if you don't nullify p->next,
+the original link (e.g., 3 → 4) is still intact, causing a cycle or loop in the list.
+
+
+
+4 → 3 → 2 → 1
+        ↑   ↓
+        \___/
+
+This means:
+
+Node 1 still points to Node 2.
+So even though 4 → 3 → 2 → 1 was correctly built, 1 still points back to 2, forming a circular list (or worse, a never-ending loop 
+if you try to print it).
