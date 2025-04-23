@@ -158,3 +158,43 @@ if __name__ == "__main__":
         x = int(input("Enter the number: "))
         linked_list.insert(x)
     linked_list.print_list()
+
+
+
+
+inserting data at end:
+
+class Node:
+    def __init__(self,data):
+        self.data = data
+        self.next = None
+
+class Linked_List:
+    def __init__(self):
+        self.head = None
+    
+    def insert(self, data):
+        node = Node(data)
+        if self.head is None:
+            self.head = node
+        else:
+            temp = self.head
+            while temp.next:
+                temp = temp.next
+            temp.next = node
+
+    def print_list(self):
+        temp = self.head
+        while temp:
+            print(temp.data)
+            temp = temp.next
+        
+    
+if __name__ == "__main__":
+    lis = Linked_List()
+    val = [1,2,3,4,5]
+    for i in val:
+        lis.insert(i)
+    lis.print_list()
+            
+        
