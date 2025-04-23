@@ -27,8 +27,8 @@ Solution:
 N = int(input())
 A = input().split()
 ans = ""
-for a in range(N):
-    ans += A[N-a-1]+" "
+for i in range(N):
+    ans += A[N-i-1]+" "
     
 print(ans[0:-1])//print()ans[0:]
 
@@ -54,7 +54,7 @@ print(res)
 
 N = input()
 A = [int(x) for x in input().split()] //int
-#A = input().split() // store as string
+#A = input().split() // store as list
 #A = input() #store its as str
 ###
 text = "IBM HackerRank test"
