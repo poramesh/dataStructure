@@ -47,48 +47,79 @@ for _ in range(q):
     queryList.append(input().strip())
 
 
-for i in range(q):
-    max =0 
-    for j in range(n):
-        if queryList[i] == stringList[j]:
-            max=max+1
-    print(max)
+def matchingStrings(stringList, queries):
+    countArr = []
+    for query in queries:
+        count = 0
+        for string in stringList:
+            if(query==string):
+                count+=1
+        countArr.append(count)
+    return countArr 
 
 (or)
 
-def matchingStrings(strings, queries):
-    res = []
-    for i in queries:
-        print(i)
-        //print(strings.count(i))
-        res.append(strings.count(i))
-    return res
+def matchingStrings(stringList, queries):
+    countArr = []
+    for query in queries:
+        countArr.append(stringList.count(query))
+    return countArr    
+
+
+basic example:
+
+list = [1,2,3,4,4,5]
+count = list.count(4)
+print(count) #2
+    
         
 (or)
 
 
 from collections import Counter
 
-cnt = Counter([input().strip() for _ in range(int(input().strip()))]) //Counter({'aba': 2, 'baba': 1, 'xzxb': 1})
+stringCount = Counter([input().strip() for _ in range(int(input().strip()))]) //Counter({'aba': 2, 'baba': 1, 'xzxb': 1})
 
 
 for _ in range(int(input().strip())):
-    print(cnt[input().strip()])
-i/p
-4
-aba
-baba
-aba
-xzxb
-3
-aba
-xzxb
-ab
-o/p
-2
-1
-0
+    print(stringCount[input().strip()])
+
+
+basic exmaple:
+
+from collections import Counter
+my_list = ["apple", "banana", "apple", "orange", "banana", "apple"]
+counted = Counter(my_list)
+print(counted)
+
+
+here the sing i iterables and another one is a list.
+from collections import Counter;
+c = Counter(['aaaabbbccccdddeeee'])
+print(c) #Counter({'aaaabbbccccdddeeee': 1})
+c = Counter('aaaabbbccccdddeeee')
+print(c) #Counter({'a': 4, 'c': 4, 'e': 4, 'b': 3, 'd': 3})
+
+
 (or)
+
+i/p:
+4 = [aba, baba, aba, xzxb]
+3 = [aba, xzxb, ab]
+
+using dictionary:
+
+def matchingStrings(stringList, queries):
+    dict = {}
+    queryCount = []
+    for string in stringList:
+        dict[string] = dict.get(string,0)+1 #{'aba': 2, 'baba': 1, 'xzxb': 1} we should dict.get so we would be ablet to pass default insteda of dict[key]
+    
+    for query in queries:
+        queryCount.append(dict.get(query,0))
+
+    return queryCount
+        
 
 import collections
 
