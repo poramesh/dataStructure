@@ -42,3 +42,21 @@ int main() {
     return 0;
 }
 
+
+
+
+and more on null pointer
+
+
+int *num = 0;         // num is a pointer to int, initialized to NULL (0)
+int **var = &num;     // var is a pointer to pointer to int, pointing to num
+So in memory terms:
+
+num holds the value 0 (NULL) → it does not point to any valid integer
+var holds the address of num
+
+Now:
+*var means:
+Dereference var → you get what it points to → that's num
+So *var is equivalent to num, which holds the value 0
+
