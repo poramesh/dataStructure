@@ -40,8 +40,7 @@ void reverse(){
     if(head==NULL)  return;
     struct node* temp = head;
     while(temp!=NULL){
-        //s[++top]=temp;
-        push(temp);
+        push(temp);         //s[++top]=temp;
         temp=temp->next;
     }
     temp =s[top];
@@ -55,6 +54,28 @@ void reverse(){
     temp->next = NULL;
     
 }
+
+A|100 B|200 C|300 D|Null 
+ 99   100    200   300
+
+s=99,100,200,300
+
+head=300 (s--)
+s=99,100,200
+
+and now temp =300
+temp->next=200 and(s--)
+temp=temp->next=200 (which has been just replaced)
+
+s=99,100
+temo->next=s.top=100 (s--)
+temp=temp->next=100
+
+s=99
+temp->next=s.top=99(s--)
+temp=temp->next=99
+
+and in the end we put temp->next = null 
 
 
 void push(struct node* temp){
@@ -96,7 +117,12 @@ int main(){
     
 }
 
+
+
+
 (or)
+
+
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -163,6 +189,12 @@ void print()
  } 
   printf("\n");
 }
+
+
+
+i/p: bugun seminer vardi!
+o/p: !idrav renimes nugub
+
 
 (or)
 
