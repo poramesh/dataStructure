@@ -1,6 +1,8 @@
 	int num = INT_MIN;
 	int *var = &num; 
 	int **ptr = &var;
+        int **anotherptr = ptr; //ptr holds the adress of var, *ptr holds the adress of num ** ptr holds the vaue of num
+        int ***triplestar = &ptr; // triplestar holds the adress of ptr, *triplestar gives the afress of var, **triplestar gives the adress of num and ***triplestar gives the value of nun  
 	printf("%d ",num); //-2147483647 value of num
 	printf("%d ",&num); //873550972 adress of num
 	printf("%d ",var); //873550972 address of num
@@ -10,6 +12,13 @@
 	printf("%d ",**ptr); //-2147483647 value of num
 	printf("%d ",*ptr); //873550972 adress of num
 	printf("%d ",&ptr); //873550952 address of ptr
+        printf("%d", **anotherptr) //-2147483647 prints value of num
+
+
+triplestar → address of ptr
+*triplestar → value of triplestar → ptr → address of var
+**triplestar → value of *triplestar → var → address of num
+***triplestar → value of **triplestar → num → INT_MIN
 
 
 #include <stdio.h>
