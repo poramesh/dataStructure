@@ -4,6 +4,11 @@ A+B*C-D*E => ABC*+DE*-
 ((A+B)*C-D)*E = AB+C*D-E*
 A*(B+C)=>ABC+*
 
+(A + B) → becomes A B +
+(A + B) * C → becomes A B + C *
+((A + B) * C - D) → becomes A B + C * D -
+((A + B) * C - D) * E → becomes A B + C * D - E *
+
 // Online C compiler to run C program online
 #include <stdio.h>
 #include<stdlib.h>
@@ -67,7 +72,7 @@ int main() {
     scanf("%[^\n]s",c);
     //A*(B+C)=>ABC+*
     //A*B+C=>AB*C+
-     char* op = infixToPostfixExp(c);
+    char* op = infixToPostfixExp(c);
     printf("\no/p is %s",op);
     return 0;
 }
