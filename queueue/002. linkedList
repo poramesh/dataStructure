@@ -12,6 +12,13 @@ we can implement it in big o of 1 if we can have front and rear variable holding
 anything that is in dynamic memory should be explicitly free'd.
 there are no major disadavantage, as we wil be storing and doing eveyrhing in less time only disadvantage is the extra mem.
 /*Queue - Linked List implementation*/
+
+
+REAR END IS WHERE WE ARE ADDING THE VALUE
+
+Front -> [NULL | 2 | 2] -> [2 | 4 | 3] -> [3 | 6 | NULL] <- Rear
+               1                2              3
+
 #include<stdio.h>
 #include<stdlib.h>
 struct Node {
