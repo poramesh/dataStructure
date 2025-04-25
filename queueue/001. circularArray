@@ -20,12 +20,12 @@ we can use modulo operation.
 
 
 current position = rear
-next position = (rear+1)%n e
+next position = (rear+1)%n 
 
 (5+1)%10 = 6
 
 
-previous postition = (rear+n-1)%n #addig n so it is always positive.
+previous postition = (rear+n-1)%n #addig n so it is always positive. => (4+4-1)%4 = 3 (in case we ((rear-1)%n = (4-1)%4=3 ))
 count = (rear+n-front)%n+1
 to check if its full: (rear+1)%MAX_SIZE == front ? true : false;
 
