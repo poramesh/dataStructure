@@ -37,25 +37,11 @@ void insert(int data, struct bstNode** root){
     
 }
 
-bool search(struct bstNode** root, int data){
-    if(root==NULL){
-        return false;
-    }
-    struct bstNode * travPtr = *root;
-    while(travPtr->data != data){
-        travPtr = data <= travPtr->data ? travPtr->left : travPtr->right;
-        
-        if(travPtr->left==NULL && travPtr->right == NULL){
-            if(travPtr->data==data){
-                return true;
-            }
-            return false;
-        }
-    }
-    bool retVal = travPtr->data == data? true : false;
-    return retVal;
-    
-}
+
+//
+//if we want to use . then we have to You need to dereference the pointer first: (*travPtr).data  ==  travPtr->data
+
+
 
 bool search1(struct bstNode** root, int data){
     struct bstNode* travPtr = *root;
