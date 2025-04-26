@@ -19,6 +19,12 @@ data will be stored in that memory.
 To properly use the allocated memory, you need to cast the void* returned by malloc to the type of pointer you need. In this case,
 you want a pointer to struct bstNode, so you cast the void* to struct bstNode*.
 
+                               15
+                              /  \
+                            10    20
+                          /  \    / \
+                         8   12  17  25
+
 struct bstNode* getNewNode(int data){
     struct bstNode* newNode = (struct bstNode*)(malloc(sizeof(struct bstNode)));
     newNode->data = data;
