@@ -48,7 +48,7 @@ int main() {
 and more on null pointer
 
 
-int *num = 0;         // num is a pointer to int, initialized to NULL (0)
+int *num = 0;         // num is a pointer to int, initialized to NULL (0), num holds value 0 at some adress memory adress 
 int **var = &num;     // var is a pointer to pointer to int, pointing to num
 So in memory terms:
 
@@ -59,4 +59,33 @@ Now:
 *var means:
 Dereference var → you get what it points to → that's num
 So *var is equivalent to num, which holds the value 0
+
+
+
+
+simpel eaxmple:
+
+#include<stdio.h>
+#include<stdlib.h>
+
+void allocateMemory(int** ptr) {
+    *ptr = (int*)malloc(sizeof(int)); //  so adress 10 will have adress of 100 
+    **ptr = 50;  // we will add value to the adress of 100 hence double pointer. 
+}
+
+int main() {
+    int* p = NULL; // adress of P=10 and it holds value 0
+    allocateMemory(&p); // pass address (= 10) of pointer p 
+    printf("%d\n", *p);  // Output will be 50
+    free(p); // don't forget to free memory
+    return 0;
+}
+
+
+** yakandre, adralli iru value beku namge , 10 ralli adress iruthe mathe aa adress bekagirodhu.
+
+
+
+
+
 
