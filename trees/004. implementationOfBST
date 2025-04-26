@@ -19,6 +19,12 @@ struct bstNode* right;
 }
 struct bstNode* rootPtr; //to store adress of root node.
 
+
+                               15
+                              /  \
+                            10    20
+                          /  \    / \
+                         8   12  17  25
 // Online C compiler to run C program online
 #include <stdio.h>
 #include<stdlib.h>
@@ -47,7 +53,7 @@ struct bstNode* insert(int data, struct bstNode* root){
         } else {
             root->right = insert(data, root->right);
         }
-    return root;
+    return root; //watch out this is where returning happening haahah it recursively updates the nodes adress
 }
 
 bool search(struct bstNode* root, int data){
@@ -78,3 +84,87 @@ int main() {
     return 0;
 }
  code: https://gist.github.com/mycodeschool/44e1a9183ab0e931f729
+
+
+
+in python:
+
+By passing root
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+class BST:
+    def insert(self, data, root):
+        if root is None:
+            return Node(data)
+        elif data <= root.data:
+            root.left = self.insert(data, root.left)
+        else:
+            root.right = self.insert(data, root.right)
+        return root
+    
+    def inorder(self, root):
+        if root:
+            self.inorder(root.left)
+            print(root.data, end=' ')
+            self.inorder(root.right)
+
+# Test it
+bst = BST()
+root = None
+root = bst.insert(15, root)
+root = bst.insert(11, root)
+root = bst.insert(20, root)
+root = bst.insert(19, root)
+
+bst.inorder(root)  # Should print: 11 15 19 20
+
+
+
+Without passing root (using self.root)
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+class BST:
+    def __init__(self):
+        self.root = None  # Store the root inside the class
+    
+    def insert(self, data):
+        # Now we don’t need to pass root; we work directly with self.root
+        self.root = self._insert_recursive(self.root, data)
+        
+    def _insert_recursive(self, root, data):
+        if root is None:
+            return Node(data)
+        elif data <= root.data:
+            root.left = self._insert_recursive(root.left, data)
+        else:
+            root.right = self._insert_recursive(root.right, data)
+        return root
+    
+    def inorder(self):
+        self._inorder_recursive(self.root)
+        
+    def _inorder_recursive(self, root):
+        if root:
+            self._inorder_recursive(root.left)
+            print(root.data, end=' ')
+            self._inorder_recursive(root.right)
+
+# Test it
+bst = BST()
+bst.insert(15)
+bst.insert(11)
+bst.insert(20)
+bst.insert(19)
+
+bst.inorder()  # Should print: 11 15 19 20
+
