@@ -12,6 +12,14 @@ print(root->data)
 inorder(root->right)
 }
 
+  struct node* ancestor = NULL;
+            while(current->data!=data){
+            if(data<current->data){
+                ancestor = current;
+                current= current->left;
+            } else current = current->right;
+            }
+            return ancestor->data;
 
   
                                       15
