@@ -216,7 +216,73 @@ int main() {
       
       */
 }
+
+
+
+
+isBstUtil(10, -∞, ∞)
+Is 10 in (-∞, ∞)? → YES
+Now check left and right subtrees:
+Left child: isBstUtil(8, -∞, 10)
+Right child: isBstUtil(12, 10, ∞)
+
+2. isBstUtil(8, -∞, 10)
+Is 8 in (-∞, 10)? → YES
+Check left and right:
+Left: isBstUtil(7, -∞, 8)
+Right: isBstUtil(9, 8, 10)
+
+3. isBstUtil(7, -∞, 8)
+Is 7 in (-∞, 8)? → YES
+Left and right are NULL → returns true for both
+
+4. isBstUtil(9, 8, 10)
+Is 9 in (8, 10)? → YES
+Left and right are NULL → returns true for both
+So 8's whole subtree is OK.
+
+5. isBstUtil(12, 10, ∞)
+Is 12 in (10, ∞)? → YES
+Check left and right:
+Left: isBstUtil(11, 10, 12)
+Right: isBstUtil(15, 12, ∞)
+
+6. isBstUtil(11, 10, 12)
+Is 11 in (10, 12)? → YES
+Left and right are NULL → returns true for both
+
+7. isBstUtil(15, 12, ∞)
+Is 15 in (12, ∞)? → YES
+Check left and right:
+Left: isBstUtil(14, 12, 15)
+Right: isBstUtil(16, 15, ∞)
+
+8. isBstUtil(14, 12, 15)
+Is 14 in (12, 15)? → YES
+Left and right are NULL → returns true for both
+
+9. isBstUtil(16, 15, ∞)
+Is 16 in (15, ∞)? → YES
+Left and right are NULL → returns true for both
+
+
+So 15's whole subtree is OK.
+So 12's whole subtree is OK.
+So 10's whole tree is OK.
+
+
+Node | Range    | Is it OK?
+10   | (-∞, ∞)  | Yes
+8    | (-∞, 10) | Yes
+7    | (-∞, 8)  | Yes
+9    | (8, 10)  | Yes
+12   | (10, ∞)  | Yes
+11   | (10, 12) | Yes
+15   | (12, ∞)  | Yes
+14   | (12, 15) | Yes
+16   | (15, ∞)  | Yes
 ------------------------------
+
 Method 3: using inroder traversal
 
 // Online C compiler to run C program online
@@ -301,7 +367,7 @@ int main() {
                 1|10|2
                   /\
                 1    2      
-             3|8|Null  NULL|12|NULL  
+             3|5|Null  NULL|12|NULL  
                /
               3
              7|7|NULL  
@@ -310,3 +376,21 @@ int main() {
          NULL|6|NULL  
       
       */"""
+
+
+
+         10
+        /  \
+      5     15
+     / \   /  \
+    3   7 12  20
+
+
+
+Start with root 10, initialize *var = -∞.
+Traverse left to 5, then left to 3. 3 is the smallest value, so *var = 3.
+Backtrack to 5. Now, check if *var (3) ≤ 5, which is true. So, *var = 5.
+Traverse right to 7. Check if *var (5) ≤ 7, which is true. So, *var = 7.
+Backtrack to 10. Check if *var (7) ≤ 10, which is true. So, *var = 10.
+Traverse right to 15. Check if *var (10) ≤ 15, which is true. So, *var = 15.
+Traverse left to 12. Check if *var (15) ≤ 12, which is false, so it returns false.
