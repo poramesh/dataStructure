@@ -24,78 +24,170 @@ longest zigzsg is 1->2->4->6 which is 3
 
 
 class Solution:
-    def __init__(self):
-        self.max = 0  # Initialize the max variable to track the longest ZigZag path
-
-    def longestZigZag(self, root):
-        if not root:
-            return 0
-        self.path(root.left, 0, False)  
-        self.path(root.right, 0, True)  
-        return self.max
-
-    def path(self, node, depth, direction):
-        self.max = max(self.max, depth)
-        if not node:
-            return
-        self.path(node.left, depth + 1 if direction else 0, False)//if previous direction was right, and now going left, we add 1 to depth, else starting again as 0
-        self.path(node.right, depth + 1 if not direction else 0, True)
+        def longestZigZag(self, root):
+            def dfs(root):
+                if not root: return [-1, -1, -1]
+                left, right = dfs(root.left), dfs(root.right)
+                return [left[1] + 1, right[0] + 1, max(left[1] + 1, right[0] + 1, left[2], right[2])]
+            
+            return dfs(root)[-1
 
 
-
-         1
-          \
-           1
-          / \
-         1   1
-            / \
-           1   1
-            \   
-             1
-              \
-               1
-if you print(depth) before self.max
-
-0
-0
-1
-0
-2
-0
-1
-0
-2
-3
-0
-1
-0
-0
-1
-0
+solve it from the last left node, you will make sense out of it.
 
 
-          1
-        /   \
-       1     1
-        \   
-         1 
-       /   \
-      1     1
-       \
-        1
+Node | left move| right move | best
+6    | 0        | 0          | 0
+4    | 1        | 0          | 1
+2    | 0        | 2          | 2
+7    | 0        | 0          | 0
+5    | 0        | 1          | 1
+3    | 0        | 1          | 1
+1    | 3        | 1          | 3
 
 
-0
-0
-1
-2
-0
-3
-4
-0
-0
-1
-0
-0
-1
-0
+
+left[0] = longest ZigZag starting by going left at the left child.
+left[1] = longest ZigZag starting by going right at the left child.
+right[0] = longest ZigZag starting by going left at the right child.
+right[1] = longest ZigZag starting by going right at the right child.
+
+
+Now, at the current node,
+you want to move left or you want to move right.
+
+Case 1: Moving left from current node
+After you move left, you are standing at the left child.
+At left child, next move must be right (because zigzag must alternate).
+So you care about left[1] (not left[0]).
+That’s why you pick left[1].
+
+Case 2: Moving right from current node
+After you move right, you are standing at the right child.
+At right child, next move must be left.
+So you care about right[0] (not right[1]).
+That’s why you pick right[0].
+
+
+Maybe a tiny example helps:
+Suppose you are at Node 2:
+
+    2
+     \
+      4
+     /
+    6
+At node 2:
+If you go right to 4,
+Then at 4, you must go left (because of zigzag).
+So we care about right[0] from Node 2.
+
+
+One-line Memory Trick:
+When you move in one direction, you need the opposite move at the child.
+So use the opposite index:
+move left → left[1]
+move right → right[0]
+
+
+
+
+Step-by-step for leaf nodes:
+
+
+
+       1
+      / \
+     2   3
+      \   \
+       4   5
+      /     \
+     6       7
+
+At 6:
+dfs(None) → [-1, -1, -1] for both left and right
+So:
+left move = left[1] + 1 = (-1) + 1 = 0
+right move = right[0] + 1 = (-1) + 1 = 0
+best = max(0, 0, -1, -1) = 0
+Return: [0, 0, 0]
+Means:
+6 can go left for 0
+6 can go right for 0
+Best so far = 0
+
+At 4 (parent of 6):
+left = dfs(6) = [0, 0, 0]
+right = dfs(None) = [-1, -1, -1]
+So:
+left move = left[1] + 1 = 0 + 1 = 1
+right move = right[0] + 1 = (-1) + 1 = 0
+best = max(1, 0, 0, -1) = 1
+Return: [1, 0, 1]
+Means:
+4 can go left for 1 (4 → 6)
+4 can go right for 0
+Best so far = 1
+
+
+At 2 (parent of 4):
+  2
+   \ 
+    4
+   /
+  6
+left = dfs(None) = [-1, -1, -1]
+right = dfs(4) = [1, 0, 1]
+So:
+left move = left[1] + 1 = (-1) + 1 = 0
+right move = right[0] + 1 = 1 + 1 = 2
+best = max(0, 2, -1, 1) = 2
+Return: [0, 2, 2]
+Means:
+2 can go left for 0
+2 can go right for 2 (2 → 4 → 6)
+Best so far = 2
+
+Similarly for right side:
+At 7:
+Return: [0, 0, 0]
+At 5:
+left = dfs(None) = [-1, -1, -1]
+right = dfs(7) = [0, 0, 0]
+So:
+left move = left[1] + 1 = 0
+right move = right[0] + 1 = 1
+best = 1
+Return: [0, 1, 1]
+
+At 3:
+left = dfs(None)
+right = dfs(5) = [0, 1, 1]
+So:
+left move = 0
+right move = 1
+best = 1
+Return: [0, 1, 1]
+Finally at root 1:
+left = dfs(2) = [0, 2, 2]
+right = dfs(3) = [0, 1, 1]
+
+So:
+
+       1
+      / \
+     2   3
+      \   \
+       4   5
+      /     \
+     6       7
+
+left move = left[1] + 1 = 2 + 1 = 3
+right move = right[0] + 1 = 0 + 1 = 1
+best = max(3, 1, 2, 1) = 3
+Return: [3, 1, 3]
+
+FINAL ANSWER: 3
+Which is the correct longest ZigZag length!
+
+
