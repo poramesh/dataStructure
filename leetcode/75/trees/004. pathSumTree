@@ -15,73 +15,51 @@ if the sum is 22:
 
 o/p: 3
 
+Now starting at node 5:
+dfs(node=5, target=22)
+Call test(node=5, target=22)
 
-5
-t 22
-4
-t 17
-11
-t 13
-7
-t 2
-2
-t 2
-target: 2
-8
-t 17
-13
-t 9
-4
-t 9
-5
-t 5
-target: 5
-1
-t 5
-4
-t 22
-11
-t 18
-7
-t 7
-target: 7
-2
-t 7
-11
-t 22
-7
-t 11
-2
-t 11
-7
-t 22
-2
-t 22
-8
-t 22
-13
-t 14
-4
-t 14
-5
-t 10
-1
-t 10
-13
-t 22
-4
-t 22
-5
-t 18
-1
-t 18
-5
-t 22
-1
-t 22
+Node is 5
+Current node value = 5
+Is 5 == 22? No, so continue.
+Go left to node 4, and reduce target:
+New target = 22 - 5 = 17
+Call test(node=4, target=17)
+
+Node is 4
+Is 4 == 17? No, so continue.
+Go left to node 11, reduce target:
+New target = 17 - 4 = 13
+Call test(node=11, target=13)
+
+Node is 11
+Is 11 == 13? No, so continue.
+Go left to node 7, reduce target:
+New target = 13 - 11 = 2
+Call test(node=7, target=2)
+
+Node is 7
+Is 7 == 2? No, so continue.
+Go left → None, return.
+Go right → None, return.
+
+Back to node 11, now go right to node 2 with target 2.
+(From node 11 → right child node 2)
+Call test(node=2, target=2)
+
+Node is 2
+Is 2 == 2? YES!!
+We found a valid path!
+Increase self.numOfPaths += 1
+Then:
+Go left → None, return.
+Go right → None, return.
+
+Back to node 4, now go right (which is None), so nothing happens.
+Back to node 5, now go right to node 8, with target 22.
+Similarly, test(node=8, target=17) will happen, and exploration continues.
 
 
-we gottta consider the entire path in the tree so we are not returning 
 
 
 
@@ -109,8 +87,6 @@ class Solution:
     def test(self, node, target):
         if node is None:
             return
-        print(node.val)
-        print("t" , target)
         if node.val == target:
             print("target:",target)
             self.numOfPaths += 1
@@ -144,10 +120,17 @@ total = 4
  -1
 
 
+        5
+       / \
+      4   8
+     /   / \
+    11  13  4
+   /  \      \
+  7    2      1
+
 
 class Solution(object):
     def pathSum(self, root, target):
-        # define global result and path
         self.result = 0
         cache = {0:1} //ensure if the root node and target is 0, it adds on the result
         
@@ -168,7 +151,6 @@ class Solution(object):
 
         self.dfs(root.left, target, currPathSum, cache)
         self.dfs(root.right, target, currPathSum, cache)
-        print(cache, currPathSum)
         cache[currPathSum] -= 1
 
 
