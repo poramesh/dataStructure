@@ -171,3 +171,51 @@ Since only the left subtree returned a result (5), return 5 (as max([5, None]) i
 
 Final Output:
 The LCA of nodes 5 and 4 is 5.
+
+
+
+
+
+
+
+lowest common ancestor in BT
+
+Key Concept for LCA in BST:
+>If both p and q are less than the current root node, then the LCA must be in the left subtree.
+>If both p and q are greater than the current root node, then the LCA must be in the right subtree.
+>If one of p or q is smaller and the other is larger than the current root node, then the current root is the LCA, because one node lies 
+in the left subtree and the other lies in the right subtree.
+
+
+
+def lowestCommonAncestor(root, p, q):
+    while root:
+        if p.val < root.val and q.val < root.val:
+            root = root.left
+        elif p.val > root.val and q.val > root.val:
+            root = root.right
+        else:
+            return root
+    return None  # In case the tree is empty
+
+
+        6
+       / \
+      2   8
+     / \  / \
+    0  4 7   9
+
+Query: Find the LCA of p = 2 and q = 4.
+
+Start at the root node (6):
+p = 2 and q = 4 are both less than 6, so we move to the left subtree.
+Move to node (2):
+p = 2 is equal to the current node, and q = 4 is greater than 2, so node 2 is the LCA of 2 and 4.
+
+
+Another Example: LCA of 7 and 9
+Query: Find the LCA of p = 7 and q = 9.
+Start at the root node (6):
+p = 7 and q = 9 are both greater than 6, so we move to the right subtree.
+Move to node (8):
+p = 7 is less than 8 and q = 9 is greater than 8, so node 8 is the LCA of 7 and 9.
