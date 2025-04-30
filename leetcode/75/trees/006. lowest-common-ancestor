@@ -1,0 +1,173 @@
+what is bt and bst?
+
+binary tree:
+      3
+     / \
+    1   4
+       /
+      2
+
+binary search tree:
+      3
+     / \
+    1   5
+         \
+          7
+| Feature                    | Binary Tree (BT)                             | Binary Search Tree (BST)                                      |
+|---------------------------|----------------------------------------------|---------------------------------------------------------------|
+| **Definition**            | A tree where each node has at most 2 children | A binary tree with additional rules for ordering elements     |
+| **Ordering Rule**         | No specific order between nodes              | Left child < Parent < Right child                             |
+| **Search Efficiency**     | O(n) in worst case                           | O(log n) in best/average case (if balanced)                   |
+| **Use Case**              | General tree structures, hierarchies         | Efficient searching, insertion, deletion of sorted data       |
+| **Duplicates**            | Can have duplicates anywhere                 | Usually avoids or handles duplicates in a specific way        |
+
+
+
+
+
+Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+
+According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that
+has both p and q as descendants (where we allow a node to be a descendant of itself).”
+
+ 
+
+Example 1:
+
+
+Input: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1
+Output: 3
+Explanation: The LCA of nodes 5 and 1 is 3.
+
+
+        3
+       / \
+      5   1
+     / \ / \
+    6  2 0  8
+      / \
+     7   4
+
+
+Input: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4
+Output: 5
+Explanation: The LCA of nodes 5 and 4 is 5, since a node can be a descendant of itself according to the LCA definition.
+
+
+        3
+       / \
+      5   1
+     / \ / \
+    6  2 0  8
+      / \
+     7   4
+
+if p = 6, q = 8, lca=5
+
+
+
+Input: root = [1,2], p = 1, q = 2
+Output: 1
+
+     1
+    / 
+   2
+
+
+
+
+great explanation
+https://www.youtube.com/watch?v=13m9ZCB8gjw&t=136s
+
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def lowestCommonAncestor(root, p, q):
+    if not root:
+        return None
+    
+    if root == p or root == q:
+        return root
+    
+    left = lowestCommonAncestor(root.left, p, q)
+    right = lowestCommonAncestor(root.right, p, q)
+    
+    if left and right: //left n right are not null so we return null
+        return root
+    
+    return left if left else right
+
+root = TreeNode(3)
+root.left = TreeNode(5)
+root.right = TreeNode(1)
+root.left.left = TreeNode(6)
+root.left.right = TreeNode(2)
+root.right.left = TreeNode(0)
+root.right.right = TreeNode(8)
+root.left.right.left = TreeNode(7)
+root.left.right.right = TreeNode(4)
+
+p = root.left  # Node with value 5
+q = root.left.right.right  # Node with value 4
+
+lca = lowestCommonAncestor(root, p, q)
+print(f"The Lowest Common Ancestor of {p.val} and {q.val} is {lca.val}")
+
+
+
+
+(or)
+
+def lowestCommonAncestor(self, root, p, q):
+    if root in (None, p, q): return root
+    subs = [self.lowestCommonAncestor(kid, p, q)
+            for kid in (root.left, root.right)]
+    return root if all(subs) else max(subs) //max(null,4) cause if both got value we return root
+
+
+
+        3
+       / \
+      5   1
+     / \ / \
+    6  2 0  8
+      / \
+     7   4
+
+
+Query:
+Find the LCA of nodes p = 5 and q = 4.
+
+1. Initial Call: root = 3, p = 5, q = 4
+The base case check root in (None, p, q) doesn't match, so we move to the recursive calls.
+
+2. Recurse into the left subtree (root.left = 5) and the right subtree (root.right = 1).
+Recursive Call (Left Subtree): root = 5, p = 5, q = 4
+The base case check root in (None, p, q) matches because root = p = 5.
+Return 5.
+
+3. Recursive Call (Right Subtree): root = 1, p = 5, q = 4
+The base case check doesn't match, so recurse into the left subtree (root.left = 0) and right subtree (root.right = 8).
+
+4. Recursive Call (Left Subtree of 1): root = 0, p = 5, q = 4
+The base case check doesn't match, so recurse into the left and right subtrees, which are None.
+Return None.
+
+5. Recursive Call (Right Subtree of 1): root = 8, p = 5, q = 4
+The base case check doesn't match, so recurse into the left and right subtrees, which are None.
+Return None.
+
+6. Back to root = 1:
+subs = [None, None] (no results found in both subtrees).
+Since both are None, return None.
+
+7. Back to root = 3:
+subs = [5, None] (found 5 in the left subtree, no result in the right subtree).
+Since only the left subtree returned a result (5), return 5 (as max([5, None]) is 5).
+
+Final Output:
+The LCA of nodes 5 and 4 is 5.
