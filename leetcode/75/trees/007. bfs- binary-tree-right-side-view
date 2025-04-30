@@ -1,0 +1,397 @@
+Given the root of a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.
+
+ 
+
+Example 1:
+Input: root = [1,2,3,null,5,null,4]
+Output: [1,3,4]
+
+        1
+       / \
+      2   3
+       \   \
+        5   4
+
+
+
+Example 2:
+
+Input: root = [1,2,3,4,null,null,null,5]
+Output: [1,3,4,5]
+
+
+        1
+       / \
+      2   3
+     /     
+    4       
+   /
+  5
+
+
+Example 3:
+
+Input: root = [1,null,3]
+Output: [1,3]
+
+   1
+  /
+ 3
+
+Example 4:
+
+Input: root = []
+Output: []
+
+ 
+Constraints:
+
+The number of nodes in the tree is in the range [0, 100].
+-100 <= Node.val <= 100
+
+
+
+from collections import deque
+
+q = deque()
+This creates an empty queue using Python’s deque (double-ended queue) from the collections module.
+
+Why Use deque Instead of list?
+Using a list as a queue:
+q = []
+q.append(1)     # enqueue
+q.pop(0)   
+
+pop(0) is slow because it has to shift all the elements (O(n) time).
+
+
+Queue behavior with deque
+
+from collections import deque
+
+q = deque()
+q.append(10)
+q.append(20)
+q.append(30)
+
+print(q.popleft())  # Output: 10
+print(q.popleft())  # Output: 20
+print(q)            # Output: deque([30])
+
+
+
+sol:
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+from typing import Optional, List
+from collections import deque
+
+class Solution:
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        if not root:
+            return []
+
+        result = []
+        q = deque([root])
+
+        while q:
+            level_size = len(q)
+            for i in range(level_size):
+                node = q.popleft()
+                
+                if i == level_size - 1:                    # If it's the last node in this level, add it to result
+                    result.append(node.val)
+
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+        
+        return result
+
+
+
+
+Trace Logic Example
+
+       1
+      / \
+     2   3
+    /     \
+   4       5
+
+
+Explanation:
+Level 0 (root): The only visible node is 1, so it's added to the result.
+Level 1: The rightmost node is 3, so it's added to the result.
+Level 2: The rightmost node is 5, so it's added to the result.
+
+Initial Setup:
+root = TreeNode(1)
+Queue (q) starts with the root: q = deque([1])
+result = [] (This will hold the visible nodes from the right side)
+
+Iteration 1:
+Queue at start: q = deque([1])
+level_size = 1 (Only one node at this level, node 1)
+
+Process level 1:
+Pop node 1 from the queue: node = 1
+=>Since i == level_size - 1 => 0 == 1-1 => 0=0, we append 1 to result: result = [1]
+Add left child (2) and right child (3) to the queue: q = deque([2, 3])
+
+
+Iteration 2:
+Queue at start: q = deque([2, 3])
+level_size = 2 (Two nodes at this level: 2, 3)
+
+Process level 2:
+Pop node 2 from the queue: node = 2
+=>i=0 and level_size=2 => 0 != 2-1 This is not the last node, so no change in result.
+Add left child (4) to the queue: q = deque([3, 4])
+Pop node 3 from the queue: node = 3
+=>Since i == level_size - 1 =>i=1 and level_size=2-1, we append 3 to result: result = [1, 3]
+
+Add right child (5) to the queue: q = deque([4, 5])
+
+Iteration 3:
+Queue at start: q = deque([4, 5])
+level_size = 2 (Two nodes at this level: 4, 5)
+
+Process level 3:
+
+Pop node 4 from the queue: node = 4
+This is not the last node, so no change in result.
+node 4 has no children, so no additions to the queue.
+Pop node 5 from the queue: node = 5
+Since i == level_size - 1 (1 == 2-1), we append 5 to result: result = [1, 3, 5]
+node 5 has no children, so no additions to the queue.
+
+End of Loop:
+The queue is now empty, and the traversal is complete.
+Final result: [1, 3, 5]
+
+Explanation:
+Level 0: The rightmost node is 1 (added to result).
+Level 1: The rightmost node is 3 (added to result).
+Level 2: The rightmost node is 5 (added to result).
+
+Time Complexity:
+The while loop processes each node once, so the time complexity is O(n), where n is the number of nodes in the tree.
+
+Space Complexity:
+The space complexity is O(n), as we store all the nodes in the queue at some point (the largest level of the tree).
+
+
+
+
+
+                  1
+               /     \
+             2        3
+           /   \     /   \
+          4     5   6     7
+        /  \   / \   \   /
+       8    9 10 11  12 13
+      / \
+     14 15
+
+Level 0:
+
+Queue: deque([1])
+
+Level Size: 1 (only the root node)
+
+Processing:
+Dequeue node 1.
+Since it's the last node at this level, add 1 to the result: result = [1].
+Enqueue left child 2 and right child 3: queue = deque([2, 3]).
+
+
+Level 1:
+
+Queue: deque([2, 3])
+
+Level Size: 2
+
+Processing:
+
+Dequeue node 2.
+Enqueue left child 4 and right child 5: queue = deque([3, 4, 5]).
+Dequeue node 3.
+Since it's the last node at this level, add 3 to the result: result = [1, 3].
+Enqueue left child 6 and right child 7: queue = deque([4, 5, 6, 7]).
+
+Level 2:
+
+Queue: deque([4, 5, 6, 7])
+
+Level Size: 4
+
+Processing:
+Dequeue node 4.
+Enqueue left child 8 and right child 9: queue = deque([5, 6, 7, 8, 9]).
+Dequeue node 5.
+Enqueue left child 10 and right child 11: queue = deque([6, 7, 8, 9, 10, 11]).
+Dequeue node 6.
+Enqueue left child 12: queue = deque([7, 8, 9, 10, 11, 12]).
+Dequeue node 7.
+Since it's the last node at this level, add 7 to the result: result = [1, 3, 7].
+Enqueue left child 13: queue = deque([8, 9, 10, 11, 12, 13]).
+
+Level 3:
+
+Queue: deque([8, 9, 10, 11, 12, 13])
+
+Level Size: 6
+
+Processing:
+
+Dequeue node 8.
+Enqueue left child 14 and right child 15: queue = deque([9, 10, 11, 12, 13, 14, 15]).
+Dequeue node 9.
+Dequeue node 10.
+Dequeue node 11.
+Dequeue node 12.
+Dequeue node 13.
+Since it's the last node at this level, add 13 to the result: result = [1, 3, 7, 13].
+Enqueue left child 14: queue = deque([14, 15]).
+
+Level 4:
+
+Queue: deque([14, 15])
+
+Level Size: 2
+
+Processing:
+Dequeue node 14.
+Dequeue node 15.
+Since it's the last node at this level, add 15 to the result: result = [1, 3, 7, 13, 15].
+
+Final Result:
+
+Right Side View: [1, 3, 7, 13, 15]
+
+
+
+
+another logic:
+
+def rightSideView(self, root):
+    if not root:
+        return []
+    right = self.rightSideView(root.right)
+    left = self.rightSideView(root.left)
+    return [root.val] + right + left[len(right):]
+
+
+in the ending:
+
+       1
+      / \
+     2   3
+    /     \
+   4       5
+
+Step 1: Start at Node 1
+root = 1
+Recurse on root.right = 3
+Recurse on root.left = 2
+
+Step 2: Process Node 3
+root = 3
+Recurse on root.right = 5
+Recurse on root.left = None
+
+Step 3: Process Node 5
+root = 5
+root.right = None, root.left = None
+So return [5]
+
+Back to node 3:
+right = [5]
+left = []
+Return: [3] + [5] + [] = [3, 5]
+
+Step 4: Process Node 2
+root = 2
+Recurse on root.right = None
+Recurse on root.left = 4
+
+Step 5: Process Node 4
+root = 4
+root.right = None, root.left = None
+So return [4]
+
+Back to node 2:
+right = []
+left = [4]
+len(right) = 0, so take full left
+Return: [2] + [] + [4] = [2, 4]
+
+Step 6: Back to Node 1
+right = [3, 5]
+left = [2, 4]
+len(right) = 2, so take left[2:] → empty
+
+Final return: [1] + [3, 5] + [] = [1, 3, 5]
+
+
+        1
+       / \
+      2   3
+     / \     
+    4   5    
+   /          
+  6           
+
+
+Step-by-Step Trace:
+
+Step 1: Node 1
+root = 1
+Call rightSideView(3) → right subtree
+Call rightSideView(2) → left subtree
+→ Will return: [1] + right + left[len(right):]
+
+Step 2: Node 3 (Right of 1)
+root = 3
+Both left and right are None → return [3]
+
+Step 3: Node 2 (Left of 1)
+root = 2
+Call rightSideView(5) → right subtree
+Call rightSideView(4) → left subtree
+→ Will return: [2] + right + left[len(right):]
+
+Step 4: Node 5 (Right of 2)
+Both left and right are None → return [5]
+
+Step 5: Node 4 (Left of 2)
+root = 4
+Call rightSideView(None) → right subtree → returns []
+Call rightSideView(6) → left subtree
+
+Step 6: Node 6 (Left of 4)
+Both left and right are None → return [6]
+Back to Node 4:
+right = [], left = [6]
+return [4] + [] + [6] = [4, 6]
+
+Back to Node 2:
+right = [5], left = [4, 6]
+len(right) = 1, so take left[1:] = [6]
+return: [2] + [5] + [6] = [2, 5, 6]
+
+Back to Node 1:
+
+right = [3]
+left = [2, 5, 6]
+len(right) = 1, so take left[1:] = [5, 6]
+return: [1] + [3] + [5, 6] = [1, 3, 5, 6]
