@@ -291,6 +291,10 @@ def rightSideView(self, root):
     return [root.val] + right + left[len(right):]
 
 
+
+THIS IMPLEMENTATION TAKES Big O of n square 
+
+
 in the ending:
 
        1
@@ -395,3 +399,54 @@ right = [3]
 left = [2, 5, 6]
 len(right) = 1, so take left[1:] = [5, 6]
 return: [1] + [3] + [5, 6] = [1, 3, 5, 6]
+
+
+
+
+def rightSideView(self, root):
+    def collect(node, depth):
+        if node:
+            if depth == len(view):
+                view.append(node.val)
+            collect(node.right, depth+1)
+            collect(node.left, depth+1)
+    view = []
+    collect(root, 0)
+    return view
+
+
+        1
+       / \
+      2   3
+     /     \
+    4       5
+
+
+Step-by-Step Trace:
+1. collect(1, 0)
+depth == len(view) → 0 == 0 → ✅
+→ view = [1]
+Go right: collect(3, 1)
+
+2. collect(3, 1)
+1 == 1 → ✅
+→ view = [1, 3]
+Go right: collect(5, 2)
+
+3. collect(5, 2)
+2 == 2 → ✅
+→ view = [1, 3, 5]
+Go right → None, then left → None
+
+4. Back to node 3 → Go left → None
+
+5. Back to node 1 → Now go left: collect(2, 1)
+depth = 1, but len(view) = 3 → skip adding
+Go right: None, then left: collect(4, 2)
+
+6. collect(4, 2)
+depth = 2, but len(view) = 3 → skip
+Recurse deeper, but all children are None
+
+
+this one is big O of n
