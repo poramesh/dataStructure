@@ -40,23 +40,17 @@ SOLUTION:
 class RecentCounter(object):
 
     def __init__(self):
-        self.counter = []
-        self.start = 0
-    
-        
+        self.counter = []  # Stores all ping times
+        self.start = 0     # Points to the index of the earliest valid ping in the last 3000 ms
 
     def ping(self, t):
-        """
-        :type t: int
-        :rtype: int
-        """
-        self.counter.append(t)
-        while(self.counter[self.start] < t-3000):
-            self.start+=1
-        
-        print(self.counter)
-        print(self.start)
+        self.counter.append(t)  # Add the current ping
+        # Move 'start' forward while the ping is older than t - 3000
+        while self.counter[self.start] < t - 3000:
+            self.start += 1
+        # The number of pings in the last 3000 ms is the count from 'start' to end
         return len(self.counter) - self.start
+
 
 
 
@@ -75,3 +69,45 @@ Stdout
 1
 [1, 1000, 3301, 4000]
 1
+
+
+
+Trace Example
+Let's trace through a sequence of calls:
+
+obj = RecentCounter()
+print(obj.ping(1))       # Output: ?
+print(obj.ping(100))     # Output: ?
+print(obj.ping(3001))    # Output: ?
+print(obj.ping(3002))    # Output: ?
+
+1. ping(1)
+counter = [1]
+start = 0
+No elements are older than 1 - 3000 = -2999
+So, we keep all pings
+Return: len(counter) - start = 1 - 0 = 1
+
+2. ping(100)
+counter = [1, 100]
+start = 0
+No elements are older than 100 - 3000 = -2900
+Return: 2 - 0 = 2
+
+3. ping(3001)
+counter = [1, 100, 3001]
+start = 0
+Now we remove pings less than 3001 - 3000 = 1
+counter[0] = 1 is not less than 1 → no need to remove
+Return: 3 - 0 = 3
+
+4. ping(3002)
+counter = [1, 100, 3001, 3002]
+We remove pings less than 3002 - 3000 = 2
+counter[0] = 1 → 1 < 2 → remove (increment start)
+start = 1
+Return: 4 - 1 = 3
+
+Final State
+counter = [1, 100, 3001, 3002]
+start = 1 (points to 100)
