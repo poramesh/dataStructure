@@ -1,0 +1,194 @@
+There are n cities. Some of them are connected, while some are not. If city a is connected directly with city b, and city b is
+connected directly with city c, then city a is connected indirectly with city c.
+
+A province is a group of directly or indirectly connected cities and no other cities outside of the group.
+
+You are given an n x n matrix isConnected where isConnected[i][j] = 1 if the ith city and the jth city are directly connected, and isConnected[i][j] = 0 otherwise.
+
+Return the total number of provinces.
+
+
+example 1:
+
+Input: isConnected = [[1,1,0],[1,1,0],[0,0,1]]
+Output: 2
+
+1 ------ 2
+
+   3
+
+
+example 2:
+
+Input: isConnected = [[1,0,0],[0,1,0],[0,0,1]]
+Output: 3
+
+
+1    2    3
+
+
+
+
+class Solution:
+    def findCircleNum(self, A: List[List[int]]) -> int:
+        n = len(A)
+        seen = set()
+        def dfs(node):
+            for i, adj in enumerate(A[node]):
+                if adj and i not in seen:
+                    seen.add(i)
+                    dfs(i)
+        
+        ans=0
+        for i in range(n):
+            if i not in seen:
+                //seen.add(i) //we can also seen the i, the exection tim eis abut high when you do this, i dont get it tho
+                dfs(i)
+                ans+=1
+        
+        return ans
+        
+        (or return sum(dfs(i) or 1 for i in range(N) if i not in seen))
+
+
+....
+seen = [1,2]
+i=4
+j=4
+if i and j in seen:
+    print('hey')
+
+it doesnt print hey
+it print hey if i is truthy and j is in seen. 
+eg: i =1 or any postiive integer and j is either 1 or 2 
+....
+
+The input isConnected is an adjacency matrix of a graph:
+isConnected[i][j] == 1 means node i is connected to node j
+All connections are bidirectional, and every node is connected to itself
+The goal is to find the number of connected components (called "provinces")
+This is a classic connected components in undirected graph problem.
+
+
+This means:
+
+isConnected = [
+  [1, 1, 0],
+  [1, 1, 0],
+  [0, 0, 1]
+]
+
+Node 0 connected to: 0, 1
+Node 1 connected to: 0, 1
+Node 2 connected to: 2 (just itself)
+
+
+Input: isConnected = [[1,1,0],[1,1,0],[0,0,1]]
+
+1 ------ 2
+
+   3
+
+
+Loop over i = 0 to 3
+i=0
+seen = ()
+>0 not in seen → start DFS
+dfs(0)=> for i=0, adj=1 in [1,1,0]
+             if adj is truthy and i not in seen , yes adj=1 and i is not in seen
+                 seen.add(i) //(0)
+                    dfs(0)
+                       for i=0,adj=1 in [1,1,0]
+                              adj=1 and i=0 is not in seen. 0 is seen
+                       for i=1,adj=1 in [1,1,0]
+                              adj=1 and i=1 is not in seen
+                                  seen.add(i)//afer adding 1 seen is (0,1)
+                                  dsf(i) //1
+                                    for i=0,adj in [1,1,0]
+                                        if 1 and 0 is not in seen: 0 is seen
+                                    for i=1,adj in [1,1,0]
+                                        if 1 and 1 is not in seen: 1 is seen
+                                    for i=2 adj in [1,1,0]
+                                        if 0 is falsy so it ends.
+                       for i=2,adj=0 in [1,1,0]
+                              adj=0 is falsy: it exits
+         for i=1, adj=1 in [1,1,0]
+                if adj = 1 is truyth and i=1 in seen? yes it is
+         for i=2 adj=0 in [1,1,0]:
+                 adj=0 is falsy
+Loop i=1            
+seen = (0,1)
+> 1 is in seen so skip
+Loop i=2
+seen=(0,1)
+>2 is not in seen: 
+dfs(2)=> for i=0,adj=0 in enumerate(node[2]=[0,0,1])
+              if adj is falsy and i=0 is not in ssen so doesnt enter the statement
+          for i=1, adj=0 in (0,0,1)
+              adj is again falsy
+          for i=2 and adj=1:
+              adj is truthy and i=2 is not in seen:
+              seen.add(2) //now seen is (0,1,2)
+              dfs(2)
+              for i=0,adj=0 in (0,0,1)
+                  if adj is falsy
+              for i=1,adj=0 in(0,0,1)
+                  if adj is flasy: which it is
+              for i=2,adj=1 in (0,0,1)
+                   if 2 is in seen:
+
+returns 2
+             
+
+THIS WOULD A LOT MORE SENSE WHEN WE SOLVE IT FOR BIG PROBLEMS 
+
+WE STARTED OFF WITH 0, 0 WAS NOT IN SEEN SO WE START TRAVERSING 0 AGAIN WE FOUND 1 AND THEN 1 DIDNT HAVE ANY OTHER CONNECTIPN SO WE CAME BACK TO 0 , HERE 0 DOESNT
+HAVE ANY MORE CONENCTION LEFT SINCE 1 IS ALREDY ADDED SO 
+
+
+Final Answer:
+return 2
+
+Visual Summary
+Component 1: 0 — 1
+Component 2: 2
+
+So there are 2 provinces.
+
+
+(or)
+
+class Solution(object):
+    def findCircleNum(self, M):
+        seen = set([])
+        res = 0
+        for i in range(len(M)):
+            if i not in seen:
+                toSee = [i]
+                while len(toSee):
+                    cur = toSee.pop()
+                    if cur not in seen:
+                        seen.add(cur)
+                        toSee = [j for j,v in enumerate(M[cur]) if v and j not in seen] + toSee
+                res += 1
+        return res
+
+
+
+what does enumerate do?
+The enumerate() function in Python adds a counter to an iterable and returns it as an enumerate object. This is commonly used in loops 
+when you need both the index and the value from a list (or any iterable).
+
+Syntax:
+enumerate(iterable, start=0)
+iterable: The collection you want to loop through.
+start: (Optional) The starting index. Default is 0.
+
+Example:
+fruits = ['apple', 'banana', 'cherry']
+for index, fruit in enumerate(fruits):
+    print(index, fruit)
+
+
+
+
