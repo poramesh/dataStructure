@@ -1,0 +1,276 @@
+There are n cities numbered from 0 to n - 1 and n - 1 roads such that there is only one way to travel between two different 
+cities (this network form a tree). Last year, The ministry of transport decided to orient the roads in one direction because they are too narrow.
+
+Roads are represented by connections where connections[i] = [ai, bi] represents a road from city ai to city bi.
+
+This year, there will be a big event in the capital (city 0), and many people want to travel to this city.
+
+Your task consists of reorienting some roads such that each city can visit the city 0. Return the minimum number of edges changed.
+
+It's guaranteed that each city can reach city 0 after reorder.
+
+
+example:1
+         3 ←--2
+         ^
+         |       
+         1
+        ^  
+        | 
+        0 ←- 4 -→ 5
+      
+
+Input: n = 6, connections = [[0,1],[1,3],[2,3],[4,0],[4,5]]
+Output: 3
+Explanation: Change the direction of edges show in red such that each node can reach the node 0 (capital).
+like  0,1 => 1,0
+      1,3 => 3,1
+      1,4 => 4,1
+
+
+example:2
+       
+0 ←- 1-→ 2 ←-3 -→ 4
+
+
+Input: n = 5, connections = [[1,0],[1,2],[3,2],[3,4]]
+Output: 2
+Explanation: Change the direction of edges show in red such that each node can reach the node 0 (capital).
+
+
+
+code: 
+
+class Solution:
+    def minReorder(self, n: int, connections: List[List[int]]) -> int:
+        self.res = 0    
+        roads = set()
+        graph = collections.defaultdict(list)
+        for u, v in connections:
+            roads.add((u, v))
+            graph[v].append(u)
+            graph[u].append(v)
+        print(graph)
+        print(roads)
+    
+        def dfs(u, parent):
+            self.res += (parent, u) in roads
+            for v in graph[u]:
+                if v == parent:
+                    continue
+                dfs(v, u)    
+        dfs(0, -1)
+        return self.res
+
+
+n = 5
+connections = [[1, 0], [1, 2], [3, 2], [3, 4]]
+
+
+So:
+roads = {(1, 0), (1, 2), (3, 2), (3, 4)} → these are original directed edges.
+graph will represent undirected connection =
+graph = {
+  0: [1],
+  1: [0, 2],
+  2: [1, 3],
+  3: [2, 4],
+  4: [3]
+}
+Now, the DFS traversal begins from node 0.
+
+What does (parent, u) in roads mean?
+We're traveling from parent -> u. If this edge exists in the original graph (roads), it means it
+was not pointing toward node 0, so it must be reversed, so we increment self.res
+
+
+Trace the DFS
+
+Start: dfs(0, -1)
+>parent = -1, u = 0
+>(parent, u) = (-1, 0) → not in roads, so res remains 0
+>graph[0] = [1], so next: dfs(1, 0)
+
+dfs(1, 0)
+>Check (0, 1) → not in roads
+>graph[1] = [0, 2], skip 0 (parent), next: dfs(2, 1)
+
+dfs(2, 1)
+>Check (1, 2) → YES, it's in roads → means edge goes from 1 → 2
+But we’re going from 1 → 2 (away from 0), so it needs to be reversed
+res += 1 → res = 1
+>graph[2] = [1, 3], skip 1, next: dfs(3, 2)
+
+dfs(3, 2)
+>Check (2, 3) → not in roads
+>graph[3] = [2, 4], skip 2, next: dfs(4, 3)
+
+dfs(4, 3)
+>Check (3, 4) → YES, it's in roads → it’s going away from 0 → must reverse
+res += 1 → res = 2
+>graph[4] = [3], only parent, return
+
+
+
+Edges that need to be reversed:
+[1, 2] → reverse to [2, 1]
+[3, 4] → reverse to [4, 3]
+
+
+
+(or)
+
+# Solution 1: BFS
+from collections import defaultdict
+from collections import deque
+
+class Solution:
+    def minReorder(self, n: int, connections: List[List[int]]) -> int:
+        graph = defaultdict(list)
+        
+        for u, v in connections:
+            graph[u].append((v, 1))
+            graph[v].append((u, 0))
+            
+        q = deque([0])
+        visited = {0}
+        res = 0
+        
+        while q:
+            city = q.popleft()
+            
+            for neighbor, cost in graph[city]:
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    res += cost
+                    q.append(neighbor)
+                    
+        return res
+
+
+
+tracing:
+
+You are given a list of directed roads between cities. You must count the minimum number of roads 
+that need to be reversed so that every city can reach city 0.
+
+graph[u].append((v, 1))  # Original direction: u → v
+graph[v].append((u, 0))  # Reverse direction added: v → u with cost 0
+
+This creates a bidirectional graph:
+Forward edges (original) have cost 1 (i.e., would need reversing if you go that way).
+Reverse edges (we artificially add) have cost 0.
+
+How it works
+res counts the number of edges that need to be reversed (those with cost = 1)
+visited prevents revisiting nodes
+q is the queue for BFS traversal
+
+
+n = 6
+connections = [[0,1],[1,3],[2,3],[4,0],[4,5]]
+
+         3 ←--2
+         ^
+         |       
+         1
+         ^  
+         | 
+         0 ←- 4 -→ 5
+
+Build graph
+Each directed edge u → v adds:
+(v, 1) to graph[u] → this is the original direction (forward)
+(u, 0) to graph[v] → fake reverse edge (free to use)
+
+After all edges are processed:
+graph = {
+  0: [(1, 1), (4, 0)],
+  1: [(0, 0), (3, 1)],
+  2: [(3, 0)],
+  3: [(1, 0), (2, 1)],
+  4: [(0, 1), (5, 1)],
+  5: [(4, 0)]
+}
+
+Step 2: BFS Traversal
+Start:
+q = deque([0])
+visited = {0}
+res = 0
+
+Iteration 1: city = 0
+graph[0] = [(1, 1), (4, 0)]
+Neighbor 1 with cost=1: not visited → add to visited, res += 1, enqueue
+Neighbor 4 with cost=0: not visited → add to visited, no change to res
+
+visited = {0, 1, 4}
+res = 1
+q = deque([1, 4])
+
+
+
+Iteration 2: city = 1
+graph[1] = [(0, 0), (3, 1)]
+0 already visited
+Neighbor 3 with cost=1: not visited → add to visited, res += 1, enqueue
+
+
+visited = {0, 1, 3, 4}
+res = 2
+q = deque([4, 3])
+
+
+Iteration 3: city = 4
+graph[4] = [(0, 1), (5, 1)]
+0 already visited
+Neighbor 5 with cost=1: not visited → add to visited, res += 1, enqueue
+
+visited = {0, 1, 3, 4, 5}
+res = 3
+q = deque([3, 5])
+
+Iteration 4: city = 3
+graph[3] = [(1, 0), (2, 1)]
+1 already visited
+Neighbor 2 with cost=1: not visited → add to visited, res += 1, enqueue
+
+visited = {0, 1, 2, 3, 4, 5}
+res = 4
+q = deque([5, 2])
+
+
+Iteration 5: city = 5 → all neighbors visited
+Iteration 6: city = 2 → all neighbors visited
+
+return res = 3
+
+You reversed:
+0 → 1
+1 → 3
+4 → 5
+
+# Solution 2: DFS
+from collections import defaultdict
+
+class Solution:
+    def minReorder(self, n: int, connections: List[List[int]]) -> int:
+        graph = defaultdict(list)
+        
+        for u, v in connections:
+            graph[u].append((v, 1))
+            graph[v].append((u, 0))
+            
+        visited = {0}
+        res = [0]
+        self.dfs(0, graph, visited, res)
+        
+        return res[0]
+    
+    def dfs(self, city: int, graph: dict, visited: set, res: List[int]) -> None:
+        visited.add(city)
+        
+        for neighbor, cost in graph[city]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+r                self.dfs(neighbor, graph, visited, res)
