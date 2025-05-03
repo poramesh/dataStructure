@@ -1,0 +1,98 @@
+difference between dpgs and bfs
+
+
+BFS (Breadth-First Search)
+Data structure used: Queue (deque)
+Search order: Explores all neighbours first, then goes deeper.
+Analogy: Like ripples in water—spread out level by level.
+When you use it: Good for finding the shortest path or visiting nodes layer-wise.
+
+example traversal:
+Start at Room 0
+ → Visit all rooms directly connected to Room 0
+   → Then visit all rooms connected to those rooms
+
+
+from collections import deque
+
+def canVisitAllRooms(rooms):
+    seen = [False] * len(rooms)
+    seen[0] = True
+    queue = deque([0])
+    
+    while queue:
+        room = queue.popleft()
+        for key in rooms[room]:
+            if not seen[key]:
+                seen[key] = True
+                queue.append(key)
+    
+    return all(seen)
+
+How it works:
+Start at room 0: queue = [1, 3]
+Visit room 1: keys [3, 0, 1] → queue = [3]
+Visit room 3: keys [0] → queue = []
+
+Done
+
+Visited rooms: 0, 1, 3
+Room 2 is still missing → return False.
+
+DFS (Depth-First Search)
+Data structure used: Stack (or recursion)
+Search order: Explores as deep as possible, then backtracks.
+Analogy: Like a maze—go deep until you hit a wall, then backtrack.
+When you use it: Good when you want to explore entire branches or paths.
+
+Start at Room 0
+ → Go into the first room you find
+   → Keep going into the next new room you find
+     → When no new rooms, backtrack and try the next one
+
+
+rooms = [[1, 3], [3, 0, 1], [2], [0]]
+This is a graph-like structure:
+Room 0 → keys to rooms 1 and 3
+Room 1 → keys to rooms 3, 0, and 1 (loop)
+Room 2 → key to room 2 (self-loop)
+Room 3 → key to room 0
+
+We need to determine: Can we visit all rooms starting from room 0?
+
+def canVisitAllRooms(rooms):
+    seen = [False] * len(rooms)
+    
+    def dfs(room):
+        seen[room] = True
+        for key in rooms[room]:
+            if not seen[key]:
+                dfs(key)
+    
+    dfs(0)
+    return all(seen)
+
+
+How it works:
+Start at room 0: visit 0 → keys [1, 3]
+Go to room 1: visit 1 → keys [3, 0, 1]
+Go to room 3 (already in path): visit 3 → key [0] → already visited
+Backtrack
+Done
+
+Visited rooms: 0, 1, 3
+Room 2 was never visited → return False.
+
+
+
+BFS:
+Searches all neighboring nodes first
+Good for finding shortest paths
+Think in “waves”
+
+DFS:
+Goes deep into one path first
+Good for exploring all possible paths or checking for cycles
+Think in “tunnels”
+
+
