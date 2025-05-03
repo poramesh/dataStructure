@@ -154,6 +154,36 @@ From b → c: multiply by 3.0
 So: a / c = 2.0 * 3.0 = 6.0
 Answer: 6.0
 
+it starts off with dfs(graph,cur,tar,set,acc)
+graph={
+a: {b: 2.0},
+b: {a: 0.5, c: 3.0},
+c: {b: 1/3 = 0.333}
+}
+cur = a , tar = c
+we have gotta see if we will be able to reach c:
+=>dfs(graph,a,c,(),1)
+   if a is not in graph or c is not in graph: return -1
+   if a is equal to c retun 1
+   visited.add(a) /(a)
+   for nei,val in {b:2}
+      if b is noti n visited:
+          result = dfs(graph,nei=b,tar=c,acc*val=1*2=2)
+                      if b is not in graph or c is not in graph: return -1
+                      if b is equal to c retun 1
+                      visited.add(b) /(a,b)
+                      for nei,val in b: {a: 0.5, c: 3.0}
+                           if a is not in visited: it is in set so deosnt enter the loop
+                      for nei,val in b: {a: 0.5, c: 3.0}
+                           if c is not in visited:
+                               result = dfs(graph,nei=c,tar=c,acc*val=2*3.0=6)
+                                             if c is not in graph or  c is not in graph: return -1
+                                              if c = c: return acc
+                               return 6
+              return 6
+                      
+
+
 Query 2: ["b", "a"]
 We want to find b / a
 Direct edge: b → a = 0.5
