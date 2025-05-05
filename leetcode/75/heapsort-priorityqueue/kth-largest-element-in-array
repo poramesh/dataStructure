@@ -1,0 +1,112 @@
+ Kth Largest Element in an Array
+
+
+Given an integer array nums and an integer k, return the kth largest element in the array.
+Note that it is the kth largest element in the sorted order, not the kth distinct element.
+
+Can you solve it without sorting?
+
+ 
+
+Example 1:
+Input: nums = [3,2,1,5,6,4], k = 2
+Output: 5
+
+Example 2:
+Input: nums = [3,2,3,1,2,4,5,5,6], k = 4
+Output: 4
+
+
+
+using sorting:
+we can use list method sort() to sort a list, if it is not a list, we have to conver it to one.
+
+
+num = 4312
+digits = list(str(num))  # ['4', '3', '1', '2']
+digits.sort()  # Sorts in place: ['1', '2', '3', '4']
+sorted_num = int(''.join(digits))
+print(sorted_num)  # Output: 1234
+
+since it sorts in a place, when you do sorted_val = digits.sort() //sorted_val will not have sorted values isntead it will sorts in plave and return None
+
+and we can use sorted(nums), which returns new sorted values.
+  
+num = 4312
+sorted_num = int(''.join(sorted(str(num))))
+print(sorted_num)  # Output: 1234
+
+Sort the digits in descending order
+num = 4312
+sorted_desc = int(''.join(sorted(str(num), reverse=True)))
+print(sorted_desc)  # Output: 4321
+
+#using sorted method 
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        nums.sort()
+        return nums[len(nums)-k] //nums[-k] //sorted(nums,reverse=true)[-k]
+
+
+
+# O(nk) time, bubble sort idea, TLE
+def findKthLargest2(self, nums, k):
+    for i in range(k):
+        for j in range(len(nums)-i-1):
+            if nums[j] > nums[j+1]:
+                # exchange elements, time consuming
+                nums[j], nums[j+1] = nums[j+1], nums[j]
+    return nums[len(nums)-k]
+
+
+
+# O(nk) time, selection sort idea
+
+
+nums= [3,2,1,5,6,4]
+k=2
+we will sort only until 2th place
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        for i in range(len(nums), len(nums)-k, -1):
+            tmp = 0
+            for j in range(i):
+                if nums[j] > nums[tmp]:
+                    tmp = j
+            nums[tmp], nums[i-1] = nums[i-1], nums[tmp]
+        print(nums) //[3, 2, 1, 4, 5, 6]
+        return nums[len(nums)-k]
+
+
+# O(k+(n-k)lgk) time, min-heap
+
+def findKthLargest4(self, nums, k):
+    heap = []
+    for num in nums:
+        heapq.heappush(heap, num)
+    for _ in range(len(nums)-k):
+        heapq.heappop(heap)
+    return heapq.heappop(heap)
+
+nums = [3, 2, 1, 5, 6, 4]
+heap = [1, 2, 3, 5, 6, 4]
+
+it starts off with 3
+  3
+
+2 is ledd than 3
+ 2
+3
+
+now 1 is less
+  
+   1
+  3 2
+
+    1
+ 3    2
+5 6  4
+  
+    1
+   3   2
+  5  6  4
