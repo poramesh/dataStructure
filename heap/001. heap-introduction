@@ -1,0 +1,110 @@
+Topic: Heap
+
+1. Representation of Binary Trees using Arrays
+2. Complete Binary Tree
+3. Full Binary Tree
+4. Heap (Min/Max)
+5. Heap Insertion and Deletion
+6. Heap Sort
+7. Heapify
+8. Priority Queue (Application)
+
+---
+
+ 1. Representation of Binary Trees using Arrays
+
+ Binary trees can be represented using arrays by storing elements level by level.
+ The indexing usually starts from 1 (for theoretical explanation), though programming typically uses index 0.
+ Relationships:
+
+   For node at index i:
+     Left child: 2*i
+     Right child: 2*i+1
+     Parent: i//2
+ Gaps must be maintained if a child is missing to preserve the parent-child relationship.
+
+ 2. Full Binary Tree
+
+ All levels are completely filled.
+ If the height is `h`, then it has `2^(h+1) - 1` nodes.
+ No further node can be added without increasing height.
+
+ 3. Complete Binary Tree
+
+ All levels are completely filled except possibly the last.
+ In the last level, nodes must be filled from left to right without gaps.
+ If a binary tree is represented in an array, there should be no empty gaps between the first and last elements.
+ Every full binary tree is a complete binary tree.
+
+ 4. Heap
+
+A heap is a complete binary tree, meaning all levels are fully filled except possibly the last, which is filled from left to right.
+It can be stored efficiently in an array using index relationships:
+Parent of node at index i: i // 2 (1-based indexing) or (i - 1) // 2 (0-based)
+Left child: 2i, Right child: 2i + 1 (1-based), or 2i + 1, 2i + 2 (0-based)
+
+Types of Heaps
+Max-Heap
+Root node has the maximum value.
+Every parent node is greater than or equal to its children.
+Useful when you need to repeatedly access/remove the largest element.
+
+Min-Heap
+Root node has the minimum value.
+Every parent node is less than or equal to its children.
+Useful when you need to access/remove the smallest element.
+
+5. Heap Insertion
+
+ Insert the new element at the end of the heap (next free position in the array).
+"Heapify up": Compare it with its parent and swap if it's greater.
+Repeat until the heap property is restored (or it reaches the root).
+
+Time Complexity:
+Worst case: O(log n) — the element bubbles up to the root
+Best case: O(1) — the element is already in the correct position
+
+
+
+ 6. Heap Deletion (usually root)
+
+Always remove the root element (max element in max-heap).
+Move the last element to the root position.
+"Heapify down": Compare it with its children, swap with the larger child.
+Repeat until the heap property is restored.
+
+Time Complexity:
+Worst case: O(log n)
+
+  
+ 7. Heap Sort
+
+Build a max-heap from the input array (by inserting each element one-by-one or using heapify in O(n)).
+Repeatedly delete the root and place it at the end of the array.
+This shrinks the heap size and fills the array from back to front with sorted elements.
+
+Result: Sorted array in ascending order using a max-heap.
+Time Complexity:
+Building heap: O(n)
+Deleting all n elements: O(n log n)
+Overall: O(n log n)
+Space Complexity: O(1) for in-place version
+
+ 8. Heapify
+
+ Procedure to convert an arbitrary array into a heap.
+ Start from the last non-leaf node and apply sift down operation.
+ Efficient: takes O(n) time.
+
+ 9. Priority Queue (Application of Heap)
+
+ Heap is used to implement priority queues.
+ Elements are served based on priority.
+ Can be efficiently implemented using min-heap or max-heap.
+
+---
+
+Note:
+
+ Heaps are useful in algorithms like Dijkstra's shortest path and Prim's algorithm.
+ Complete binary tree's minimal height (log n) ensures efficient insert and delete operations.
