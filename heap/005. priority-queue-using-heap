@@ -1,0 +1,21 @@
+Priority Queue Using Heaps (Min-Heap and Max-Heap)
+
+
+Min-Heap (smaller number = higher priority)
+
+min_pq = []
+for num in [10, 40, 20, 5]:
+    heapq.heappush(min_pq, num)
+
+print("Min Priority Queue:", min_pq)
+print("Deleted element with highest priority (min):", heapq.heappop(min_pq))
+
+
+Max-Heap (larger number = higher priority)
+
+max_pq = []
+for num in [10, 40, 20, 5]:
+    heapq.heappush(max_pq, -num)  # Python heapq is min-heap, so we invert values
+
+print("Max Priority Queue:", [-x for x in max_pq])
+print("Deleted element with highest priority (max):", -heapq.heappop(max_pq))
