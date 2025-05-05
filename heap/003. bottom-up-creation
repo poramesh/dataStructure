@@ -1,0 +1,124 @@
+Leaf nodes:
+           20        <-- index 0
+         /    \
+       10      15    <-- indices 1 and 2
+      /  \
+    30    40          <-- indices 3 and 4
+
+In a binary heap, all nodes from index n // 2 to n - 1 are leaf nodes.
+So in this case:
+n = 5
+Leaf nodes are at indices 2, 3, 4 → values = 15, 30, 40
+
+Summary:
+n // 2 - 1 → index of last non-leaf node, here 10 is the leaf node.
+n // 2 to n - 1 → indices of all leaf nodes
+
+
+code:
+This builds a max-heap from an unsorted array.
+
+
+def heapify(arr, n, i):
+    largest = i
+    l = 2 * i + 1
+    r = 2 * i + 2
+
+    if l < n and arr[l] > arr[largest]:
+        largest = l
+    if r < n and arr[r] > arr[largest]:
+        largest = r
+
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+def build_max_heap(arr):
+    n = len(arr)
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+    return arr
+
+arr = [20, 10, 15, 30, 40]
+build_max_heap(arr)
+print("Heap created using heapify:", arr)
+
+
+This function ensures the max-heap property is satisfied for a subtree rooted at index i.
+ 
+           20        <-- index 0
+         /    \
+       10      15    <-- indices 1 and 2
+      /  \
+    30    40          <-- indices 3 and 4
+
+idx = [0 , 1,  2,  3, 4]
+arr = [20, 10, 15, 30, 40]
+
+n= 5
+n//2-1=1
+for 0 in range(1,-1,-1): //1,0
+    heapify(arr,5,1)
+        laregest=i=1 //parent 10
+        l = i*2+1=1*2+1=3 (30)
+        r = i*2+2=1*2+2=4  (40)
+     if 3<5 and  arr[3]>arr[1]
+         largest=l
+     if 4<5 and arr[4]>arr[3]
+         largest=r
+     if 1!=4: swap()
+        and hence it will [20,40,15,30,10]
+                          [0, 1, 2, 3, 4]
+          20
+        /    \
+      40     15
+     /  \
+   30   10
+
+         heapify(arr,5,largest=4)
+             largest=i=4 //parent 10
+             l = i*2+1=9 
+             r = i*2+2=10 
+             if 9<5 and arr[l]>arr[largest], it is largest
+             if 10<5 and arr[r]>arr[largest], nope again
+             if 4!=4, it is eqal hence it will go back.
+
+for 0 in range(1,-1,-1): //1,0
+    heapify(arr,5,0)
+        largest=i=0 //parent 20
+        l = i*2+1=0*2+1=1 (40)
+        r = i*2+2=0*2+2=2 (15)
+     if 0<5 and  arr[1]>arr[largest]
+         largest=1
+     if 0<5 and arr[2]>arr[largest],15 is not greater than 20
+     if 0!=4: swap()
+        and hence it will [40,20,15,30,10]
+                          [0, 1, 2, 3, 4]
+          40
+        /    \
+      20     15
+     /  \
+   30   10
+
+         heapify(arr,5,largest=1)
+             largest=i=1 //parent 20
+             l = i*2+1=3 //30
+             r = i*2+2=4 //10
+             if 3<5 and arr[3]>arr[1], it is largest
+                  l=3
+             if 4<5 and arr[4]>arr[3], nope 
+             if 1!=3: swap
+                 and hence it will be [40,30,15,20,10]
+                                      [0, 1, 2, 3, 4]
+          40
+        /    \
+      30     15
+     /  \
+   20   10
+                 heapify(arr,5,3)  but index 3 is a leaf — nothing happens.
+
+
+
+Final array (max heap) = [40, 30, 15, 20, 10]
+              
+
