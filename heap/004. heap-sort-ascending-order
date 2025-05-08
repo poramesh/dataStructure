@@ -1,3 +1,62 @@
+
+A LOT OF THINGS HAPPENING HERE. A LOT OF THINGS THAT WE LEARNT FROM THE PAST.
+THE HEAPIFY AND BUILDMAX FUNTION IS FROM THE LAST LESSON AND WE ARE GONNA MAKE USE OF THAT IMPLEMENTAION WITH SORTING.
+
+
+
+basics:
+
+
+what does arr.copy does?
+The arr.copy() method in Python (specifically for lists and NumPy arrays) creates a shallow copy of the array or list. This means 
+it creates a new object with the same elements, but changes to the new object will not affect the original
+one — unless the elements themselves are mutable (like nested lists).
+
+arr = [1, 2, 3]
+copy_arr = arr.copy()
+
+copy_arr[0] = 99
+print(arr)       # [1, 2, 3]
+print(copy_arr)  # [99, 2, 3]
+
+
+what happen when you copy array with = ?
+When you do arr2 = arr, you are not creating a new copy of the data — you're just creating a new reference (alias) to the same object in memory.
+So both arr and arr2 point to the same object, and any changes to one are reflected in the other.
+
+arr = [1, 2, 3]
+arr2 = arr  # No copy — just a reference
+
+arr2[0] = 99
+print(arr)   # [99, 2, 3]  <-- also changed!
+print(arr2)  # [99, 2, 3]
+
+
+
+
+
+
+def heapify(arr, n, i):
+    largest = i
+    l = 2 * i + 1
+    r = 2 * i + 2
+
+    if l < n and arr[l] > arr[largest]:
+        largest = l
+    if r < n and arr[r] > arr[largest]:
+        largest = r
+
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+def build_max_heap(arr):
+    n = len(arr)
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+    return arr #it doesnt matter if we are retuning or not.
+
+
 def heap_sort(arr):
     n = len(arr)
     build_max_heap(arr)
@@ -10,3 +69,123 @@ def heap_sort(arr):
 arr = [20, 10, 15, 30, 40]
 sorted_arr = heap_sort(arr.copy())
 print("Sorted using heap sort:", sorted_arr)
+
+          20
+        /    \
+      10     15
+     /  \
+   30   40
+
+now when it calls heap_sort(arr.copy()) it created a shallow copy with a totaly different object memory and it is not pointing to the same reference.
+inside the heap_sort(arr) we get the lenght of the array which is 4 and then build a max heap out of it. you can notice how we are passing arry, it will create 
+max heap. 
+[40, 30, 15, 20, 10]
+
+          40
+        /    \
+      30     15
+     /  \
+   20   10
+
+
+for 4 in range(5-1,0,-1) //4,3,2,1,0
+  arr[0],arr[4] = arr[4], arr[0] //now arr looks like [10,30,15,20,40]
+          10
+        /    \
+      30     15
+     /  \
+   20   40
+     [10,30,15,20,40]
+     [0, 1, 2, 3, 4]
+     heapify(arr,n=4,i=0)
+        largest = 0
+        l = 2*i+1=1
+        r = 2*i+2=2
+        if(l=1<n=4 and arr[l]=30>arr[largest]=10):
+            largest=l=1
+        if(r=2<n=4 and arr[r]=15>arr[largest]=30): no
+        if(largest!=i): 1!=0
+           arr[largest],arr[i] = arr[i],arr[largest]
+           heapify(arr[30,10,15,20,40],n=4,i=1)
+                       [0, 1, 2, 3, 4 ]
+          30
+        /    \
+      10     15
+     /  \
+   20   40
+               largest=i=1
+               l=2*i+1=2*1+1=3
+               r=2*i+2=2*1+2=4
+               if(l<n and arr[3]=20>arr[largest]=10):
+                   largest=l=3
+               if(r<n and arr[r]=40>arr[largest]=20): no  4<4  HERE IS WHERE IT DOESNT GET INTO IT CAUSE WE DONT WANT THE LAST ELEMENT TO BE TOUCHED.         
+                   if(largest!=i) 1!=3
+                      arr[largest]=20,arr[i]=10 =10,20
+                            heapify(arr=[30,20,15,20,40],i=4,3) since it is a leaf node, it will come back.
+          30
+        /    \
+      20     15
+     /  \
+   10   40
+for 3 in range(5-1,0,-1) //4,3,2,1,0 arr = [30,20,15,10,40]
+   arr[0],arr[i=3] = arr[i=3], arr[0] // now arr looks like [10,20,15,30,40] 
+          10
+        /    \
+      20     15
+     /  \
+   30   40
+   heapify(arr,3,0):
+     largest=0
+     l=2*0+1=1
+     r=2*0+2=2
+     if(l<n=1<3 and a[1]=20>a[0]=10):
+        largest=1
+     if(r<n=2<3 and a[2]=15>a[1]=20): no
+        if i!=largest:
+            arr[i],arr[largest] = 20,10
+            heapify(arr=[20,10,15,30,40],n=3,largest=1)
+               largest=1
+               l=2*1+1=3
+               r=2*1+1=4
+             if(l<n 3 is not less than 3 si it would not go ahead)
+             if(r<n) sane here
+               it ends here cause i is equal to largest
+          20
+        /    \
+      10     15
+     /  \
+   30   40
+for 2 in range(5-1,0,-1)// arr[20,30,15,10,40]
+  arr[0], arr[i] = 15,20
+          15
+        /    \
+      10     20
+     /  \
+   30   40 
+  heapify(arr=[15,10,20,30,40],n=2,i=0)
+     largest=0
+     l=2*0+1=1
+     r=2*0+2=2
+     if(l<n=1<2 and a[l=1]=10>a[largest=0]=15):
+     if(r<n=2<2 2 is not greater than 2)
+
+          15
+        /    \
+      10     20
+     /  \
+   30   40 
+for 1 in range(4,0,-1)//arr = [15,10,20,30,40]
+ arr[0], arr[1] = 10,15
+ heapify(arr=[10,15,20,30,40],1,0)
+    largest=0
+    l=2*0+1=1
+    r=2*0+2=2
+    if(l<n=1 is not less than 1)
+     same for right
+
+
+          10
+        /    \
+      15     20
+     /  \
+   30   40 
