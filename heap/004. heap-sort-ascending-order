@@ -32,8 +32,23 @@ print(arr)   # [99, 2, 3]  <-- also changed!
 print(arr2)  # [99, 2, 3]
 
 
+arr: arr = [20, 10, 15, 30, 40]
+after heapify = [40, 30, 15, 20, 10]
+and now we enter the soriting 
 
+after swapping i  [10, 30, 15, 20, 40]
+afer heapify [30, 20, 15, 10, 40]
 
+after swapping i  [10, 20, 15, 30, 40]
+after heapify [20, 10, 15, 30, 40]
+
+after swapping i  [15, 10, 20, 30, 40]
+after heapify [15, 10, 20, 30, 40]
+
+after swapping i  [10, 15, 20, 30, 40]
+after heapify [10, 15, 20, 30, 40]
+
+Sorted using heap sort: [10, 15, 20, 30, 40]
 
 
 def heapify(arr, n, i):
