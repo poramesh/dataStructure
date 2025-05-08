@@ -1,21 +1,256 @@
 Priority Queue Using Heaps (Min-Heap and Max-Heap)
 
+A priority queue is a special type of queue where each element has a priority, and elements with higher priority are served before those with lower priority.
+In a normal queue → FIFO (First In, First Out).
+In a priority queue → elements are dequeued based on priority, not arrival order.
 
-Min-Heap (smaller number = higher priority)
+Example:
+
+Example (Conceptual)
+
+Imagine a hospital emergency room:
+
+| Patient Name | Condition   | Priority (Lower = More Urgent) |
+| ------------ | ----------- | ------------------------------ |
+| John         | Cold        | 3                              |
+| Alice        | Head injury | 1                              |
+| Bob          | Broken arm  | 2                              |
+
+
+With a priority queue, Alice will be treated first, then Bob, then John — based on priority, not the order they came in.
+
+Types of Priority Queues:
+1. Min-Priority Queue:
+Smaller priority value = higher priority.
+Example: priority 1 served before priority 5.
+
+2. Max-Priority Queue:
+Larger priority value = higher priority.
+Example: priority 5 served before priority 1.
+
+Why Use a Heap?
+A heap is the most efficient way to implement a priority queue.
+A heap is a special kind of binary tree:
+Min-Heap: Parent ≤ Children (smallest at top).
+Max-Heap: Parent ≥ Children (largest at top).
+
+Operations:
+insert() — O(log n)
+delete() or pop() — O(log n)
+peek() (get top priority without removal) — O(1)
+
+
+
+Python provides heapq — a binary min-heap implementation using lists.
+
+
+import heapq
+
+pq = []
+heapq.heappush(pq, 20)
+heapq.heappush(pq, 5)
+heapq.heappush(pq, 10)
+
+print(pq) //[5, 20, 10]
+
+print(heapq.heappop(pq))  # outputs 5 (highest priority in min-heap)
+
+
+(or)
 
 min_pq = []
 for num in [10, 40, 20, 5]:
     heapq.heappush(min_pq, num)
 
-print("Min Priority Queue:", min_pq)
-print("Deleted element with highest priority (min):", heapq.heappop(min_pq))
+print("Min Priority Queue:", min_pq) //[5,10,20,40]
+
+      5
+    /  \
+   10  20
+  /
+40
+
+print("Deleted element with highest priority (min):", heapq.heappop(min_pq)) //5
 
 
 Max-Heap (larger number = higher priority)
 
+Python doesn't have a built-in max-heap, but you can simulate it by inserting negative values:
+max_pq = []
+heapq.heappush(max_pq, -10)
+heapq.heappush(max_pq, -5)
+heapq.heappush(max_pq, -20)
+print(-heapq.heappop(max_pq))  # outputs 20 (highest priority)
+
+[-20, -5, -10]
+
+
+(or)
+
+import heapq
+
 max_pq = []
 for num in [10, 40, 20, 5]:
     heapq.heappush(max_pq, -num)  # Python heapq is min-heap, so we invert values
+print(max_pq) #[-40, -10, -20, -5]
+print("Max Priority Queue:", [-x for x in max_pq]) #Max Priority Queue: [40, 10, 20, 5]
+print("Deleted element with highest priority (max):", -heapq.heappop(max_pq)) #40
 
-print("Max Priority Queue:", [-x for x in max_pq])
-print("Deleted element with highest priority (max):", -heapq.heappop(max_pq))
+
+
+
+
+| Feature          | Min-Heap                         | Max-Heap                     |
+| ---------------- | -------------------------------- | ---------------------------- |
+| Priority         | Smaller number = higher          | Larger number = higher       |
+| Python built-in? | Yes (`heapq`)                    | No (use negatives manually)  |
+| Use cases        | Dijkstra’s algorithm, scheduling | Leaderboards, stock tracking |
+
+
+
+
+
+
+implementation of PQ without heap:
+
+class PriorityQueue:
+    def __init__(self):
+        self.queue = []
+
+    def is_empty(self):
+        return len(self.queue) == 0
+
+    def enqueue(self, item, priority):
+        self.queue.append((priority, item))      # Append item as a tuple (priority, item)
+
+    def dequeue(self):
+        if self.is_empty():
+            raise IndexError("Queue is empty")
+        
+        # Find the item with the lowest priority value (min-priority)
+        min_index = 0
+        for i in range(1, len(self.queue)):
+            if self.queue[i][0] < self.queue[min_index][0]:
+                min_index = i
+        
+        return self.queue.pop(min_index)
+
+    def peek(self):
+        if self.is_empty():
+            raise IndexError("Queue is empty")
+        return min(self.queue, key=lambda x: x[0])
+
+    def display(self):
+        for priority, item in sorted(self.queue):
+            print(f"{item} (Priority: {priority})")
+
+
+
+pq = PriorityQueue()
+pq.enqueue("Alice", 1)
+pq.enqueue("Bob", 3)
+pq.enqueue("John", 2)
+
+pq.display()
+# Alice (Priority: 1)
+# John (Priority: 2)
+# Bob (Priority: 3)
+
+print("Dequeued:", pq.dequeue())
+# Dequeued: (1, 'Alice')
+
+print("peek",pq.peek()) 
+#peek (2, 'John')
+
+pq.display()
+#John (Priority: 2)
+#Bob (Priority: 3)
+
+
+
+Limitations:
+Enqueue: O(1)
+Dequeue (finding min): O(n)
+
+For better performance (O(log n) operations), we use a heap — which is what heapq does.
+
+
+Implementation of PQ using heapI
+
+
+class MinHeapPriorityQueue:
+    def __init__(self):
+        self.heap = []  # each element is a tuple: (priority, item)
+
+    def is_empty(self):
+        return len(self.heap) == 0
+
+    def enqueue(self, item, priority):
+        self.heap.append((priority, item))
+        self._heapify_up(len(self.heap) - 1)
+
+    def dequeue(self):
+        if self.is_empty():
+            raise IndexError("Priority queue is empty")
+        
+        # Swap root with last element, then pop last (smallest item)
+        self._swap(0, len(self.heap) - 1)
+        item = self.heap.pop()
+        self._heapify_down(0)
+        return item
+
+    def peek(self):
+        if self.is_empty():
+            raise IndexError("Priority queue is empty")
+        return self.heap[0]
+
+    def _heapify_up(self, index):
+        parent = (index - 1) // 2
+        if index > 0 and self.heap[index][0] < self.heap[parent][0]:
+            self._swap(index, parent)
+            self._heapify_up(parent)
+
+    def _heapify_down(self, index):
+        smallest = index
+        left = 2 * index + 1
+        right = 2 * index + 2
+
+        if left < len(self.heap) and self.heap[left][0] < self.heap[smallest][0]:
+            smallest = left
+        if right < len(self.heap) and self.heap[right][0] < self.heap[smallest][0]:
+            smallest = right
+
+        if smallest != index:
+            self._swap(index, smallest)
+            self._heapify_down(smallest)
+
+    def _swap(self, i, j):
+        self.heap[i], self.heap[j] = self.heap[j], self.heap[i]
+
+    def display(self):
+        for priority, item in self.heap:
+            print(f"{item} (Priority: {priority})")
+
+
+pq = MinHeapPriorityQueue()
+pq.enqueue("Clean Code", 4)
+pq.enqueue("Design Patterns", 2)
+pq.enqueue("Algorithms", 1)
+pq.enqueue("Data Structures", 3)
+
+pq.display()
+# Algorithms (Priority: 1)
+# Design Patterns (Priority: 2)
+# Clean Code (Priority: 4)
+# Data Structures (Priority: 3) -- order depends on heap
+
+print("Dequeued:", pq.dequeue())  # Should return (1, 'Algorithms')
+pq.display()
+
+
+| Operation | Time Complexity |
+| --------- | --------------- |
+| Enqueue   | O(log n)        |
+| Dequeue   | O(log n)        |
+| Peek      | O(1)            |
+
