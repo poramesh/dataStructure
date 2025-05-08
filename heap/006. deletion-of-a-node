@@ -1,1 +1,185 @@
+How to Delete an Element from a Heap (Array-based Max-Heap)
 
+
+Steps to Delete a Node at Index i:
+Replace the element at index i with the last element of the heap.
+Remove the last element.
+
+Restore the heap property:
+Call heapify() on index i (since the replaced value may violate heap property).
+
+
+code:
+
+
+def heapify(arr, n, i):
+    largest = i
+    l = 2 * i + 1
+    r = 2 * i + 2
+
+    if l < n and arr[l] > arr[largest]:
+        largest = l
+    if r < n and arr[r] > arr[largest]:
+        largest = r
+
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+
+
+def delete_node(arr, i):
+    n = len(arr)
+    if i >= n:
+        print("Index out of range")
+        return
+
+    # Step 1: Replace i-th element with last
+    arr[i] = arr[-1]
+    
+    # Step 2: Remove last
+    arr.pop()
+    
+    # Step 3: Restore heap property
+    # Try both down and up heapify to be safe
+    heapify(arr, len(arr), i)
+    
+    # Optional: if the new element is larger than parent, heapify up
+    parent = (i - 1) // 2
+    while i > 0 and arr[i] > arr[parent]:
+        arr[i], arr[parent] = arr[parent], arr[i]
+        i = parent
+        parent = (i - 1) // 2
+
+
+
+usecase:
+
+arr = [10, 5, 3, 4, 1]
+build_max_heap(arr)
+print("Before deletion:", arr)
+delete_node(arr, 1)  # Delete the node at index 1 (value = 5)
+print("After deletion:", arr)
+
+
+
+o/p:
+
+Before deletion: [10, 5, 3, 4, 1]
+After deletion: [10, 4, 3, 1]
+
+
+
+
+
+
+
+
+
+
+
+Steps to Delete by Value:
+Find the index of the value to be deleted.
+
+Use the same steps as before:
+Swap it with the last element.
+Remove the last element.
+Restore the heap property using both heapify down and heapify up.
+
+
+def delete_value(arr, value):
+    n = len(arr)
+    try:
+        i = arr.index(value)
+    except ValueError:
+        print(f"Value {value} not found in heap.")
+        return
+
+    arr[i] = arr[-1]
+
+    arr.pop()
+    n -= 1
+
+    heapify(arr, n, i)  # heapify down
+    
+    # If heapify down didn't fix it (in case it's larger than parent), heapify up
+    parent = (i - 1) // 2
+    while i > 0 and arr[i] > arr[parent]:
+        arr[i], arr[parent] = arr[parent], arr[i]
+        i = parent
+        parent = (i - 1) // 2
+
+
+
+
+ex:
+
+Initial Heap (array representation):
+Index:   0   1   2   3   4   5   6
+Array: [90, 70, 60, 20, 10, 50, 40]
+
+        90
+      /    \
+    70      60
+   /  \    /  \
+ 20   10  50  40
+
+
+Now let’s delete 10 (which is at index 4) and replace it with the last element 40.
+
+        90
+      /    \
+    70      60
+   /  \    /  
+ 20   40  50  
+
+Deletion Steps:
+Replace index 4 (value 10) with 40:
+arr = [90, 70, 60, 20, 40, 50]  # popped off last element
+Call heapify down at index 4:
+It’s a leaf → no children → heapify down does nothing
+
+Check parent:
+Parent of index 4 is (4 - 1) // 2 = 1
+arr[4] = 40, arr[1] = 70 → 40 < 70 → no need for heapify up
+Okay, so this one doesn't need heapify up either. Let’s go again with a better one.
+
+
+
+
+
+
+JUST FOR MY UNDERSTANDING:
+
+arr = [90, 50, 60, 10, 20, 40]
+       90
+      /   \
+    50     60
+   /  \    /
+ 10  20  40
+
+Delete value 10 (index 3), replace with 80:
+
+arr = [90, 50, 60, 80, 20, 40]
+       90
+      /   \
+    50     60
+   /  \    /
+ 80  20  40
+
+
+heapify down at index 3:
+Index 3 is a leaf node → no children → nothing happens
+
+Parent of index 3 is (3 - 1) // 2 = 1 → arr[1] = 50
+Now arr[3] = 80 > arr[1] = 50 → violation of max-heap property
+
+So we heapify up:
+Swap 80 and 50:
+arr = [90, 80, 60, 50, 20, 40]
+
+Now index = 1, parent = 0, arr[1] = 80 < arr[0] = 90 → done.
+
+After deleting 10 and inserting 80:
+Before: [90, 50, 60, 10, 20, 40]
+After:  [90, 80, 60, 50, 20, 40]
