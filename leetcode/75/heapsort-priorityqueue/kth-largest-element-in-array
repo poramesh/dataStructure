@@ -80,6 +80,9 @@ class Solution:
 
 # O(k+(n-k)lgk) time, min-heap
 
+
+import heapq
+
 def findKthLargest4(self, nums, k):
     heap = []
     for num in nums:
@@ -89,24 +92,120 @@ def findKthLargest4(self, nums, k):
     return heapq.heappop(heap)
 
 nums = [3, 2, 1, 5, 6, 4]
-heap = [1, 2, 3, 5, 6, 4]
+k=2
+heap = [1, 3, 2, 5, 6, 4]
+
+in the for loop to find the largest element, we will remove the element from the top
+
+6-2 = 4
+[1, 3, 2, 5, 6, 4]
+[2, 3, 4, 5, 6]
+[3, 5, 4, 6]
+[4, 5, 6]
+[5,6]
+and the loop exists.
+we do the last pop and return the value.
+
+
 
 it starts off with 3
   3
+2
 
-2 is ledd than 3
- 2
+2 is less than 3
+  2
 3
 
 now 1 is less
-  
-   1
-  3 2
+
+  1
+3   2
+
 
     1
  3    2
 5 6  4
   
-    1
+     
+     1
    3   2
   5  6  4
+
+
+
+(or)
+
+
+MaxHeap
+
+Covert the nums array into maxHeap.
+Remove k-1 elements from the max heap.
+Then the kth element is the kth largest elemment.
+
+
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        maxHeap = nums
+        for i in range(len(maxHeap)):
+            maxHeap[i] = -maxHeap[i]
+        heapify(maxHeap)
+        for i in range(k-1):
+            heappop(maxHeap)
+        return -maxHeap[0]
+
+Complexity:
+Time: O(N + KlogN), heapify cost O(N), heappop k times costs O(KlogN).
+Space: O(1)
+
+
+maxHeap after nums have been introduced to it [3, 2, 1, 5, 6, 4]
+maxHeap after negating values to get maxHeap [-3, -2, -1, -5, -6, -4]
+maxHeap after Heapifying [-6, -5, -4, -3, -2, -1]
+maxHeap after removing elements until K [-5, -3, -4, -1, -2]
+
+
+
+(or)
+
+return heapq.nlargest(k,nums)[-1]
+
+
+
+
+
+(or)
+
+THIS IS SUCH A SIMPLE AND BEAUTIFUL LOGIC
+
+from heapq import heappush
+
+
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        minHeap = []
+        for x in nums:
+            heappush(minHeap, x)
+            print(minHeap)
+            if len(minHeap) > k:
+                heappop(minHeap)
+                print(minHeap)
+        return minHeap[0]
+
+
+nums = [3, 2, 1, 5, 6, 4]
+k=2
+[3]
+[2, 3]
+[1, 3, 2]
+inside the if loop [2, 3]
+[2, 3, 5]
+inside the if loop [3, 5]
+[3, 5, 6]
+inside the if loop [5, 6]
+[4, 6, 5]
+inside the if loop [5, 6]
+
+
+Complexity:
+Time: O(NlogK)
+Space: O(K)
