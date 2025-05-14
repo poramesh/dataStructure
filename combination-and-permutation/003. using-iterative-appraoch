@@ -1,0 +1,96 @@
+it follows the same logic from the previous example:
+
+
+
+
+1. Iterative approach using a stack (general solution for any k)
+
+nums1 = [1, 3, 3, 2]
+nums2 = [2, 1, 3, 4]
+k = 3
+n = len(nums1)
+
+max_score = 0
+stack = [(0, [])]  # (start_index, current_path)
+
+while stack:
+    start, path = stack.pop()
+    print('start:', start, 'path:', path)
+    
+    if len(path) == k:
+        sum1 = sum(nums1[i] for i in path)
+        min2 = min(nums2[i] for i in path)
+        score = sum1 * min2
+        max_score = max(max_score, score)
+        print('inside k:', path)
+        continue
+
+    for i in range(n - 1, start - 1, -1):  # Reverse to maintain stack order
+        stack.append((i + 1, path + [i]))
+    print("after loop", stack)
+
+print("Max score:", max_score)
+
+
+
+
+
+for i in range(1,5):
+    print(i) # 1 2 3 4 5
+
+for i in range(5,1,-1):
+    print(i) #5,4,3,2
+
+for i in range(5,1,1):
+   print(i) # doesnt work cause 5,6,? how will it work when 6 is not in the raange.
+
+
+
+behind the scene: understanding the logic
+
+
+
+start: 0 path: []
+after loop [(4, [3]), (3, [2]), (2, [1]), (1, [0])]
+start: 1 path: [0]
+after loop [(4, [3]), (3, [2]), (2, [1]), (4, [0, 3]), (3, [0, 2]), (2, [0, 1])]
+start: 2 path: [0, 1]
+after loop [(4, [3]), (3, [2]), (2, [1]), (4, [0, 3]), (3, [0, 2]), (4, [0, 1, 3]), (3, [0, 1, 2])]
+start: 3 path: [0, 1, 2]
+inside k: [0, 1, 2]
+
+continue cause theres no point going further, if we do we will end up with this, after loop [(4, [3]), (3, [2]), (2, [1]), (4, [0, 3]), (3, [0, 2]), (4, [0, 1, 3]), (4, [0, 1, 2, 3])]
+
+and then  starts off with this 
+start: 4 path: [0, 1, 2, 3]
+goes back to 0,1,3
+
+start: 4 path: [0, 1, 3]
+inside k: [0, 1, 3]
+start: 3 path: [0, 2]
+after loop [(4, [3]), (3, [2]), (2, [1]), (4, [0, 3]), (4, [0, 2, 3])]
+start: 4 path: [0, 2, 3]
+inside k: [0, 2, 3]
+start: 4 path: [0, 3]
+after loop [(4, [3]), (3, [2]), (2, [1])]
+start: 2 path: [1]
+after loop [(4, [3]), (3, [2]), (4, [1, 3]), (3, [1, 2])]
+start: 3 path: [1, 2]
+after loop [(4, [3]), (3, [2]), (4, [1, 3]), (4, [1, 2, 3])]
+start: 4 path: [1, 2, 3]
+inside k: [1, 2, 3]
+start: 4 path: [1, 3]
+after loop [(4, [3]), (3, [2])]
+start: 3 path: [2]
+after loop [(4, [3]), (4, [2, 3])]
+start: 4 path: [2, 3]
+after loop [(4, [3])]
+start: 4 path: [3]
+after loop []
+Max score: 12
+
+=== Code Execution Successful ===
+
+
+
+
