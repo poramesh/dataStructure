@@ -35,21 +35,35 @@ Example 1:
 
 Input: str1 = "ABCABC", str2 = "ABC"
 Output: "ABC"
+
 Example 2:
 
 Input: str1 = "ABABAB", str2 = "ABAB"
 Output: "AB"
+
+
+For this ABABAB 1st one and ABAB 2nd
+Here in 1st 3 * AB and for 2nd 2 * AB that's why ans AB the common part is AB
+
 Example 3:
 
 Input: str1 = "LEET", str2 = "CODE"
 Output: ""
 
-solution
 
+str1 = "ABAB"
+str2 = "ABBA"
+str1 + str2 ≠ str2 + str1 → ❌ no common divisor
+
+
+
+solution
 
 https://leetcode.com/problems/greatest-common-divisor-of-strings/editorial/?source=submission-ac
 
 FOR MORE EXMAPLE:
+
+
 
 
 java script:
@@ -91,3 +105,22 @@ class Solution:
         gcd_of_strings = gcd(word1_len, word2_len)
 
         return str1[:gcd_of_strings]
+
+
+
+str1 = "ABABAB"
+str2 = "ABAB"
+str1 + str2 == str2 + str1 → OK
+len(str1) = 6, len(str2) = 4
+
+gcd(6, 4) = 2
+str1[:2] = "AB" → Check:
+"ABABAB" = "AB" * 3
+"ABAB" = "AB" * 2
+
+
+
+This code:
+Checks if the strings repeat compatibly.
+Finds the length of the biggest common building block using gcd.
+Returns the prefix of that length, which will be the common repeated substring.
