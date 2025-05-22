@@ -14,7 +14,7 @@ Output: false
 
 Constraints:
 
-1 <= flowerbed.length <= 2 * 104
+1 <= flowerbed.length <= 2 * 10^4
 flowerbed[i] is 0 or 1.
 There are no two adjacent flowers in flowerbed.
 0 <= n <= flowerbed.length
@@ -40,29 +40,21 @@ class Solution:
             return True
         else: return False
 
-n is <=0 cause we might end w this:
 
+
+so in the left = i==0 is true then true will be asigned cause flowerbed[-1] is always true cause there is nothing
+and same logic applied to right 
+
+n is <=0 cause we might end w this:
 flowerbed = [0,0,1,0,0]
 n =1
+cause it will go n=-1
 
-and this logic didnt work cause i didnt check the plot in the first and last index.
 
-class Solution:
 
-    def canPlaceFlowers(self, flowerbed: List[int], n: int) -> bool:
 
-        for i in range(len(flowerbed)-2):
-            left = flowerbed[i]
-            right = flowerbed[i+2]
 
-            if(flowerbed[i+1]==0 and (left==0 and right ==0)):
-                n=n-1
-                flowerbed[i+1] = 1
-        
-        if(n==0):
-            return True
-        else: return False
-
+(or)
 
 
 I REALLY LIKE THIS APPROACH:::::
@@ -73,6 +65,75 @@ If the previous and next pointers fall outside the array, they are treated as 0.
 If count >= n, it signifies that flowers can be placed.
 
 
+
+
+def canPlaceFlowers(flowerbed, n):
+    count = 0
+    pre = -1
+    next_pos = 1
+
+    for i in range(len(flowerbed)):
+        if get_value(flowerbed, pre) + get_value(flowerbed, i) + get_value(flowerbed, next_pos) == 0:
+            flowerbed[i] = 1
+            count += 1
+        pre += 1
+        next_pos += 1
+
+    return count >= n
+
+def get_value(flowerbed, i):
+    if i < 0 or i >= len(flowerbed):
+        return 0
+    return flowerbed[i]
+
+
+
+
+
+logic trace example:
+flowerbed = [1, 0, 0, 0, 1]
+n = 1
+
+Initial setup:
+count = 0
+pre = -1, next_pos = 1
+
+Now we iterate through each index i of the flowerbed.
+i = 0:
+pre = -1, i = 0, next_pos = 1
+get_value(flowerbed, -1) = 0 (out of bounds)
+get_value(flowerbed, 0) = 1
+get_value(flowerbed, 1) = 0
+=> Total = 0 + 1 + 0 = 1 → Not equal to 0 → Cannot plant
+Update: pre = 0, next_pos = 2
+
+i = 1:
+pre = 0, i = 1, next_pos = 2
+get_value(0) + get_value(1) + get_value(0) = 1 + 0 + 0 = 1
+→ Cannot plant
+Update: pre = 1, next_pos = 3
+
+i = 2:
+get_value(1) + get_value(0) + get_value(0) = 0 + 0 + 0 = 0
+→ We can plant → Set flowerbed[2] = 1, count = 1
+Update: pre = 2, next_pos = 4
+Now flowerbed becomes: [1, 0, 1, 0, 1]
+
+i = 3:
+get_value(2) + get_value(0) + get_value(1) = 1 + 0 + 1 = 2
+→ Cannot plant
+Update: pre = 3, next_pos = 5
+
+i = 4:
+get_value(3) + get_value(1) + get_value(out of bounds) = 0 + 1 + 0 = 1
+→ Cannot plant
+
+Final count = 1, and n = 1
+→ count >= n → Return True
+
+
+
+in js
 
 var canPlaceFlowers = function(flowerbed, n) {
     let count = 0;
@@ -96,4 +157,5 @@ var getValue = function(flowerbed, i) {
     return flowerbed[i];
 }
 
-link: https://leetcode.com/problems/can-place-flowers/solutions/4451371/easy-short-beats-99-with-explanation/?envType=study-plan-v2&envId=leetcode-75
+link:
+https://leetcode.com/problems/can-place-flowers/solutions/4451371/easy-short-beats-99-with-explanation/?envType=study-plan-v2&envId=leetcode-75
