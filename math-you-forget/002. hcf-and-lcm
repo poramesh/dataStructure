@@ -51,10 +51,7 @@ import math
 a = 12
 b = 18
 
-# HCF (GCD)
 hcf = math.gcd(a, b)
-
-# LCM
 lcm = abs(a * b) // hcf # we do absolute here cause negatice doesnt make sense, 
 
 print(f"HCF: {hcf}")
@@ -84,7 +81,7 @@ math.gcd(0, 0)       # 0
 
 
 
-  Implementaion using Euclidean Algo:
+Implementaion using Euclidean Algo:
 
 
 def find_hcf(x, y):
@@ -96,10 +93,147 @@ def find_lcm(x, y):
     hcf = find_hcf(x, y)
     return abs(x * y) // hcf
 
-# Example usage
 a = 12
 b = 18
-
 print("HCF:", find_hcf(a, b))  # Output: 6
 print("LCM:", find_lcm(a, b))  # Output: 36
+
+
+
+Say you want HCF(24, 36):
+Step 1: a = 24, b = 36
+Step 2: a, b = 36, 24 % 36 → a=36, b=24
+Step 3: a, b = 24, 36 % 24 → a=24, b=12
+Step 4: a, b = 12, 24 % 12 → a=12, b=0
+Step 5: Since b == 0, return a = 12
+
+
+and whrn theres no hcf then it would be like this:HCF(3,14)
+step 1: a=3, b = 14
+step 2: a, b = 14, 3%14 -> a = 14, b = 3
+step 3: a, b = 3, 14%3 -> a = 3, b = 2
+step 4: a, b = 2, 3%2 -> a= 2, b = 1
+step 5: a, b = 1, 2/1 -> a=1, b = 0
+
+14 3
+3 2
+2 1
+1 0
+HCF: 1
+
+
+it doesn't matter at all whether a is smaller or larger than b in Euclid’s algorithm.
+This operation works regardless of which number is bigger, because:
+If a < b, then a % b = a
+So the next step just swaps the numbers
+
+
+
+
+why do we do modulus and shrink it?
+
+Let’s go deeper into why this works:
+60 and 36 have many divisors:
+60 → [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60]
+36 → [1, 2, 3, 4, 6, 9, 12, 18, 36]
+The common ones: [1, 2, 3, 4, 6, 12]
+Highest = 12
+
+Euclid’s algorithm just takes a shortcut by:
+Subtracting (via remainder)
+Repeating with smaller numbers
+Finding the common divisor quickly
+
+
+
+
+HCF(60, 36)
+Let’s walk through it:
+60 % 36 = 24
+→ So HCF(60, 36) = HCF(36, 24)
+36 % 24 = 12
+→ Now HCF(36, 24) = HCF(24, 12)
+24 % 12 = 0
+→ So HCF(24, 12) = 12
+Final HCF is 12
+
+
+Why this works:
+Let’s say:
+a=b*q+r
+This is the division equation:
+a%b=r
+
+60=36×1+24
+36=24x1+12
+24=12x2+0
+
+Any number that divides both a and b, must also divide r. So, instead of checking divisors of large numbers,
+we shrink the problem down to smaller and smaller values.
+
+
+
+
+
+def gcd(a, b):
+    while b != 0:
+        a, b = b, a % b
+    return abs(a)
+
+def gcd_multiple(numbers):
+    result = numbers[0]
+    for num in numbers[1:]:
+        result = gcd(result, num)
+    return result
+
+
+nums = [60, 48, 36]
+print("HCF:", gcd_multiple(nums))  # Output: 12
+
+Start with result = 60
+Then gcd(60, 48) → 12 → result = 12
+Then gcd(12, 36) → 12 → result = 12
+Done!
+
+
+
+
+with reduce?
+
+from functools import reduce
+
+def gcd(a, b):
+    while b != 0:
+        a, b = b, a % b
+    return abs(a)
+
+def gcd_multiple(numbers):
+    return reduce(gcd, numbers)
+
+nums = [60, 48, 36]
+print("HCF:", gcd_multiple(nums))  # Output: 12
+
+
+
+
+What is reduce()?
+
+reduce() takes:
+A function that combines two values
+A list (or iterable) of values
+And applies the function cumulatively across the list from left to right.
+
+from functools import reduce
+reduce(function, iterable)
+
+ex:
+from functools import reduce
+
+def add(a, b):
+    return a + b
+
+nums = [1, 2, 3, 4]
+result = reduce(add, nums)
+print(result)  # Output: 10
+
 
