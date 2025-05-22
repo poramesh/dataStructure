@@ -1,0 +1,105 @@
+1. HCF (Highest Common Factor)
+HCF of two or more numbers is the largest number that divides all of them exactly (i.e., without leaving a remainder). It’s also called GCD (Greatest Common Divisor).
+
+How to find HCF:
+List the factors of each number.
+Find the common factors.
+The largest one is the HCF.
+
+Example:
+Find HCF of 12 and 18.
+Factors of 12 = {1, 2, 3, 4, 6, 12}
+Factors of 18 = {1, 2, 3, 6, 9, 18}
+Common factors = {1, 2, 3, 6}
+HCF = 6
+
+
+  
+2. LCM (Least Common Multiple)
+LCM of two or more numbers is the smallest number that is a multiple of all the given numbers.
+
+How to find LCM:
+List the multiples of each number.
+Find the first (smallest) common multiple.
+
+Example:
+Find LCM of 4 and 5.
+Multiples of 4 = 4, 8, 12, 16, 20, 24, ...
+Multiples of 5 = 5, 10, 15, 20, 25, ...
+Common multiples = {20, 40, ...}
+LCM = 20
+
+Relationship between HCF and LCM
+For any two numbers a and b:
+HCF(a,b)×LCM(a,b) = a×b
+Example:
+Let’s take a = 12, b = 18
+HCF = 6
+LCM = 36
+Check:
+6 × 36 = 216
+12 × 18 = 216 
+
+
+
+
+  We can implement this logic using math module in python
+
+
+import math
+
+a = 12
+b = 18
+
+# HCF (GCD)
+hcf = math.gcd(a, b)
+
+# LCM
+lcm = abs(a * b) // hcf # we do absolute here cause negatice doesnt make sense, 
+
+print(f"HCF: {hcf}")
+print(f"LCM: {lcm}")
+
+
+
+  
+why floor division // instead of / normal division?
+
+/ returns a float, even when the result is a whole number.
+// returns an integer, which is what we want for LCM and HCF.
+
+
+why abs()?
+
+The HCF (Highest Common Factor) or GCD (Greatest Common Divisor) is always defined as a non-negative integer — typically positive or zero (when both numbers are zero).
+Even if the inputs are negative, the HCF is considered positive.
+
+math.gcd(12, 18)     # 6
+math.gcd(-12, 18)    # 6
+math.gcd(-12, -18)   # 6
+math.gcd(0, 18)      # 18
+math.gcd(0, 0)       # 0
+
+
+
+
+
+  Implementaion using Euclidean Algo:
+
+
+def find_hcf(x, y):
+    while y:
+        x, y = y, x % y
+    return x
+
+def find_lcm(x, y):
+    hcf = find_hcf(x, y)
+    return abs(x * y) // hcf
+
+# Example usage
+a = 12
+b = 18
+
+print("HCF:", find_hcf(a, b))  # Output: 6
+print("LCM:", find_lcm(a, b))  # Output: 36
+
