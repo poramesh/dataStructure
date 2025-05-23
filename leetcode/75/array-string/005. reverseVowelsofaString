@@ -30,9 +30,7 @@ class Solution:
         for i in range(len(s)):
             if( s[i] in vow):
                 str1.append(s[i])
-        
-        str1[:-1]
-        
+                
         for i in range(len(s)):
             if(s[i] in vow):
                 s[i] = str1.pop()
@@ -53,28 +51,28 @@ Unpack and Assign: It assigns 'd' to word[start] and 'b' to word[end], effective
 
 **********
 
-s = hello
-list(s) = ['h','e','l','l','o']
 
-intially s = 1, e =len(s)-1=4
+w= hello
+list(w) = ['h','e','l','l','o']
+
+intially s = 1, e =len(w)-1=4
 vowels=[aeiouAEIOU]
 
- while(1<4):
-    while(1<4 and vowles.find(s[s] ==-1)):
+ while(s<e):
+    while(s<e and vowles.find(w[s] ==-1)):
         s+=1
-    while(1<4 and vowels.find(e[s])):
+    while(s<e and vowels.find(w[e])):
         e+=1
-    s[s], s[e] = s[e], s[s]
-    s+=1
-    e-=1
+    w[s], w[e] = w[e], w[s]
+    w+=1
+    w-=1
 return "".join(s)
 
     
 
 class Solution(object):
     def reverseVowels(self, s):
-        # Convert the input string to a character array.
-        word = list(s)
+        word = list(s)    # Convert the input string to a character array.
         start = 0
         end = len(s) - 1
         vowels = "aeiouAEIOU"
