@@ -52,23 +52,57 @@ Unpack and Assign: It assigns 'd' to word[start] and 'b' to word[end], effective
 **********
 
 
-w= hello
-list(w) = ['h','e','l','l','o']
+def reverse_vowels(w):
+    w = list(w)  # Convert string to list so we can modify characters
+    s = 0
+    e = len(w) - 1
+    vowels = "aeiouAEIOU"
 
-intially s = 1, e =len(w)-1=4
-vowels=[aeiouAEIOU]
+    while s < e:
+        while s < e and w[s] not in vowels:
+            s += 1
+        while s < e and w[e] not in vowels:
+            e -= 1
+        w[s], w[e] = w[e], w[s]
+        s += 1
+        e -= 1
 
- while(s<e):
-    while(s<e and vowles.find(w[s] ==-1)):
-        s+=1
-    while(s<e and vowels.find(w[e])):
-        e+=1
-    w[s], w[e] = w[e], w[s]
-    w+=1
-    w-=1
-return "".join(s)
+    return "".join(w)
 
-    
+
+
+
+Input:  "hello"
+Output: "holle"
+
+
+w = ['h', 'e', 'l', 'l', 'o']
+
+s = 0, e = 4
+
+Loop starts: 0<4
+w[0] = 'h' → not a vowel → s = 1
+and now w[1]='e' ->is a vowel
+proceed to end while loop
+w[4] = 'o' → vowel so e is still is 4
+
+and now we swap w[1] and w[4]
+
+After swap:
+w = ['h', 'o', 'l', 'l', 'e']
+
+and we increment, cause we dont want to stuck in the buggy loop forever
+s = 2
+e = 3
+
+Next: 2<3
+w[2] = 'l' → not a vowel → s = 3
+
+Now 3>3, so loop ends.
+Final result: 'holle'
+
+we dont have to worry about swapping, cause its swppping with itself.
+
 
 class Solution(object):
     def reverseVowels(self, s):
