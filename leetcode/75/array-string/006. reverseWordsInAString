@@ -148,6 +148,40 @@ class Solution:
             j -= 1
         print(a)
 
+
+str = [' ', ' ', 'P', 'O', 'O', ' ' , 'A', 'K', 'I', ' ' , ' ']
+i=0
+j=10
+while(0<10):
+   it goes until i=5 and j =5 and then it comes out of the loop.
+str = [' ', ' ', 'I', 'K', 'A', ' ' , 'O', 'O', 'P', ' ' , ' ']
+
+and now we shall reverse each word:
+
+i=0,
+n=len(str)
+while i < n:
+  while i<10 and str[i]==' ':
+    i+=1
+    j=i
+and now i=2,j=2
+  while j<n and str[j]!=' ':
+    j+=1
+and now j = 5
+  reverse(str,i,j-1) //we send j-1 cause the last element is space 
+  i=j+1 //its fine even if we dont do it cause it doenst mater and it will do it when the while loop is executed next
+
+
+and now the str looks like this = [' ', ' ', 'A', 'K', 'I',' ', 'P','O','O',' ',' ']
+
+and we have to clear out the space and we can do that by swapping from the index where there is space
+
+its pretty easy, just go through the code 
+
+
+   
+
+
 # Create an instance of the Solution class
 solution = Solution()
 
