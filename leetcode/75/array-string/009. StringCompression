@@ -1,3 +1,5 @@
+
+
 Given an array of characters chars, compress it using the following algorithm:
 
 Begin with an empty string s. For each group of consecutive repeating characters in chars:
@@ -132,5 +134,39 @@ class Solution:
         return walker
 
 
+i/P:
+["a","b","b","b","b","b","b","b","b","b","b","b","b"]
 
+Step-by-step Execution:
+
+Group 1: "a"
+runner = 0, chars[runner] = 'a'
+Write 'a' at walker = 0
+No duplicates (count = 1)
+runner = 1
+walker = 1
+
+chars = ["a", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b"]
+
+Group 2: "b" repeated 12 times
+runner = 1, chars[runner] = 'b'
+Write 'b' at walker = 1
+Start counting:
+While chars[runner] == chars[runner+1], increment runner and count
+This continues until runner = 12, count = 12
+Now write the count:
+Convert 12 to string → "1", "2"
+Write:
+'1' at walker = 2
+'2' at walker = 3
+Then:
+runner = 13 → end of array
+walker = 4 → final write position
+
+chars = ["a", "b", "1", "2", ...]
+
+Final Result:
+Compressed array: ["a", "b", "1", "2"]
+
+Returned length: 4
 
