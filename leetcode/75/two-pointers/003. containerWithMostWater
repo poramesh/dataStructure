@@ -18,31 +18,6 @@ Notice that you may not slant the container.
 
 
 
-JUST PUTTING IT OUT HERE CAUSE I MANAGED TO CAME UP W THIS SOLUTION BUT IT DOESNT PASS ALL THE TEST CASES SO I AM NOT ENTIRELY HAPPE.
-
-class Solution:
-    def maxArea(self, height: List[int]) -> int:
-        i=0
-        n = len(height)
-        max_water = -inf
-        while(i<n):
-            w=0
-            j=i
-            while (j<n):
-                if(height[i]>height[j]):
-                    val = height[j]*w
-                else: 
-                    val = height[i]*w
-                
-                if(val>max_water):
-                    max_water = val
-                
-                w+=1
-                j+=1
-            
-            i+=1
-        
-        return max_water
 
 THE TRICK IS NOT THE HEIGHT, IT IS THE WIDTH.
 
