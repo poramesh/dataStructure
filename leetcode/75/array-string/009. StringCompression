@@ -40,6 +40,15 @@ chars[i] is a lowercase English letter, uppercase English letter, digit, or symb
 
 
 
+i/p
+["a","b","b","b","b","b","b","b","b","b","b","b","b"]
+Output
+["a","b","1","2"]
+
+
+12 would have to be 1 and 2 
+
+
 solution:
 
 class Solution:
@@ -67,11 +76,43 @@ class Solution:
 #i/p: ["a","a","b","b","c","c","c"] chars[:idx]
 
 
+
+
+p = 45
+l = str(p) 
+print(l) //45
+n = len(l) //2
+cha = []
+cha[0:n] = l
+print(cha) // ['4','5']
+
+(or)
+
+class Solution:
+    def compress(self, chars: List[str]):
+        idx=0
+        for ch, ch_group in groupby(chars):
+            chars[idx]=ch
+            idx+=1
+            sum_ch=sum([1 for _ in ch_group])
+            if sum_ch > 1:
+                lis = list(str(sum_ch))
+                for i in range(len(lis)):
+                    chars[idx]=lis[i]
+                    idx+=1
+
+        chars = chars[:idx]
+        return len(chars)
+
+
+
+
 (or)
 
 class Solution:
     def compress(self, chars: List[str]) -> int:
         walker, runner = 0, 0
+        
         while runner < len(chars):
 		
             chars[walker] = chars[runner]
@@ -85,9 +126,8 @@ class Solution:
                 for c in str(count):
                     chars[walker+1] = c
                     walker += 1
-            
-			      runner += 1
-            walker += 1
+            runner+=1
+            walker+=1
         
         return walker
 
