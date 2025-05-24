@@ -19,12 +19,19 @@ Example 3:
 Input: nums = [2,1,5,0,4,6]
 Output: true
 Explanation: The triplet (3, 4, 5) is valid because nums[3] == 0 < nums[4] == 4 < nums[5] == 6.
+
+
+
+the indices i, j, and k do not have to be consecutive.
+The only requirements are:
+i < j < k (they appear in increasing order by position),
+nums[i] < nums[j] < nums[k] (they form a strictly increasing sequence by value).
  
 
 Constraints:
 
-1 <= nums.length <= 5 * 105
--231 <= nums[i] <= 231 - 1
+1 <= nums.length <= 5 * 10^5
+-231 <= nums[i] <= 2^31 - 1
 
 
 
@@ -49,5 +56,18 @@ class Solution:
         else:
             return True
     return False
+
+
+nums = [2, 1, 5, 0, 4, 6]
+
+
+| Step | n | first | second | What happens?                                                    |
+| ---- | - | ----- | ------ | ---------------------------------------------------------------- |
+| 1    | 2 | 2     | inf    | `n <= first`, so `first = 2`                                     |
+| 2    | 1 | 1     | inf    | `n <= first`, so `first = 1`                                     |
+| 3    | 5 | 1     | 5      | `n > first`, so update `second = 5`                              |
+| 4    | 0 | 0     | 5      | `n <= first`, so `first = 0`                                     |
+| 5    | 4 | 0     | 4      | `n > first`, so update `second = 4`                              |
+| 6    | 6 | 0     | 4      | `n > second`, so we found triplet: **0 < 4 < 6** → `return True` |
 
         
