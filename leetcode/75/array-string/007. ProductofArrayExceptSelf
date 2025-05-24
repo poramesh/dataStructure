@@ -45,6 +45,8 @@ return product
 
 but this wouldnt work cause divide my zero would result in an error.
 
+[-1,1,0,-3,3]
+:(( 
 
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
@@ -61,30 +63,101 @@ class Solution:
         
         return ans
 
+
+
 3. using prefix and suffix
+
 
 I REALLY WONDER HOW ANYONE OCMES W THIS :(
 
-initially we find the prefic product:
-i/P: [1,2,3,4]
+""""""""""
+Prefix: A group of letters added at the beginning of a word to change its meaning.
+Example:
+"unhappy" → "un-" is the prefix, added to "happy"
+"preview" → "pre-" is the prefix, added to "view"
+
+Suffix: A group of letters added at the end of a word.
+Example:
+"happiness" → "-ness" is the suffix, added to "happy"
+"running" → "-ing" is the suffix, added to "run"
 
 
-[1, 1]
-[1, 1, 2]
-[1, 1, 2, 6]
 
-and then suffix:
 
-[1, 1, 4, 1]
-[1, 12, 4, 1]
-[24, 12, 4, 1]
+In programming or strings:
 
-multuplying prefix and suffix would give this result:
+A prefix is a substring that occurs at the start of a string.
+Example:
+text = "hello"
+prefix = text[:3]  # "hel"
 
-[24, 12, 8, 6]
+A suffix is a substring that occurs at the end of a string.
+Example:
+text = "hello"
+suffix = text[-2:]  # "lo"
 
-ans[i] would be given by ans[i] = pre[i] * suff[i]. Why? Because the pre[i] * suff[i] contains product of every element before i and every element
-after i but not the element at index i (and that is the reson why we excluded a[i] in our prefix and suffix product).
+""""""""""
+
+
+Instead of computing product excluding nums[i] for each i by looping (which would be O(n²)), you precompute prefix and suffix products.
+Prefix product (pre[i]) = product of all elements before index i.
+Suffix product (suf[i]) = product of all elements after index i.
+
+Then:
+ans[i] = pre[i] * suf[i]
+
+
+Step-by-Step Breakdown of Your Code
+length = len(nums)
+pre = []
+suf = [1]*length
+pre.append(1)
+ans = []
+pre will store prefix products. Start with 1 since nothing is before the first element.
+suf is initialized with all 1s. Will store suffix products.
+ans will be the final result.
+
+
+
+First loop: Build the prefix array
+for i in range(1, length):
+    pro = nums[i-1] * pre[i-1]
+    pre.append(pro)
+
+Let’s trace for nums = [1, 2, 3, 4]:
+i=1 → pre[1] = nums[0] * pre[0] = 1 * 1 = 1
+i=2 → pre[2] = nums[1] * pre[1] = 2 * 1 = 2
+i=3 → pre[3] = nums[2] * pre[2] = 3 * 2 = 6
+
+Now pre = [1, 1, 2, 6]
+Meaning:
+pre[0] = 1 (nothing before 0th)
+pre[1] = product of [0] → 1
+pre[2] = product of [0,1] → 1×2=2
+pre[3] = product of [0,1,2] → 1×2×3=6
+
+SO HERE WE ARE DOING prev[i-1]*nums[i-1] since, nums[i-1] is exlcuded in the previous multiplication. eg: 2,3,4 so here pre[2-1=1]=2 and nums[2-1=1]=3 so multipltying will give 6
+
+
+
+
+Second loop: Build the suffix array in reverse
+
+for i in range(0, length-1)[::-1]:
+    pro = nums[i+1] * suf[i+1]
+    suf[i] = pro
+This loop is reverse — going from right to left. nums = [1, 2, 3, 4]:
+i = 2 → suf[2] = nums[3] * suf[3] = 4 * 1 = 4
+i = 1 → suf[1] = nums[2] * suf[2] = 3 * 4 = 12
+i = 0 → suf[0] = nums[1] * suf[1] = 2 * 12 = 24
+
+Now suf = [24, 12, 4, 1]
+Meaning:
+suf[0] = product of [1,2,3] = 2×3×4 = 24
+suf[1] = product of [2,3] = 3×4 = 12
+suf[2] = product of [3] = 4
+suf[3] = product of [] = 1
+
 
 
 
@@ -99,17 +172,16 @@ class Solution:
             pro = nums[i-1]*pre[i-1]
             pre.append(pro)
 
-
         for i in range(0, length-1)[::-1]:
             pro = nums[i+1]*suf[i+1]
             suf[i] = pro
 
-
         for i in range(length):
             ans.append(suf[i]*pre[i])
-
             
         return ans
+
+
 
 
 4. Directly store the product of prefix and suffix into the final answer array
@@ -117,6 +189,8 @@ class Solution:
 we would not need seprate array.
 
 i/p: [1,2,3,4]
+
+Here we are storin the cur=1 and multiplying it with ans, initially both cur and ans is 1 so initial index will be 1, and calculate cur for the next
 
 first loop
 [1, 1, 1, 1]
@@ -142,15 +216,6 @@ end result =>
 [24, 12, 8, 6]
 
 
-1
-2
-6
-24
-4
-12
-24
-24
-
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
         length = len(nums)
@@ -167,6 +232,7 @@ class Solution:
             curr = nums[i]*curr
             print(ans)            
         return ans
+
 
 ----------------------------------------------------------------
 n=5
