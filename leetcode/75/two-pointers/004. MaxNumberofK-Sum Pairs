@@ -38,8 +38,23 @@ class Solution:
             elif nums[r]+nums[l]>k:
                 r-=1
             else:
-                l+=1           
+                l+=1         
+            print("res:",res,"  i:", i,"  j:",j)
+
         return ans
+
+
+after sorted: [1, 2, 2, 3, 4, 4, 5, 5]
+              [0, 1, 2, 3, 4, 5, 6, 7]
+k=6
+res: 1   i: 1   j: 6 //its 1 and 6 since, match is found
+res: 1   i: 1   j: 5
+res: 2   i: 2   j: 4
+res: 3   i: 3   j: 3
+
+res = 3
+
+its simple, we know that, 2+5>6 so if we want to find the match then we gotta decerement upperbound. its sorted so we might find the match in the lowerbond
 
 (or)
 
@@ -49,13 +64,53 @@ class Solution:
         print(cnt) #Counter({1: 1, 2: 1, 3: 1, 4: 1})
         for val in cnt:
             print(cnt[val],cnt[k-val])
-            ans += cnt[k - val] 
+            ans += min(cnt[val], cnt[k - val]) 
             #we are doind min here, cause we want to intialise cnt[k-val] as value, as 0 when there exists no such k-val.
             print(ans)
             print()
 
 
         return ans//2
+
+
+
+[1,5,5,2,3,4,2,4]
+k=6
+
+after counter: Counter({5: 2, 2: 2, 4: 2, 1: 1, 3: 1})
+
+for 5 in count:
+   ans+=min(count[6-5]=count[1]=1, count[5]=2) ans = 1
+for 2 in count:
+   ans+=min(count[6-2]=count[4]=2, count[2]=2) ans = 3
+for 4 in count:
+   ans+=min(count[6-4]=count[2]=2,count[4]=2) ans = 5
+for 1 in count:
+  ans+=min(count[6-1]=count[5]=2,count[1]=1) ans = 6
+for 1 in count:
+  ans+=min(count[6-3]=count[3]=1, count[1]=1) ans = 7
+
+
+
+Why does it add 1 when there's only one 3?
+
+Well, the code does count the pair (3, 3) once — it doesn't ensure that val != k - val. But that’s not necessarily wrong.
+
+However, for the final result, it does:
+return ans // 2
+
+This division by 2 is important. It ensures that for each unique pair (val, k - val), we count it only once, even though the loop visits both val and k - val.
+
+Let’s look at all pairs that sum to 6:
+(2, 4): cnt[2] = 2, cnt[4] = 2 → 2 pairs
+(1, 5): cnt[1] = 1, cnt[5] = 2 → 1 pair
+(3, 3): cnt[3] = 1 → not enough to form a pair, needs 2 threes
+
+So actual valid pairs:
+(2, 4) × 2
+(1, 5) × 1
+
+Total = 3 valid pairs
 
 
 
