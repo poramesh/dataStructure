@@ -62,13 +62,22 @@ o/P;
 the empty array is to initialise RecentCounter lol and its not empty array lol
 Stdout
 [1]
-0
+start = 0 - intially the counter is at 0 cause 1 is greater 1-3000=-2999, so it returns len(arr)-start=1
 [1, 1000]
-0
+start = 0 - and now 1000-3000=-2000 and 1 is greater than -2000, return 2-0=2
 [1, 1000, 3301]
-1
+start is incremmented to 1 since 3301-3000=301 and 1 is less than 301, it goes on until while loop condition is not satisified, start = 1 and now 3301-3000=301 
+and 1000 is greater than 301 and 1000 is in the range of 3301 and 301, and hence it returns 3-1=2
 [1, 1000, 3301, 4000]
-1
+start is still 1 since 4000-3000=1000, it can accomdate requessts, 1000 to 4000 and hence returns 3
+[1, 1000, 3301, 4000,8000]
+8000-3000=5000, it can have requests between 5000 and 8000, while counter[start=1], 1000 is less than 5000, hence start = 2, and now 3301 is less than 5000 and strt =3
+and now 4000 is less than 500 hence start = 4, it returns len(counter)=5-4=1
+
+
+
+final ans: [null,1,2,2,3,1]
+
 
 
 
