@@ -40,17 +40,74 @@ class Solution:
         
         return res
 
+0st iteration: i=0  j=0  k=0  res=0
+[0, 1, 1, 1, 0, 1, 1, 0, 1]]
+i,j
 
-[Input: nums = [0,1,1,1,0,1,1,0,1]]
-1st iteration: 0 0 0 0
-2st iteration: 0 1 0 1
-3st iteration: 0 2 0 2
-4st iteration: 0 3 0 3
-5st iteration: 1 4 0 3
-6st iteration: 1 5 0 4
-7st iteration: 1 6 0 5
-8st iteration: 5 7 0 5
-9st iteration: 5 8 0 5
+1st iteration: i= 0  j= 1  k= 0  res= 1  j-i= 1
+
+[0, 1, 1, 1, 0, 1, 1, 0, 1]
+i   j
+
+2nd iteration: i= 0  j= 2  k= 0  res= 2  j-i= 2
+
+[0, 1, 1, 1, 0, 1, 1, 0, 1]
+i      j
+
+3rd iteration: i= 0  j= 3  k= 0  res= 3  j-i= 3
+
+[0, 1, 1, 1, 0, 1, 1, 0, 1]
+i         j
+
+4th iteration: i= 1  j= 4  k= 0  res= 3  j-i= 3
+
+[0, 1, 1, 1, 0, 1, 1, 0, 1]
+    i        j
+
+while k<0
+here comes that sitation: k becomes = -1 and i is incremeneted, since nums[i] is 0 k becomes 0
+
+
+5th iteration: i= 1  j= 5  k= 0  res= 4  j-i= 4
+
+[0, 1, 1, 1, 0, 1, 1, 0, 1]
+    i           j
+
+6th iteration: i= 1  j= 6  k= 0  res= 5  j-i= 5
+
+[0, 1, 1, 1, 0, 1, 1, 0, 1]
+    i              j
+
+
+7th iteration: i= 5  j= 7  k= 0  res= 5  j-i= 2
+
+while comes into the picture, k is -1
+
+[0, 1, 1, 1, 0, 1, 1, 0, 1]
+       i              j
+
+[0, 1, 1, 1, 0, 1, 1, 0, 1]
+          i           j
+
+now k becomes 0, since it encounters nums[i]=0 and it increments to the next position:
+[0, 1, 1, 1, 0, 1, 1, 0, 1]
+             i        j  
+
+[0, 1, 1, 1, 0, 1, 1, 0, 1]
+                i     j
+
+[0, 1, 1, 1, 0, 1, 1, 0, 1]
+                i     j
+
+
+8th iteration: i= 5  j= 8  k= 0  res= 5  j-i= 3
+
+[0, 1, 1, 1, 0, 1, 1, 0, 1]
+                i        j
+
+
+
+
 
 (or)
 
@@ -60,7 +117,6 @@ class Solution:
 
         i = 0
         k=1
-        res =0
         for j in range(len(nums)):
             if(nums[j] == 0 ): 
                 k-=1
@@ -84,36 +140,3 @@ class Solution:
 3 8 -1
 
 
-
-(or)
-
-
-
-[Input: nums = [0,1,1,1,0,1,1,0,1]]
-
-var longestSubarray = function (nums) {
-  let i = 0;
-  let j = 1;
-  let zeroes = nums[i] === 0 ? 1 : 0; // number of zeroes in our window
-  let max = -1;
-
-  while (j < nums.length) {
-    if (nums[j] === 0) {
-      zeroes++; // increment the number of zeroes encountered.
-      
-      // now we only want one zero in our window, so increment i,
-     // i.e. slide the window by incrementing i (the window is actually getting smaller,
-     // but you get the point).
-      while (zeroes > 1) {
-        if (nums[i++] === 0) {
-          zeroes--;
-        }
-      }
-    }
-
-    max = Math.max(max, j - i);
-    j++;
-  }
-
-  return max;
-};
