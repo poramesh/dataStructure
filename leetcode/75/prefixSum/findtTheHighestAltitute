@@ -38,3 +38,8 @@ class Solution:
 
   def largestAltitude(self, A):
         return max(0, max(accumulate(A)))
+
+
+>accumulate(A) comes from itertools, and returns the running total (cumulative sum) of the elements in A.
+>max(accumulate(A)) gives the highest altitude after the starting point (excluding the initial 0).
+>max(0, ...) ensures that if all values in A are negative (i.e., altitude always decreases), we still return 0 (the initial starting point is the highest).
