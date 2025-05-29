@@ -1,0 +1,126 @@
+Maximum Subsequence Score
+
+You are given two 0-indexed integer arrays nums1 and nums2 of equal length n and a positive integer k. You must choose a subsequence of indices from nums1 of length k.
+
+For chosen indices i0, i1, ..., ik - 1, your score is defined as:
+
+The sum of the selected elements from nums1 multiplied with the minimum of the selected elements from nums2.
+It can defined simply as: (nums1[i0] + nums1[i1] +...+ nums1[ik - 1]) * min(nums2[i0] , nums2[i1], ... ,nums2[ik - 1]).
+Return the maximum possible score.
+
+A subsequence of indices of an array is a set that can be derived from the set {0, 1, ..., n-1} by deleting some or no elements.
+
+ 
+
+Example 1:
+
+Input: nums1 = [1,3,3,2], nums2 = [2,1,3,4], k = 3
+Output: 12
+Explanation: 
+The four possible subsequence scores are:
+- We choose the indices 0, 1, and 2 with score = (1+3+3) * min(2,1,3) = 7.
+- We choose the indices 0, 1, and 3 with score = (1+3+2) * min(2,1,4) = 6. 
+- We choose the indices 0, 2, and 3 with score = (1+3+2) * min(2,3,4) = 12. 
+- We choose the indices 1, 2, and 3 with score = (3+3+2) * min(1,3,4) = 8.
+Therefore, we return the max score, which is 12.
+
+Example 2:
+
+Input: nums1 = [4,2,3,1,1], nums2 = [7,5,10,9,6], k = 1
+Output: 30
+Explanation: 
+Choosing index 2 is optimal: nums1[2] * nums2[2] = 3 * 10 = 30 is the maximum possible score.
+
+
+
+sol:
+
+
+this solution doesnt pass all the test cases since its too slow, and time limit exceeded
+
+from itertools import combinations
+
+class Solution:
+    def maxScore(self, nums1: List[int], nums2: List[int], k: int) -> int:
+        n = len(nums1)
+        self.score = 0
+
+        for path in combinations(range(n),k):
+            sumi = sum(nums1[i] for i in path)
+            mini = min(nums2[i] for i in path)
+            if self.score < sumi*mini:
+                self.score = sumi*mini            
+
+        return self.score
+
+
+if you dont understand this, you can go back to the basics maths and brush up, it got detailed explaination, AYTHAAA???
+
+
+
+recap on sorted n zip n lambda
+
+A lambda function can take any number of arguments, but can only have one expression.
+Add 10 to argument a, and return the result:
+x = lambda a : a + 10
+print(x(5))
+Multiply argument a with argument b and return the result:
+x = lambda a, b : a * b
+print(x(5, 6))
+
+
+data = [('Alice', 30), ('Bob', 25), ('Alice', 35)]
+sorted_data = sorted(data, key=lambda x: (x[0], -x[1]))  # Sort by name ascending, age descending
+print(sorted_data)  # Output: [('Alice', 35), ('Alice', 30), ('Bob', 25)]
+
+
+A = [5, 1, 3]
+B = [4, 2, 1]
+list(zip(A, B)) → [(5, 4), (1, 2), (3, 1)]
+
+
+
+    def maxScore(self, A, B, k):
+        total = res = 0
+        h = []
+        for a,b in sorted(list(zip(A, B)), key=lambda x: -x[1]):
+            heappush(h, a)
+            total += a
+            if len(h) > k:
+                total -= heappop(h)
+            if len(h) == k:
+                res = max(res, total * b)
+        return res
+
+
+
+
+Let's Trace It with a Real Example
+A = [5, 1, 3, 7]
+B = [4, 2, 1, 3]
+k = 2
+So:
+zip(A,B) = [(5,4), (1,2), (3,1), (7,3)]
+sorted by B descending: [(5,4), (7,3), (1,2), (3,1)]
+
+Now loop through each (a, b):
+
+1. (5, 4)
+Push 5 → h = [5], total = 5
+Heap size < k → skip computing result
+
+2. (7, 3)
+Push 7 → h = [5, 7], total = 12
+Heap size == k → res = max(0, 12 * 3) = 36
+
+3. (1, 2)
+Push 1 → h = [1, 7, 5], total = 13
+Heap size > k → pop smallest (1) → h = [5, 7], total = 12
+Heap size == k → res = max(36, 12 * 2 = 24) → still 36
+
+4. (3, 1)
+Push 3 → h = [3, 7, 5], total = 15
+Heap size > k → pop 3 → h = [5, 7], total = 12
+Heap size == k → res = max(36, 12 * 1 = 12) → still 36
+
+Final Result: 36
