@@ -124,3 +124,49 @@ Heap size > k → pop 3 → h = [5, 7], total = 12
 Heap size == k → res = max(36, 12 * 1 = 12) → still 36
 
 Final Result: 36
+
+
+
+another example:
+
+
+A = [1, 2, 10, 5]
+B = [4, 4, 3, 3]
+k = 3
+
+Goal:
+Choose 3 pairs (A[i], B[i]) to maximize:
+score = sum(A[i1], A[i2], A[i3]) * min(B[i1], B[i2], B[i3])
+
+Step 1: Pair and Sort by B descending
+pairs = sorted(zip(A, B), key=lambda x: -x[1])
+# [(1, 4), (2, 4), (10, 3), (5, 3)]
+We'll now simulate the logic in your original code.
+
+Step 2: Initialize
+total = 0
+res = 0
+h = []
+
+Step 3: Loop Through Each (a, b)
+1. (1, 4)
+Push 1 → h = [1], total = 1
+Heap size < k → no score yet
+
+2. (2, 4)
+Push 2 → h = [1, 2], total = 3
+Heap size < k → no score yet
+
+3. (10, 3)
+Push 10 → h = [1, 2, 10], total = 13
+Heap size == k → compute score: 13 * 3 = 39
+res = max(0, 39) = 39
+
+4. (5, 3)
+Push 5 → h = [1, 2, 10, 5], total = 18
+Heap size > k → pop min (1) → h = [2, 5, 10], total = 17
+Heap size == k → compute score: 17 * 3 = 51
+res = max(39, 51) = 51
+
+Final Answer:
+return 51
