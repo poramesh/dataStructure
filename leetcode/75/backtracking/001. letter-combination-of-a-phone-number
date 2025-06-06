@@ -203,3 +203,78 @@ return list(ans)  #['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf']
 
 
 
+
+
+(or)
+
+
+class Solution(object):
+    def letterCombinations(self, digits):
+        """
+        :type digits: str
+        :rtype: List[str]
+        """
+        dic = { "2": "abc", "3": "def", "4":"ghi", "5":"jkl", "6":"mno", "7":"pqrs", "8":"tuv", "9":"wxyz"}
+        
+        res=[]
+        if len(digits) ==0:
+            return res
+            
+        self.dfs(digits, 0, dic, '', res)
+        return res
+    
+    def dfs(self, nums, index, dic, path, res):
+        if index >=len(nums):
+            res.append(path)
+            return
+        string1 =dic[nums[index]]
+        for i in string1:
+            self.dfs(nums, index+1, dic, path + i, res)
+
+
+
+
+
+sol:
+
+Overall idea:
+Start with an empty path.
+For each digit, choose one letter and recurse to the next digit.
+Once you’ve chosen letters for all digits (base case), add the full path to res.
+
+Trace step-by-step for digits = "23"
+
+Step 0 — Setup
+digits = "23"
+res = []
+call: self.dfs("23", 0, dic, "", res)
+
+DFS Tree Unfolding:
+We’ll visualize the recursive tree:
+Index 0: nums[0] = '2' → "abc"
+Try "a" → recurse
+Try "b" → recurse
+Try "c" → recurse
+
+Try "a" → index = 1 → nums[1] = '3' → "def"
+Now you build:
+"a" + "d" → "ad"
+"a" + "e" → "ae"
+"a" + "f" → "af"
+
+All of these reach index 2 (length of input), so they go into res.
+
+Backtrack to "b" → then:
+"bd", "be", "bf"
+
+Backtrack to "c" → then:
+"cd", "ce", "cf"
+
+Final Output:
+res = ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"]
+
+
+Breakdown of one path (e.g., "ae"):
+index=0, path="" → nums[0] = '2' → try 'a'
+index=1, path="a" → nums[1] = '3' → try 'e'
+index=2, path="ae" → full length → add "ae" to res
