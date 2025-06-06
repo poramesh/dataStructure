@@ -116,6 +116,31 @@ public:
         }
     }
 
+
+
+python equivalent:
+
+
+class Solution:
+    def leafSimilar(self, root1: TreeNode, root2: TreeNode) -> bool:
+        s1, s2 = [root1], [root2]
+        
+        while s1 and s2:
+            if self.dfs(s1) != self.dfs(s2):
+                return False
+                
+        return not s1 and not s2
+
+    def dfs(self, stack):
+        while True:
+            node = stack.pop()
+            if node.right:
+                stack.append(node.right)
+            if node.left:
+                stack.append(node.left)
+            if not node.left and not node.right:
+                return node.val
+
         3                                       
        / \
       5   1
@@ -203,7 +228,61 @@ def leafSimilar(self, root1, root2):
         return s
 
 
+A stack is a linear data structure that follows the LIFO principle — Last In, First Out. This means the last item added (pushed)
+to the stack is the first one removed (popped).
+
+Basic Operations
+Push – Add an element to the top of the stack.
+Pop – Remove the top element from the stack.
+Top/Peek – Look at the top element without removing it.
+isEmpty – Check if the stack is empty.
+
+
+stack = []         # Start with an empty stack
+stack.append(10)   # Push 10
+stack.append(20)   # Push 20
+stack.append(30)   # Push 30
+print(stack)       # Output: [10, 20, 30]
+
+
+val = stack.pop()  # Removes and returns 30 (the last pushed)
+print(val)         # Output: 30
+print(stack)       # Output: [10, 20]
+val = stack.pop()  # Removes and returns 20
+print(val)         # Output: 20
+print(stack)       # Output: [10]
+
+
+stack = [10, 20, 30]
+x = stack.pop()      # same as stack.pop(-1)
+print(x)             # 30
+print(stack)         # [10, 20]
+pop(-1) removes the last element (index -1).
+pop(0) would remove the first element (index 0).
+
+Why is pop(-1) useful in stacks?
+Stacks follow LIFO (Last In, First Out), and in Python, stacks are usually implemented as lists. So stack.pop() or stack.pop(-1) gives you the last 
+item you pushed — which is exactly how a stack is supposed to behav
+
+
 (or)
+
+ 
+        3                                       
+       / \
+      5   1
+     / \ / \
+    6  2 9  8
+      / \
+     7   4
+
+        3
+       / \
+      5   1
+     / \ / \
+    6  7 4  2
+             / \
+            9   8
 
 understanding yield haha
 
@@ -259,6 +338,19 @@ It continues producing pairs until the longest iterable is exhausted. If one ite
 fills in the missing values with a specified fillvalue (which defaults to None).
 
 This means that if one tree has more leaf nodes than the other, zip_longest will still pair them up, allowing for comparison without causing an error.
+
+
+from itertools import zip_longest
+
+# Tree 1 leaves: [1, 2, 3]
+# Tree 2 leaves: [1, 2]
+
+a = [1, 2, 3]
+b = [1, 2]
+
+print(list(zip(a, b)))            # [(1, 1), (2, 2)] ← misses the 3
+print(list(zip_longest(a, b)))    # [(1, 1), (2, 2), (3, None)] ← detects the difference
+
 
 Generator Expression:
 
@@ -337,3 +429,16 @@ class Solution:
                                                     #        3          [6,7] + [4,9,8] = [6,7,4,9,8] <--
 
                                                     #       Return True
+
+
+
+[1,2] and [2,2]
+
+
+  1          2
+ /          /
+2          2
+
+dfs(1) => 1.left = 2 = [2] + dfs(1) => [] hence = [2]
+dfs(2) => 2.left = 2 = [2] + dfs(2) => [] hence = [2]
+
