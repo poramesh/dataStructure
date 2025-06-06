@@ -1,0 +1,205 @@
+Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.
+
+A mapping of digits to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
+
+Example 1:
+
+Input: digits = "23"
+Output: ["ad","ae","af","bd","be","bf","cd","ce","cf"]
+Example 2:
+
+Input: digits = ""
+Output: []
+Example 3:
+
+Input: digits = "2"
+Output: ["a","b","c"]
+ 
+
+Constraints:
+
+0 <= digits.length <= 4
+digits[i] is a digit in the range ['2', '9'].
+
+
+
+sol:
+
+
+from collections import deque
+from typing import List
+
+def letterCombinations(digits: str) -> List[str]:
+    if not digits:
+        return []
+
+    mapping = ["0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"]
+    ans = deque([""])
+
+    for i in range(len(digits)):
+        x = int(digits[i])
+        while len(ans[0]) == i:
+            t = ans.popleft()
+            for c in mapping[x]:
+                ans.append(t + c)
+
+    return list(ans)
+
+
+Problem you're solving:
+Given a string of digits like "23", generate all possible letter combinations (based on a phone keypad):
+2 → "abc"
+3 → "def"
+So: "ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"
+
+Step-by-step Trace of "23"
+
+Initialization:
+digits = "23"
+mapping = ["0", "1", "abc", "def", "ghi", ...]
+ans = deque([""])  # Start with an empty string
+
+Step 1: Process digit '2' → mapping = "abc"
+i = 0
+x = int(digits[0]) = 2
+mapping[2] = "abc"
+Now ans = deque([""])
+
+While loop:
+len(ans[0]) == i → len("") == 0 
+Take t = "" (pop from front)
+For c in "abc":
+t + c → add to deque:
+"a"
+"b"
+"c"
+Now: ans = deque(["a", "b", "c"])
+
+Step 2: Process digit '3' → mapping = "def"
+i = 1
+x = int(digits[1]) = 3
+mapping[3] = "def"
+Now ans = deque(["a", "b", "c"])
+
+While loop:
+Check len(ans[0]) == 1 (matches i = 1), so loop continues.
+
+Pop "a":
+Add: "ad", "ae", "af"
+Pop "b":
+Add: "bd", "be", "bf"
+Pop "c":
+Add: "cd", "ce", "cf"
+Now: ans = deque(["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"])
+
+Final result:
+return list(ans)
+# ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf']
+
+
+*****
+
+deque (short for double-ended queue) is a data structure from Python’s collections module.
+Key features:
+You can add/remove from both ends efficiently.
+popleft() removes the leftmost item — this is what makes it useful as a queue (like Java's LinkedList.remove()).
+
+from collections import deque
+
+q = deque()
+
+# Add items
+q.append("a")
+q.append("b")
+q.append("c")
+print("After appends:", q)
+
+print("popleft:", q.popleft()) # Remove from front # Removes "a"
+print("pop:", q.pop()) # Remove from end # Removes "c"
+q.appendleft("z") # Add to front
+print("After appendleft:", q)
+
+
+After appends: deque(['a', 'b', 'c'])
+popleft: a
+pop: c
+After appendleft: deque(['z', 'b'])
+
+****
+
+(or)
+
+
+from collections import deque
+from typing import List
+
+def letterCombinations(digits: str) -> List[str]:
+    if not digits:
+        return []
+
+    mapping = ["0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"]
+    ans = deque([""])
+
+    while len(ans[0]) != len(digits):
+        remove = ans.popleft()
+        map_chars = mapping[int(digits[len(remove)])]
+        for c in map_chars:
+            ans.append(remove + c)
+
+    return list(ans)
+
+
+
+sol:
+
+Let’s Trace with Input: "23"
+Initial setup:
+digits = "23"
+ans = deque([""])
+mapping = ["0", "1", "abc", "def", ...]
+
+Loop Iteration 1:
+while len(ans[0]) != 2:
+ans = deque([""]) → len(ans[0]) = 0
+remove = ans.popleft() → remove = ""
+len(remove) = 0 → digits[0] = '2' → map_chars = "abc"
+
+Now:
+for c in "abc":
+    ans.append("" + c)
+So:
+ans = deque(["a", "b", "c"])
+
+Loop Iteration 2:
+ans = deque(["a", "b", "c"])
+len(ans[0]) = 1
+remove = "a"
+len(remove) = 1 → digits[1] = '3' → map_chars = "def"
+
+Now:
+for c in "def":
+    ans.append("a" + c)  # → "ad", "ae", "af"
+So:
+ans = deque(["b", "c", "ad", "ae", "af"])
+Loop Iteration 3:
+remove = "b"
+digits[1] = '3' → map_chars = "def"
+
+Append:
+"bd", "be", "bf"
+Now:
+ans = deque(["c", "ad", "ae", "af", "bd", "be", "bf"])
+Loop Iteration 4:
+remove = "c"
+Append "cd", "ce", "cf"
+
+Now:
+ans = deque(["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"])
+Loop ends:
+Now len(ans[0]) = 2, which equals len(digits) = 2, so while stops.
+
+Final result:
+return list(ans)  #['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf']
+
+
+
