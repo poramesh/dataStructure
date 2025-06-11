@@ -80,6 +80,8 @@ WHEN I WRITE CODE THIS IS WHAT I COME UP WITH AHAHHAHAAHAHHAHA
 (or)
 
 
+BFS
+
     def maxLevelSum(self, root: TreeNode) -> int:
         max, level, maxLevel = -float('inf'), 0, 0
         q = collections.deque()
@@ -97,5 +99,71 @@ WHEN I WRITE CODE THIS IS WHAT I COME UP WITH AHAHHAHAAHAHHAHA
             if max < sum:
                 max, maxLevel = sum, level        
         return maxLevel
+
+
+(or)
+
+
+DFS:
+
+
+    def maxLevelSum(self, root: TreeNode) -> int:
+        def dfs(node: TreeNode, list: List, level: int) -> None:
+            if not node:
+                return
+            if len(list) == level:
+                list.append(node.val)
+            else:
+                list[level] += node.val
+            dfs(node.left, list, level + 1)
+            dfs(node.right, list, level + 1)
+        list = []    
+        dfs(root, list, 0)
+        return 1 + list.index(max(list))
+
+
+
+        1
+       / \
+      7   0
+     / \
+    7  -8
+
+
+
+This tree looks like:
+Level 0: 1
+Level 1: 7, 0
+Level 2: 7, -8
+
+DFS Execution Breakdown
+We'll track the list variable during the DFS traversal. This list accumulates the sum of each level:
+
+Start at root (1) — level = 0
+len(list) == 0, so append 1 → list = [1]
+
+Go to left child (7) — level = 1
+
+len(list) == 1, so append 7 → list = [1, 7]
+
+Go to left child (7) — level = 2
+len(list) == 2, so append 7 → list = [1, 7, 7]
+
+Backtrack and go to right child (-8) — level = 2
+len(list) == 3, so add -8 → list = [1, 7, -1]
+
+Backtrack to root, go to right child (0) — level = 1
+len(list) == 3, so add 0 → list = [1, 7, -1] (no change)
+
+Final Level Sum List
+After the traversal, the level sums are:
+Level 0: 1
+Level 1: 7
+Level 2: -1
+
+So the maximum sum is 7, which occurs at level 1 (0-indexed). But the function returns 1 + index, so the result is:
+
+python
+return 1 + list.index(7)  # 1 + 1 = 2
 
 
