@@ -1,0 +1,67 @@
+Given an integer array nums that may contain duplicates, return all possible subsets (the power set).
+The solution set must not contain duplicate subsets. Return the solution in any order.
+
+ 
+
+Example 1:
+
+Input: nums = [1,2,2]
+Output: [[],[1],[1,2],[1,2,2],[2],[2,2]]
+
+
+Example 2:
+
+Input: nums = [0]
+Output: [[],[0]]
+ 
+
+Constraints:
+
+1 <= nums.length <= 10
+-10 <= nums[i] <= 10
+
+
+
+when given this input: [0,1,1,1]
+
+this is output for subset 1: [[],[0],[0,1],[0,1,1],[0,1,1,1],[0,1,1],[0,1],[0,1,1],[0,1],[1],[1,1],[1,1,1],[1,1],[1],[1,1],[1]]
+
+this is the expected Output for 2: [[],[0],[0,1],[0,1,1],[0,1,1,1],[1],[1,1],[1,1,1]]
+
+
+::::::SOL:::::
+
+
+
+class Solution(object):
+    def subsetsWithDup(self, nums):
+        res = []
+        nums.sort()
+        self.dfs(nums, [], res)
+        return res
+    
+    def dfs(self, nums, path, res):
+        res.append(path)
+        for i in range(len(nums)):
+            if i > 0 and nums[i] == nums[i-1]:
+                continue
+            self.dfs(nums[i+1:], path + [nums[i]], res)
+
+
+
+
+In a for loop (or any loop), the continue statement skips the rest of the code block for the current iteration
+and jumps to the next iteration of the loop.
+
+Example in Python:
+
+for i in range(5):
+    if i == 2:
+        continue  # skip the rest of the code for i = 2
+    print("Processing", i)
+
+output:
+Processing 0
+Processing 1
+Processing 3
+Processing 4
