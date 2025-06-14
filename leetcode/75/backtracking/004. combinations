@@ -1,0 +1,146 @@
+Given two integers n and k, return all possible combinations of k numbers chosen from the range [1, n].
+
+You may return the answer in any order.
+
+ 
+
+Example 1:
+
+Input: n = 4, k = 2
+
+here n = [1,2,3,4] and k =2 means
+
+[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]
+
+
+Output: [[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]
+Explanation: There are 4 choose 2 = 6 total combinations.
+Note that combinations are unordered, i.e., [1,2] and [2,1] are considered to be the same combination.
+
+
+Example 2:
+
+Input: n = 1, k = 1
+Output: [[1]]
+Explanation: There is 1 choose 1 = 1 total combination.
+
+
+
+
+
+
+
+sol:
+
+class Solution(object):
+    def combine(self, n, k):
+        res=[]
+        self.dfs(range(1, n+1), k, [], res)
+        return res
+    
+    def dfs(self, nums, k, path, res):
+        if len(path) == k:
+            res.append(path)
+            return
+        for i in range(len(nums)):
+            self.dfs(nums[i+1:], k, path+ [nums[i]], res)
+
+
+
+
+
+ex: 
+
+combine(4, 2)
+So nums = [1, 2, 3, 4] and k = 2.
+
+Let’s trace how the recursion unfolds:
+
+Call 1:
+path = [], nums = [1, 2, 3, 4]
+Loop over i=0 to 3
+
+i = 0 → nums[0] = 1
+Call dfs([2, 3, 4], 2, [1], res)
+
+Inside this:
+Loop i=0 to 2
+
+i = 0 → nums[0] = 2
+Call dfs([3, 4], 2, [1, 2], res)
+len(path) == 2, so append [1, 2]
+
+i = 1 → nums[1] = 3
+Call dfs([4], 2, [1, 3], res)
+Append [1, 3]
+
+i = 2 → nums[2] = 4
+Call dfs([], 2, [1, 4], res)
+Append [1, 4]
+
+i = 1 → nums[1] = 2
+Call dfs([3, 4], 2, [2], res)
+
+Loop i=0 to 1
+i = 0 → 3 → [2, 3]
+i = 1 → 4 → [2, 4]
+Append both.
+
+i = 2 → nums[2] = 3 → path = [3]
+Call dfs([4], 2, [3], res)
+i = 0 → 4 → [3, 4]
+
+i = 3 → nums[3] = 4 → path = [4]
+Call dfs([], 2, [4], res)
+
+Can't continue, not enough elements.
+
+Final result:
+[[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]]
+
+
+(or)
+
+
+def generate_combinations(start, path):
+    if len(path) == 2:
+        print(path)
+        return
+
+    for i in range(start, 4):
+        generate_combinations(i + 1, path + [i])
+
+
+
+
+generate_combinations(0, [])
+
+generate_combinations(start=0,path=[]):
+  if len(path) ==2 : no
+  for 0 in range(start=0,4):      
+    generate_combinations(start=0+1,path=[]+[0]=[0])
+       if len of path is equal to 2? no
+       for 1 in range(start=1,4):
+           generate_combinations(1+1=2,[0]+[1]=[0,1])
+              if len of path is equal to 2? yes: path = [0,1] return
+       for 2 in range(start=1,4):
+           generate_combinations(2+1=3,[0]+[2]=[0,2])
+              if len of path is eqal to 2? yes: path= [0,2] return
+       for 3 in range(start=1,4):
+           generate_combinations(3+1=4,[0]+[3]=[0,3])
+              if len of path is eqal to 2? yes: path = [0,3] return
+for 1 in range(start=0,4):      
+    generate_combinations(start=1+1=2, path=[]+[1]=[1])
+       if len of path is equal to 2? no
+       for 2 in range(2,4):
+           generate_combinations(2+1=3,[1]+[2]=[1,2])
+              if len of path is equal to 2? yes: path=[1,2] return
+       for 3 in range(2,4):
+           generate_combinations(2+1=3,[1]+[3]=[1,3])
+              if len of path is eqal to 2? yes: path=[1,3] return
+for 2 in range(start=0,4):
+   generate_combinations(start=2+1=3,path=[]+[2]=[2])
+         if len of path is eqal to 2? no
+         for 3 in range(3,4):
+             generate_combinations(start=3+1=4,path=[2]+[3]=[2,3])
+      
