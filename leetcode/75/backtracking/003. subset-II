@@ -36,7 +36,7 @@ this is the expected Output for 2: [[],[0],[0,1],[0,1,1],[0,1,1,1],[1],[1,1],[1,
 class Solution(object):
     def subsetsWithDup(self, nums):
         res = []
-        nums.sort()
+        nums.sort()    # Important: sort so duplicates are adjacent
         self.dfs(nums, [], res)
         return res
     
@@ -46,6 +46,26 @@ class Solution(object):
             if i > 0 and nums[i] == nums[i-1]:
                 continue
             self.dfs(nums[i+1:], path + [nums[i]], res)
+
+
+[]
+├── [1]
+│   ├── [1,2]
+│   │   └── [1,2,2]
+│   └── SKIP 2 (duplicate at same level)
+├── [2]
+│   └── [2,2]
+└── SKIP 2 (duplicate at same level)
+
+
+
+
+Sorting ensures duplicates are adjacent.
+
+if i > 0 and nums[i] == nums[i-1] skips adding the same number at the same tree level.
+
+This prevents creating the same subset path multiple times.
+Note that the check is i > 0 to allow the first occurrence but skip the rest at that recursion level.
 
 
 
