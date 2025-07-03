@@ -1,0 +1,189 @@
+Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
+
+
+Example 2:
+
+Input: nums = [0,1]
+Output: [[0,1],[1,0]]
+
+
+Example 3:
+
+Input: nums = [1]
+Output: [[1]]
+ 
+Example 1:
+
+Input: nums = [1,2,3]
+Output: [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+
+Constraints:
+
+1 <= nums.length <= 6
+-10 <= nums[i] <= 10
+All the integers of nums are unique.
+
+
+
+
+
+sol:
+
+class Solution(object):
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        res = []
+        self.dfs(nums, [], res)
+        return res
+    
+    def dfs(self, nums, path, res):
+        if len(nums) == 0:
+            res.append(path)
+            return
+        for i in range(len(nums)):
+            self.dfs(nums[:i] + nums[i+1:], path + [nums[i]], res)   
+
+
+
+
+
+dfs([1,2,3], [])
+├── pick 1 → dfs([2,3], [1])
+│   ├── pick 2 → dfs([3], [1,2])
+│   │   └── pick 3 → dfs([], [1,2,3]) → res.append([1,2,3])
+│   └── pick 3 → dfs([2], [1,3])
+│       └── pick 2 → dfs([], [1,3,2]) → res.append([1,3,2])
+├── pick 2 → dfs([1,3], [2])
+│   ├── pick 1 → dfs([3], [2,1])
+│   │   └── pick 3 → dfs([], [2,1,3]) → res.append([2,1,3])
+│   └── pick 3 → dfs([1], [2,3])
+│       └── pick 1 → dfs([], [2,3,1]) → res.append([2,3,1])
+├── pick 3 → dfs([1,2], [3])
+    ├── pick 1 → dfs([2], [3,1])
+    │   └── pick 2 → dfs([], [3,1,2]) → res.append([3,1,2])
+    └── pick 2 → dfs([1], [3,2])
+        └── pick 1 → dfs([], [3,2,1]) → res.append([3,2,1])
+
+
+
+
+
+1st Level Call
+nums = [1, 2, 3], path = []
+for i = 0 → pick 1
+→ call dfs([2, 3], [1])
+
+2nd Level Call
+nums = [2, 3], path = [1]
+for i = 0 → pick 2
+→ call dfs([3], [1, 2])
+
+3rd Level Call
+nums = [3], path = [1, 2]
+for i = 0 → pick 3
+→ call dfs([], [1, 2, 3])
+
+4th Level Call (Base Case)
+nums = [], path = [1, 2, 3]
+→ res.append([1, 2, 3])
+→ return
+
+Now we backtrack to the 3rd level, where nums = [3], but there’s no more i values, so return.
+Then backtrack to the 2nd level dfs([2,3], [1]) and continue with:
+
+
+
+2nd Level Continued
+
+dfs([2,3], [1])
+i = 1 → pick 3 → dfs([2], [1,3])
+
+3rd Level
+dfs([2], [1,3])
+i = 0 → pick 2 → dfs([], [1,3,2])
+
+4th Level (Base Case)
+dfs([], [1,3,2]) → res.append([1,3,2]) → return
+
+Now all options from dfs([2,3], [1]) are done → return to top level.
+
+
+
+
+Back to 1st Level
+
+dfs([1,2,3], [])
+i = 1 → pick 2 → dfs([1,3], [2])
+
+2nd Level
+dfs([1,3], [2])
+i = 0 → pick 1 → dfs([3], [2,1])
+
+3rd Level
+dfs([3], [2,1])
+i = 0 → pick 3 → dfs([], [2,1,3])
+
+4th Level (Base Case)
+dfs([], [2,1,3]) → res.append([2,1,3]) → return
+
+
+Backtrack to dfs([1,3], [2])
+i = 1 → pick 3 → dfs([1], [2,3])
+
+3rd Level
+dfs([1], [2,3])
+i = 0 → pick 1 → dfs([], [2,3,1])
+
+4th Level (Base Case)
+dfs([], [2,3,1]) → res.append([2,3,1]) → return
+
+
+
+Now all options from dfs([1,3], [2]) are done → return.
+
+
+
+
+Back to 1st Level
+
+dfs([1,2,3], [])
+i = 2 → pick 3 → dfs([1,2], [3])
+
+
+2nd Level
+dfs([1,2], [3])
+i = 0 → pick 1 → dfs([2], [3,1])
+
+3rd Level
+dfs([2], [3,1])
+i = 0 → pick 2 → dfs([], [3,1,2])
+
+4th Level (Base Case)
+dfs([], [3,1,2]) → res.append([3,1,2]) → return
+
+
+Backtrack to dfs([1,2], [3])
+i = 1 → pick 2 → dfs([1], [3,2])
+
+3rd Level
+dfs([1], [3,2])
+i = 0 → pick 1 → dfs([], [3,2,1])
+
+4th Level (Base Case)
+dfs([], [3,2,1]) → res.append([3,2,1]) → return
+
+
+Final Result in res:
+[
+  [1, 2, 3],
+  [1, 3, 2],
+  [2, 1, 3],
+  [2, 3, 1],
+  [3, 1, 2],
+  [3, 2, 1]
+]
+
+
