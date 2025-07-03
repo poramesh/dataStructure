@@ -32,6 +32,40 @@ Output:
 
 
 
+Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sum to target.
+
+Each number in candidates may only be used once in the combination.
+
+Note: The solution set must not contain duplicate combinations.
+
+ 
+
+Example 1:
+
+Input: candidates = [10,1,2,7,6,1,5], target = 8
+Output: 
+[
+[1,1,6],
+[1,2,5],
+[1,7],
+[2,6]
+]
+
+
+Example 2:
+
+Input: candidates = [2,5,2,1,2], target = 5
+Output: 
+[
+[1,2,2],
+[5]
+]
+
+
+
+
+
+
 class Solution:
     def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
         res = []
@@ -48,6 +82,35 @@ class Solution:
             if i>0 and candidates[i] == candidates[i-1]: continue
             self.dfs(candidates[i+1:],target-candidates[i],path+[candidates[i]],result)
 
+
+
+
+
+dfs([1,1,2,5], 3, [], result)
+├── pick 1 → dfs([1,2,5], 2, [1], result)
+│   ├── pick 1 → dfs([2,5], 1, [1,1], result)
+│   │   ├── pick 2 → target = -1 → return
+│   │   └── pick 5 → target = -4 → return
+│   ├── skip duplicate 1
+│   ├── pick 2 → dfs([5], 0, [1,2], result) ← valid → append [1,2]
+├── pick 1 (duplicate, skip)
+├── pick 2 → dfs([5], 1, [2], result)...
+
+
+
+
+| Expression      | Meaning                                           |
+| --------------- | ------------------------------------------------- |
+| `self.dfs(...)` | Call `dfs()` method defined in the **same class** |
+| `dfs(...)`      | Tries to call a **global function** — will error  |
+| `self`          | Refers to the **current instance** of the class   |
+
+
+
+
+
+You're not returning the result — you're mutating (modifying) the result list directly by passing it into the recursive calls.
+This is possible because lists in Python are mutable and passed by reference, so appending to result inside any recursive call affects the original result.
 
 
 
